@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="VPLEX Ports" singleNodeId="e019df9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; devtype=='VirtualStorage' &amp; parttype=='Port' &amp; (iftype=='front-end' | iftype=='back-end')"/>
+  <property xsi:type="ReportPreferences" defaultMode="tab" description="&lt;div&gt;&#10;  Unfortunately the VPLEX doesn't provide statistics per front-end or back-end port. This report grabs the switch port statistics for each VPLEX port and visualizes those. &#10;&lt;/div&gt;"/>
+  <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="&lt;device&gt;" singleNodeId="19bdd56c">
+    <property xsi:type="NodeExpansion" expandOn="city,dc,device"/>
+    <property xsi:type="ReportPreferences" defaultMode="tab"/>
+    <node name="&lt;iftype&gt;" singleNodeId="8d0091f1">
+      <property xsi:type="NodeExpansion" expandOn="iftype"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <node name="&lt;director&gt;" singleNodeId="7679a9cc">
+        <property xsi:type="NodeExpansion" expandOn="director"/>
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="part" legendDisplayPolicy="visible"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="&lt;port&gt;" singleNodeId="23761652">
+          <property xsi:type="NodeExpansion" expandOn="part"/>
+          <property xsi:type="ReportPreferences" defaultMode="mix"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" properties="part" xsi:type="ResultFormulaParameterDefinition" result="TotalOctets"/>
+            <result name="TotalOctets" default="true" graphable="true"/>
+          </formula>
+          <customization marker="circle" filter="@result=='TotalOctets'"/>
+          <node name="&lt;&lt;VPLEX2Switch&gt;&gt;" singleNodeId="7bed3a0d">
+            <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; #APG:ALL &amp; devtype=='FabricSwitch' &amp; parttype &amp; parttype=='Port'"/>
+            <property xsi:type="NodeExpansion" expandOn="portwwn&lt;type=split;properties=portwwn;level-up=9999&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" paging="0"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Metric" sortMode="asc" nodeProperty="name"/>
+            <property xsi:type="PropertyNodeColumn" name="Description" property="description"/>
+            <property xsi:type="PropertyNodeColumn" name="Unit" property="unit"/>
+            <formula formulaId="math.Addition">
+              <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="IfInOctets"/>
+              <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="IfOutOctets"/>
+              <result name="TotalOctets" default="true" graphable="true"/>
+            </formula>
+            <node name="IfInOctets" singleNodeId="1cc9d946">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInOctets'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInOctets'"/>
+                <result name="IfInOctets" default="false" graphable="false"/>
+              </formula>
+            </node>
+            <node name="IfOutOctets" singleNodeId="7a55e5be">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifOutOctets'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutOctets'"/>
+                <result name="IfOutOctets" default="false" graphable="false"/>
+              </formula>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

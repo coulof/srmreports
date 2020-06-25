@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="SRM vApp Server File Systems" order="1" singleNodeId="4ed26114" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; module=='O.S.' &amp; (name=='FreeSpace' | name=='TotalSpace') &amp; parttype=='FileSystem' &amp; part=='/'"/>
+  <property xsi:type="ReportPreferences" defaultMode="ncr" duration="l1w" legendProperties=""/>
+  <node name="device" singleNodeId="e7a40913">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" legendProperties=""/>
+    <formula formulaId="math.Division">
+      <setting name="scale" value="100"/>
+      <parameter name="numerator" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeSpace'"/>
+      <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='TotalSpace'"/>
+      <result name="Free %" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.Subtraction">
+      <parameter name="base metric" xsi:type="ConstantFormulaParameterDefinition" value="100.0"/>
+      <parameter name="subtract metric" xsi:type="ResultFormulaParameterDefinition" result="Free %" from="node"/>
+      <result name="Used (%)" default="true" graphable="true"/>
+    </formula>
+  </node>
+</node>

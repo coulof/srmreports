@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Hypervisor VM load analysis" singleNodeId="e325f53a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="devtype=='Hypervisor' | devtype=='VirtualMachine'"/>
+  <property xsi:type="ReportPreferences" description="&lt;div&gt;&#10;  This report is an analysis of assigned VMs per Hypervisor. The % Assigned column provides the % number of VM on a given Hypervisor based on the overall average of VM per Hypervisor. The calculation is as follow: &#10; &lt;br /&gt; % Assigned = ( VMCountonHV ) / AvgVMperHV ) * 100 &#10;&lt;/div&gt;"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Hypervisor name" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Total HV count" display="no" description="Overall total number of Hypervisor (HV) in the context. (Hidden by default)" formatter="Number&lt;rounding=0&gt; Graph" resultName="hvcount" forcePeriod="never" timeThreshold="600" displayWhen="$v &gt; 0.00" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Total VM count" display="no" description="Overall total number of VM in the context. (Hidden by default)" formatter="Number&lt;rounding=0&gt; Graph" resultName="vmcount" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="VM on HV Count" description="Number of VM on a given HV, in the context. (Hidden by default)" formatter="Number&lt;rounding=0&gt; Graph" resultName="VMCount" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Assigned (%)" sortMode="desc" description="% Assigned of VM on a given HV host, based on the average VM per HV in the context." formatter="Number&lt;rounding=0;suffix=%;color&gt; Status CellBackground Style&lt;bold&gt; Graph" resultName="%Assigned" forcePeriod="never" timeThreshold="600" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="MAJOR" value="90.0"/>
+    <threshold severity="CRITICAL" value="150.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="Avg VM per HV" description="Average VM per HV value. (Hidden by default)" formatter="Number&lt;rounding=0&gt; Graph" resultName="vmratioperhv" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <node name="[hypervisor]" singleNodeId="691b29d9">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='Hypervisor'"/>
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+    <formula formulaId="util.DistinctValueCountFormula">
+      <setting name="Filter" value="devtype='VirtualMachine'"/>
+      <setting name="ExpandOn" value="device"/>
+      <setting name="Level-Up" value="1"/>
+      <result name="vmcount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.DistinctValueCountFormula">
+      <setting name="Filter" value="devtype='Hypervisor'"/>
+      <setting name="ExpandOn" value="device"/>
+      <setting name="Level-Up" value="1"/>
+      <result name="hvcount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.Division">
+      <setting name="scale" value="1"/>
+      <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="vmcount" from="node"/>
+      <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="hvcount" from="node"/>
+      <result name="vmratioperhv" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VMCount"/>
+      <result name="VMCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.Division">
+      <setting name="scale" value="100"/>
+      <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="VMCount"/>
+      <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="vmratioperhv" from="node"/>
+      <result name="%Assigned" default="false" graphable="false"/>
+    </formula>
+    <node name="[VM per HV]" singleNodeId="fc2a9df9">
+      <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;properties=hypervsr;level-up=2&gt;"/>
+      <property xsi:type="ReportPreferences" defaultMode="lst"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+      <formula formulaId="util.ChildCount">
+        <result name="VMCount" default="false" graphable="false"/>
+      </formula>
+      <node name="[VM list]" singleNodeId="363ccec1">
+        <property xsi:type="NodeFilter" filterExpression="devtype=='VirtualMachine'"/>
+        <property xsi:type="NodeExpansion" expandOn="device,deviceid"/>
+        <property xsi:type="ReportPreferences" defaultMode="lst"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+      </node>
+    </node>
+  </node>
+</node>

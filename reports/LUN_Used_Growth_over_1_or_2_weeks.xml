@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="LUNGrowth" order="0" singleNodeId="d86232ce" type="graph" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="mix"/>
+  <node name="Storage" singleNodeId="94b6af2c">
+    <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; !(vstatus=='inactive') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; #APG:ALL &amp; parttype=='LUN' &amp; (!(dgstype=='Thin') | dgstype=='Thin' &amp; poolname &amp; !(poolname=='N/A') &amp; !(poolname=='Unbound'))"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <node name="LUNs" order="4" singleNodeId="b46ee279" uid="EXPLORE-BRANCH-ALL-LUNS" type="objects">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='LUN' &amp; (!(dgstype=='Thin') | dgstype=='Thin' &amp; poolname &amp; !(poolname=='N/A') &amp; !(poolname=='Unbound'))"/>
+      <property xsi:type="ReportPreferences" displayMode="1" defaultMode="imx" duration="l2w" preferredPeriod="604800" preferredAggregate="last" paging="5" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." formatter="Text&lt;type=link&gt;" property="device"/>
+      <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+      <property xsi:type="PropertyNodeColumn" name="LUN Type" description="RAID and LUN type defined by vendor." property="devconf"/>
+      <property xsi:type="PropertyNodeColumn" name="Service Level" description="Name of Service Level." property="svclevel"/>
+      <property xsi:type="ValueNodeColumn" name="LUN Capacity (GB)" description="Total presented capacity of the LUN." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="LUN Used (GB)" description="Storage capacity that has been consumed by write operations." filterExpression="name=='UsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="1 week Used (GB) Change" sortMode="desc" resultName="Change1Week" period="86400" forcePeriod="never" aggregationFunc="last" timeThreshold="2" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="2 week Used (GB) Change" resultName="Change2Week" period="86400" forcePeriod="true" aggregationFunc="last" timeThreshold="3" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Purpose" description="Role of the LUN. Possible values are Primary, Local Replica, Remote Replica, System Resource, or N/A." property="purpose"/>
+      <property xsi:type="PropertyNodeColumn" name="Pool" description="User-defined pool name. Not available if the LUN is neither a pool contributor or consumer." filterExpression="!(poolname='%,%')" property="poolname"/>
+      <property xsi:type="PropertyNodeColumn" name="Pool Type" description="Type of pool." property="pooltype"/>
+      <property xsi:type="PropertyNodeColumn" name="Policy Name" description="Name of the policy with which the discovered array is associated." property="polname"/>
+      <property xsi:type="PropertyNodeColumn" name="Storage Group" description="Group of LUNs used in mapping, masking, and FAST management. Not Available if LUN is not mapped or masked." property="sgname"/>
+      <property xsi:type="ValueNodeColumn" name="Is Mapped" display="no" description="Mapped state, values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismapped" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Is Masked" display="no" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismasked" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Is Used" display="no" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="isused" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Is Meta Head" display="no" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismetah" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Is Thinly Provisioned" description="Thin provisioned state. Possible values are Thick or Thin." property="dgstype"/>
+      <property xsi:type="ValueNodeColumn" name="Is Pool Consumer" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ispolcsu" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Is Pool Contributor" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ispolctr" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Availability" display="no" description="The operational status of the LUN." formatter="Number&lt;rounding=2;color&gt; StatusChart Status" filterExpression="name=='Availability'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="80.0"/>
+        <threshold severity="OK" value="90.0"/>
+      </property>
+      <property xsi:type="PropertyNodeColumn" name="LUN Alias" display="noIfEmpty" description="Alias given to the LUN." property="alias"/>
+      <wiring>
+        <jump-to-report>
+          <src-filter xsi:type="CellClickFilter" columnName="Array"/>
+          <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+        </jump-to-report>
+      </wiring>
+      <node name="LUNs" singleNodeId="b561ffb5">
+        <property xsi:type="NodeFilter" filterExpression="!(devtype=='VirtualStorage')"/>
+        <property xsi:type="NodeExpansion" expandOn="device,part"/>
+        <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismapped"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="ismapped" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismasked"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="ismasked" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="isused"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="isused" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismetah"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="ismetah" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ispolctr"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="ispolctr" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Multiplication">
+          <setting name="scale" value="1"/>
+          <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ispolcsu"/>
+          <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+          <result name="ispolcsu" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="7"/>
+          <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+          <result name="Change1Week" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="14"/>
+          <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+          <result name="Change2Week" default="false" graphable="false"/>
+        </formula>
+        <report-layout hspan=":#W4N-WWN-LINKER=2"/>
+        <node name="device, part" order="0" singleNodeId="f390d5b7" uid="EXPLORE-BRANCH-ALL-LUNS-DETAILS">
+          <property xsi:type="NodeExpansion" expandOn="device,part"/>
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <report-layout hspan=":#W4N-WWN-LINKER=2"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Attributes" order="0" singleNodeId="c4060f35">
+            <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+            <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." formatter="Text&lt;type=link&gt;" property="device"/>
+            <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+            <property xsi:type="PropertyNodeColumn" name="LUN ID" description="LUN identifier." property="partid"/>
+            <property xsi:type="PropertyNodeColumn" name="LUN Type" description="RAID and LUN type defined by vendor." formatter="Text&lt;type=Default Style&gt;" property="devconf"/>
+            <property xsi:type="PropertyNodeColumn" name="Pool" description="User-defined pool name. Not available if the LUN is neither a pool contributor or consumer." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(poolname='%,%')" property="poolname"/>
+            <property xsi:type="PropertyNodeColumn" name="Purpose" description="Role of the LUN. Possible values are Primary, Local Replica, Remote Replica, System Resource, or N/A." formatter="Text&lt;type=Default Style&gt;" property="purpose"/>
+            <property xsi:type="PropertyNodeColumn" name="Service Level" description="Name of Service Level." formatter="Text&lt;type=Default Style&gt;" property="svclevel"/>
+            <property xsi:type="PropertyNodeColumn" name="RAID Level" description="RAID type." filterExpression="!(dgraid='%,%')" property="dgraid"/>
+            <property xsi:type="PropertyNodeColumn" name="Disk Type" description="Base storage architecture like ATA, SATA, SAS, Flash, FC." formatter="Text&lt;type=Default Style&gt;" property="disktype"/>
+            <property xsi:type="PropertyNodeColumn" name="Storage Group" description="Storage Group name." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+            <property xsi:type="PropertyNodeColumn" name="Thin / Thick" description="Type of Storage Provisioning i.e. (Thin/Thick)." formatter="Text&lt;type=Default Style&gt;" property="dgstype"/>
+            <property xsi:type="ValueNodeColumn" name="Is Used?" description="Indicates if the LUN is used." formatter="ValueToString&lt;rounding=0;key_1.0=Yes;key_0.0=No&gt; Status Style&lt;type=Default Style&gt;" resultName="isused" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="Is Masked?" description="Indicates if the LUN is masked." formatter="ValueToString&lt;rounding=0;key_1.0=Yes;key_0.0=No&gt; Status Style&lt;type=Default Style&gt;" resultName="ismasked" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="Is Mapped?" description="Indicates if the LUN is mapped." formatter="ValueToString&lt;rounding=0;key_1.0=Yes;key_0.0=No&gt; Status Style&lt;type=Default Style&gt;" resultName="ismapped" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="Is Meta Head?" description="Values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status Style&lt;type=Default Style&gt;" resultName="ismetah" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Presented capacity of the LUN." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="PropertyNodeColumn" name="LUN WWN" description="World Wide Name is an unique identifier of the LUN." property="partsn"/>
+            <wiring behaviors="!entityDrilldown">
+              <jump-to-report>
+                <src-filter xsi:type="CellClickFilter" columnName="Array"/>
+                <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+              </jump-to-report>
+            </wiring>
+            <node name="part" singleNodeId="443d1816">
+              <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="ismasked"/>
+                <result name="ismasked" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="ismapped"/>
+                <result name="ismapped" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="ismetam"/>
+                <result name="ismetam" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isused"/>
+                <result name="isused" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="ismetah"/>
+                <result name="ismetah" default="false" graphable="false"/>
+              </formula>
+            </node>
+          </node>
+          <node name="Status" order="1" singleNodeId="a695e1d3">
+            <property xsi:type="NodeFilter" filterExpression="name=='Availability' | name='%Status'"/>
+            <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" maxValue="109.0"/>
+            <threshold name="critical" color="#ff0000" value="95.0"/>
+            <threshold name="major" color="#ff8000" value="99.0"/>
+            <node name="Availability" order="0" singleNodeId="56a54632">
+              <property xsi:type="NodeFilter" filterExpression="name=='Availability'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrb" preferredPeriod="3600" legendDisplayPolicy="visible" maxValue="101.0" paging="5"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+              <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+              <threshold name="Critical" color="#e74c3c" value="98.0"/>
+              <threshold name="Major" color="#e67e22" value="99.0"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="name" order="0" singleNodeId="26ee5a93">
+              <property xsi:type="NodeFilter" filterExpression="!(name=='Availability')"/>
+              <property xsi:type="NodeExpansion" expandOn="name"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" paging="5"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+              <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            </node>
+          </node>
+          <node name="Capacity" order="2" singleNodeId="d1179853">
+            <property xsi:type="NodeFilter" filterExpression="name='%Capacity%'"/>
+            <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+            <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+            <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            <node name="Capacity" order="0" singleNodeId="ffa91c8">
+              <property xsi:type="NodeFilter" filterExpression="name=='Capacity'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="part name unit" legendDisplayPolicy="visible"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                <result name="Capacity (GB)" default="false" graphable="true"/>
+              </formula>
+            </node>
+            <node name="Used Capacity" order="1" singleNodeId="4a889ea9">
+              <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                <result name="Used Capacity (GB)" default="false" graphable="true"/>
+              </formula>
+            </node>
+            <node name="name" order="3" singleNodeId="83180a28">
+              <property xsi:type="NodeFilter" filterExpression="!(name=='Capacity' | name=='UsedCapacity' | name=='FreeCapacity')"/>
+              <property xsi:type="NodeExpansion" expandOn="name"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" paging="5"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+              <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            </node>
+            <node name="Tier Capacity" singleNodeId="4b608623">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Tier' &amp; name=='TierCapacity' &amp; !(vstatus=='inactive')"/>
+              <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=lunname;level-up=4;name-override=Tier Utilization&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" duration="l3M" preferredPeriod="86400" preferredAggregate="last" displayedProperties="lunname memberof partsn[SN]" legendDisplayPolicy="visible"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+                <result name="Tier Capacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <node name="tiername" singleNodeId="e2fca89b">
+                <property xsi:type="NodeExpansion" expandOn="tiername"/>
+                <property xsi:type="ReportPreferences" defaultMode="stk" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+              </node>
+            </node>
+          </node>
+          <node name="Performance" order="3" singleNodeId="44eb14d5">
+            <property xsi:type="NodeFilter" filterExpression="!(name='%Capacity%') &amp; !(name=='Availability') &amp; !(name='%Status') &amp; !(name=='ReplicaPath')"/>
+            <property xsi:type="ReportPreferences" defaultMode="tab" paging="5"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+            <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+            <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            <node name="name" order="0" singleNodeId="83180a28">
+              <property xsi:type="NodeExpansion" expandOn="name"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" paging="5"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Metric Name" description="The name of the metric." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="Unit" description="The unit of measurement of the metric value." property="unit"/>
+              <property xsi:type="ValueNodeColumn" name="Value" description="The last collected value of the metric." formatter="Number&lt;rounding=2;color&gt; SparkLine Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            </node>
+          </node>
+          <node name="Replicas" order="4" singleNodeId="6d3d8b29">
+            <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; parttype=='LUN' &amp; purpose='%Replica' &amp; !(rootwwn=='N/A')"/>
+            <property xsi:type="NodeExpansion" expandOn="partsn&lt;type=split;properties=rootwwn;level-up=9999;name-override=Replicas&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+            <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." formatter="Text&lt;type=link&gt;" property="device"/>
+            <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." formatter="Text&lt;type=Default Style&gt;" property="part"/>
+            <property xsi:type="PropertyNodeColumn" name="Purpose" description="Indicates the purpose of the LUN. Values are Local Replica, Remote Replica." property="purpose"/>
+            <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with." property="svclevel"/>
+            <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Capacity of the LUN." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="Used Capacity (GB)" description="Used capacity of the LUN." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='UsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+            <wiring behaviors="!entityDrilldown">
+              <jump-to-report>
+                <src-filter xsi:type="CellClickFilter" columnName="Array"/>
+                <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+              </jump-to-report>
+            </wiring>
+            <node name="device,part" singleNodeId="4ef36ae3">
+              <property xsi:type="NodeExpansion" expandOn="device,part"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

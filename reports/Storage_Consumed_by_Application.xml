@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Storage Capacity by Application" singleNodeId="aa16ccb6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; !(source=='HMC_Collection') &amp; (name=='Capacity' | name=='UsedCapacity')"/>
+  <property xsi:type="ReportPreferences" duration="l1w" preferredPeriod="86400" preferredAggregate="max"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Application" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Capacity (GB)" resultName="Capacity" period="86400" forcePeriod="never" aggregationFunc="max" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+  <property xsi:type="ValueNodeColumn" name="Used Capacity (GB)" resultName="UsedCapacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+  <node name="App expansion" singleNodeId="eadaed2a">
+    <property xsi:type="NodeFilter" filterExpression="appname"/>
+    <property xsi:type="NodeExpansion" expandOn="appname"/>
+    <property xsi:type="ReportPreferences" duration="l1w" preferredPeriod="86400" preferredAggregate="max"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Host" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity (GB)" resultName="Capacity" period="86400" forcePeriod="never" aggregationFunc="max" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used Capacity (GB)" resultName="UsedCapacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+      <result name="Capacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity"/>
+      <result name="UsedCapacity" default="false" graphable="false"/>
+    </formula>
+    <node name="Host Expansion" singleNodeId="b338a782">
+      <property xsi:type="NodeExpansion" expandOn="device"/>
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="3600"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Attribute" nodeProperty="name"/>
+      <property xsi:type="ValueNodeColumn" name="Capacity (GB)" resultName="Capacity" period="86400" forcePeriod="never" aggregationFunc="max" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Used Capacity (GB)" resultName="UsedCapacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="true"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity"/>
+        <result name="UsedCapacity" default="false" graphable="false"/>
+      </formula>
+      <node name="LUN Expansion-VM" order="0" singleNodeId="8f60267b">
+        <property xsi:type="NodeFilter" filterExpression="source=='VMWareCollector' &amp; !(part='%.vmdk') &amp; !(part='%.vmx') &amp; !(part='%HARD%') &amp; !(parttype=='Datastore')"/>
+        <property xsi:type="NodeExpansion" expandOn="part,deviceid&lt;type=hide&gt;"/>
+        <property xsi:type="ReportPreferences" displayMode="2" duration="l2w" preferredPeriod="3600" legendProperties="name unit dispName" paging="10"/>
+        <property xsi:type="PropertyNodeColumn" name="Storage" property="part"/>
+        <property xsi:type="ValueNodeColumn" name="Capacity (MB)" resultName="Capacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::MB" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity (MB)" resultName="UsedCapacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal::MB" summaryLabel="" summaryAggregate="6"/>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="true"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+          <result name="Capacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="true"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity"/>
+          <result name="UsedCapacity" default="false" graphable="false"/>
+        </formula>
+        <node name="Virtual Disks" order="0" singleNodeId="7292506a">
+          <property xsi:type="NodeFilter" filterExpression="(name=='Capacity' | apgdb=='UsedCapacity') &amp; parttype=='FileSystem' &amp; !(part='%HARD%')"/>
+          <property xsi:type="NodeExpansion" expandOn="part,deviceid&lt;type=hide&gt;"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l2w" preferredPeriod="86400" graphInfoDisplayMode="composite"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+          <property xsi:type="PropertyNodeColumn" name="Virtual Disk" property="part"/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+            <result name="Capacity" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.temporal.TimeRangeAggregation">
+            <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Aggregation" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Aggregation" from="node"/>
+            <result name="Aggregation over time" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+            <result name="UsedCapacity" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.9"/>
+            <result name="90 Threshold" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.8"/>
+            <result name="80 Threshold" default="false" graphable="true"/>
+          </formula>
+          <customization color="#ff0015" width="1.0" marker="circle" filter="@result=='90 Threshold'"/>
+          <customization color="#f7fc6f" width="1.0" marker="diamond" filter="@result=='80 Threshold'"/>
+        </node>
+        <node name="VM Files (other than VMDK)" singleNodeId="43c104e3">
+          <property xsi:type="NodeFilter" filterExpression="(name=='Capacity' | name=='UsedCapacity') &amp; !(parttype=='FileSystem') &amp; !(part='%DISK%')"/>
+          <property xsi:type="NodeExpansion" expandOn="part,deviceid&lt;type=hide&gt;"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" graphInfoDisplayMode="composite"/>
+          <property xsi:type="PropertyNodeColumn" name="File type" property="part"/>
+          <property xsi:type="ValueNodeColumn" name="Used Space" sortMode="desc" formatter="PerformanceSparkLineFormatter" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+            <result name="Capacity" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.temporal.TimeRangeAggregation">
+            <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Aggregation" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Aggregation" from="node"/>
+            <result name="Aggregation over time" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+            <result name="UsedCapacity" default="false" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+      <node name="LUN Expansion-Host Disk" singleNodeId="d9bef3c7">
+        <property xsi:type="NodeFilter" filterExpression="parttype=='Disk' &amp; (devtype=='Host' | devtype=='VirtualMachine') &amp; name=='Capacity' &amp; datagrp='LMD%'"/>
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk" property="part"/>
+        <property xsi:type="ValueNodeColumn" name="Capacity (MB)" resultName="Capacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::MB" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity (MB)" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::MB" summaryLabel="" summaryAggregate="6"/>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+          <result name="Capacity" default="false" graphable="false"/>
+        </formula>
+        <node name="Disk Capacity" singleNodeId="6af2ac98">
+          <property xsi:type="NodeFilter" filterExpression="name=='Capacity' &amp; parttype=='Disk'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l2w" preferredPeriod="86400"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Capacity" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.temporal.TimeRangeAggregation">
+            <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Aggregation" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Aggregation" from="node"/>
+            <result name="Aggregation over time" default="false" graphable="false"/>
+          </formula>
+        </node>
+      </node>
+      <node name="LUN Expansion-Host FS" singleNodeId="4e21bea3">
+        <property xsi:type="NodeFilter" filterExpression="parttype=='FileSystem' &amp; (devtype=='Host' | devtype=='VirtualMachine') &amp; (name=='UsedCapacity' | name=='Capacity') &amp; datagrp='LMD%'"/>
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk" property="part"/>
+        <property xsi:type="ValueNodeColumn" name="Capacity (MB)" resultName="Capacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Storage::MB" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity (MB)" resultName="UsedCapacity" period="86400" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal::MB" summaryLabel="" summaryAggregate="6"/>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="true"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity"/>
+          <result name="UsedCapacity" default="false" graphable="false"/>
+        </formula>
+        <node name="Disk Used Capacity" singleNodeId="b3c0626b">
+          <property xsi:type="NodeFilter" filterExpression="(name=='UsedCapacity' | name=='Capacity') &amp; parttype=='FileSystem'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l2w" preferredPeriod="86400"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="UsedCapacity" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.temporal.TimeRangeAggregation">
+            <parameter name="Metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Aggregation" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Aggregation" from="node"/>
+            <result name="Aggregation over time" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.9"/>
+            <result name="90 Threshold" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.8"/>
+            <result name="80 Threshold" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+            <result name="Capacity" default="false" graphable="false"/>
+          </formula>
+          <customization color="#f20505" width="1.0" marker="circle" filter="@result=='90 Threshold'"/>
+          <customization color="#f5f50c" width="1.0" marker="diamond" filter="@result=='80 Threshold'"/>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

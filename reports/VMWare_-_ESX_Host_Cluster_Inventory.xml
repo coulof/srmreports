@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="VMWare ESX Cluster Inventory" singleNodeId="e68e0d11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="source=='VMWareCollector' &amp; !(vstatus=='inactive')"/>
+  <property xsi:type="ReportPreferences" preferredPeriod="3600" preferredAggregate="last"/>
+  <property xsi:type="PropertyNodeColumn" name="ESX Cluster" sortMode="asc" property="cluster"/>
+  <property xsi:type="PropertyNodeColumn" name="DataCenter" property="memberof"/>
+  <property xsi:type="ValueNodeColumn" name="No of ESX Hosts" resultName="No of ESX" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="No of VMs" resultName="No: of VMs" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="No of LUNs" resultName="No of LUNs" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Total SAN Storage (TB)" sortMode="asc#1" formatter="Number&lt;rounding=2&gt; Status" resultName="SAN Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::TB" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Total Used SAN Storage (TB)" resultName="Total Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal::TB" summaryLabel=""/>
+  <property xsi:type="PropertyNodeColumn" name="Connected Array" resultName="Array" useTimeRange="false" timeThreshold="600" property="device"/>
+  <node name="Each Cluster" singleNodeId="f14a0be1">
+    <property xsi:type="NodeExpansion" expandOn="cluster"/>
+    <property xsi:type="ReportPreferences" displayMode="1" defaultMode="tab" preferredPeriod="3600" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+    <property xsi:type="ValueNodeColumn" name="Tot Cap" resultName="Total SAN Disk Capacity" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="No of Hostss"/>
+      <result name="No of ESX" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VirtualMachines"/>
+      <result name="No: of VMs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total SAN Disk Capacity"/>
+      <result name="SAN Capacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="No of LUNs"/>
+      <result name="No of LUNs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total Used Capacity"/>
+      <result name="Total Used Capacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Array"/>
+      <result name="Array" default="false" graphable="false"/>
+    </formula>
+    <node name="Hypervisors" order="0" singleNodeId="cc83c2be">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Hypervisor'"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="imx"/>
+      <property xsi:type="PropertyNodeColumn" name="Host" sortMode="asc" property="device"/>
+      <property xsi:type="PropertyNodeColumn" name="ESX OS" property="product"/>
+      <property xsi:type="PropertyNodeColumn" name="Model" property="model"/>
+      <property xsi:type="PropertyNodeColumn" name="Maintenance Mode ?" property="maintmod"/>
+      <property xsi:type="PropertyNodeColumn" name="Domain" property="domain"/>
+      <formula formulaId="util.ChildCount">
+        <result name="No of Hostss" default="false" graphable="false"/>
+      </formula>
+      <node name="each hypervisor" singleNodeId="f407ef2e">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" displayMode="2" defaultMode="mix"/>
+        <node name="Availability" singleNodeId="9777b8e9">
+          <property xsi:type="NodeFilter" filterExpression="name=='Availability'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+        <node name="Utilization" singleNodeId="96d2f827">
+          <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+    </node>
+    <node name="DataStores &amp; Virtual Machines" order="1" singleNodeId="d448b5d9">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Datastore'"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="imx"/>
+      <property xsi:type="PropertyNodeColumn" name="DataStore" property="part"/>
+      <property xsi:type="ValueNodeColumn" name="No of VMs" resultName="Total VMs" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total VMs"/>
+        <result name="VirtualMachines" default="false" graphable="false"/>
+      </formula>
+      <node name="each datastore" singleNodeId="d838fd2d">
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" defaultMode="mix"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <property xsi:type="ValueNodeColumn" name="vms per datastore" resultName="VMs per DataStore" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VMs per DataStore"/>
+          <result name="Total VMs" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="true"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="false"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+          <result name="Capacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="true"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="false"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Free'"/>
+          <result name="FreeCap" default="false" graphable="false"/>
+        </formula>
+        <node name="DataStore Linker" singleNodeId="659a673e">
+          <property xsi:type="NodeFilter" filterExpression="source=='VMWareCollector' &amp; devtype=='Datastore'"/>
+          <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=device;level-up=5&gt;" filterMode="select"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+          <property xsi:type="PropertyNodeColumn" name="Device" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="WWN" property="partsn"/>
+          <property xsi:type="ValueNodeColumn" name="DataStore Capacity" filterExpression="name=='Capacity'" forcePeriod="never" timeThreshold="600" summaryLabel=""/>
+          <property xsi:type="PropertyNodeColumn" name="LUN ID" property="rootlun"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" property="rootarry"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" properties="rootlun" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="LUNID" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" properties="rootarry" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="ArrayID" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="true"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="false"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+            <result name="DSCapacity" default="false" graphable="false"/>
+          </formula>
+          <node name="Each Datastore" singleNodeId="9d07c4b8">
+            <property xsi:type="NodeExpansion" expandOn="device"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          </node>
+        </node>
+        <node name="VM Linker" singleNodeId="d1c3b862">
+          <property xsi:type="NodeFilter" filterExpression="source=='VMWareCollector' &amp; devtype=='VirtualMachine' &amp; parttype=='Datastore' &amp; !(vstatus=='inactive')"/>
+          <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=5&gt;" filterMode="select"/>
+          <property xsi:type="PropertyNodeColumn" name="VirtualMachines" property="device"/>
+          <formula formulaId="util.ChildCount">
+            <result name="VMs per DataStore" default="false" graphable="false"/>
+          </formula>
+          <node name="each vm" singleNodeId="2064c1b6">
+            <property xsi:type="NodeExpansion" expandOn="device"/>
+            <property xsi:type="ReportPreferences" defaultMode="mix"/>
+            <node name="Latency" singleNodeId="995e57c4">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadLatency' | name=='WriteLatency'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Throughput" singleNodeId="3956f46b">
+              <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput' | name=='ReadThroughput'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="SAN Disks" order="2" singleNodeId="c621fbee">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Disk' &amp; !(part='mpx%') &amp; !(part='5%') &amp; devtype=='Hypervisor'"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk" property="part"/>
+      <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" forcePeriod="never" timeThreshold="600" summaryLabel="Total" summaryAggregate="6"/>
+      <property xsi:type="PropertyNodeColumn" name="Array Name" resultName="Array" property="device"/>
+      <property xsi:type="PropertyNodeColumn" name="LUN ID" resultName="LUNID" period="inherit" forcePeriod="true" aggregationFunc="inherit" valuesAggregationFunc="inherit" property="partid"/>
+      <property xsi:type="ValueNodeColumn" name="LUN Capacity" resultName="LUN Cap" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="LUN Used Capacity" resultName="LUN Used Cap" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskCap"/>
+        <result name="Total SAN Disk Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.ChildCount">
+        <result name="No of LUNs" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUN Used Cap"/>
+        <result name="Total Used Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Array"/>
+        <result name="Array" default="false" graphable="false"/>
+      </formula>
+      <node name="each disk" singleNodeId="83d5dce7">
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" defaultMode="mix"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="true"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="false"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+          <result name="DiskCap" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop4">
+          <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Array"/>
+          <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="LUN ID"/>
+          <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="LUN Capacity"/>
+          <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="LUN Used Capacity"/>
+          <result name="Array" default="false" graphable="false"/>
+          <result name="LUNID" default="false" graphable="false"/>
+          <result name="LUN Cap" default="false" graphable="false"/>
+          <result name="LUN Used Cap" default="false" graphable="false"/>
+        </formula>
+        <node name="LUN Linker" singleNodeId="f1c3ed63">
+          <property xsi:type="NodeFilter" filterExpression="devtype=='Array' &amp; parttype=='LUN'"/>
+          <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=partsn;level-up=5&gt;" filterMode="select"/>
+          <property xsi:type="ReportPreferences" defaultMode="imx"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="LUN" property="part"/>
+          <property xsi:type="ValueNodeColumn" name="Capacity" resultName="LUN Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity" resultName="LUN Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" properties="device" xsi:type="EmptyFormulaParameterDefinition"/>
+            <parameter name="Second Value" properties="partid" xsi:type="EmptyFormulaParameterDefinition"/>
+            <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="LUN Capacity"/>
+            <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="LUN Used Capacity"/>
+            <result name="Array" default="false" graphable="false"/>
+            <result name="LUN ID" default="false" graphable="false"/>
+            <result name="LUN Capacity" default="false" graphable="false"/>
+            <result name="LUN Used Capacity" default="false" graphable="false"/>
+          </formula>
+          <node name="Each LUN" singleNodeId="9826c966">
+            <property xsi:type="NodeExpansion" expandOn="part"/>
+            <property xsi:type="ReportPreferences" defaultMode="mix"/>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="true"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="false"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+              <result name="LUN Capacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="true"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="false"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+              <result name="LUN Used Capacity" default="false" graphable="false"/>
+            </formula>
+            <node name="Performance Metrics" singleNodeId="96fdb705">
+              <property xsi:type="NodeFilter" filterExpression="name=='WriteRequests' | name=='ReadResponseTime' | name=='ReadRequests' | name=='WriteResponseTime'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

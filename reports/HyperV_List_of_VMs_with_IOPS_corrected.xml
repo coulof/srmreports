@@ -1,0 +1,1685 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="All HyperV VMs (IOPS)" order="10" singleNodeId="702cc50f" uid="All HyperV VM-IOPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="devtype=='VirtualMachine' &amp; !(vstatus=='inactive') &amp; source=='HyperV-Collector'"/>
+  <property xsi:type="ReportPreferences" legendProperties="name unit dispName" paging="50"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Virtual Machine" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Total IOPs" sortMode="desc" resultName="Total IOPs" forcePeriod="never" useTimeRange="true" summaryLabel=""/>
+  <property xsi:type="PropertyNodeColumn" name="IP" property="ip"/>
+  <property xsi:type="PropertyNodeColumn" name="Host" property="hypervsr"/>
+  <property xsi:type="PropertyNodeColumn" name="Guest OS" property="devdesc"/>
+  <property xsi:type="PropertyNodeColumn" name="Status" property="status"/>
+  <property xsi:type="ValueNodeColumn" name="vCPUs" formatter="Number&lt;rounding=0&gt; Status Graph" filterExpression="name=='TotalCpu' &amp; #APG:ALL" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Assigned Memory" formatter="Number&lt;rounding=0&gt; Status" filterExpression="part=='System' &amp; parttype=='Memory' &amp; name=='Assigned' &amp; #APG:ALL" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Disks" formatter="Number&lt;rounding=0&gt; Status" resultName="DiskCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="CPU (%)" formatter="Number&lt;rounding=0&gt; Status" filterExpression="part=='System' &amp; parttype=='Processor' &amp; name=='CurrentUtilization' &amp; #APG:ALL" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+    <threshold severity="OK" value="-Infinity"/>
+    <threshold severity="MAJOR" value="60.0"/>
+    <threshold severity="CRITICAL" value="90.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="Uptime" formatter="Duration&lt;format=DHms&gt; Status" filterExpression="!(part) &amp; name=='Uptime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+    <threshold severity="CRITICAL" value="-Infinity"/>
+    <threshold severity="MAJOR" value="1800.0"/>
+    <threshold severity="OK" value="3600.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="Is Running?" formatter="Status" resultName="IsRunning" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+    <threshold severity="CRITICAL" value="-Infinity"/>
+    <threshold severity="OK" value="0.0"/>
+  </property>
+  <formula formulaId="math.spatial.Sum">
+    <setting name="aggregation" value="DEFAULT"/>
+    <setting name="partial" value="true"/>
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="vCpuCount"/>
+    <result name="vCpuCount" default="false" graphable="false"/>
+  </formula>
+  <formula formulaId="math.spatial.Sum">
+    <setting name="aggregation" value="DEFAULT"/>
+    <setting name="partial" value="true"/>
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VmInProblem"/>
+    <result name="VmInProblem" default="false" graphable="false"/>
+  </formula>
+  <formula formulaId="math.spatial.Sum">
+    <setting name="aggregation" value="DEFAULT"/>
+    <setting name="partial" value="true"/>
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsageMHz"/>
+    <result name="TotalCpuUsageMHz" default="false" graphable="false"/>
+  </formula>
+  <formula formulaId="math.spatial.Sum">
+    <setting name="aggregation" value="DEFAULT"/>
+    <setting name="partial" value="true"/>
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AssignedMemory"/>
+    <result name="VmTotalMemory" default="false" graphable="false"/>
+  </formula>
+  <formula formulaId="util.DistinctValueCountFormula">
+    <setting name="Filter" value="*"/>
+    <setting name="ExpandOn" value="device"/>
+    <setting name="Level-Up" value="0"/>
+    <result name="VmCount" default="false" graphable="false"/>
+  </formula>
+  <formula formulaId="util.ChildCount">
+    <result name="Count" default="true" graphable="false"/>
+  </formula>
+  <formula formulaId="math.spatial.Sum">
+    <setting name="aggregation" value="DEFAULT"/>
+    <setting name="partial" value="true"/>
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IsRunning"/>
+    <result name="VmRunningCount" default="false" graphable="false"/>
+  </formula>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="device" singleNodeId="2c427857" uid="HyperV-Virtual_Machines-Device">
+    <property xsi:type="NodeFilter" filterExpression="source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+    <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;properties=device;level-up=1&gt;"/>
+    <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="hypervsr[Host] devdesc[Guest O.S] hostname[Guest Hostname] device ip toolvrs[Integration Service Version]" paging="6"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Usage (%)"/>
+      <result name="CPU Utilization (%)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Is VM Swapping ?"/>
+      <result name="Is VM Swapping ?" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskCount"/>
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="RequestedCapacity"/>
+      <result name="RequestedCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AllocatedCapacity"/>
+      <result name="AllocatedCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="TotalCpu" from="node"/>
+      <result name="vCpuCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.ConditionalTimeValueCount">
+      <setting name="Comparison Type" value="'&gt;'"/>
+      <setting name="Base Value" value="80"/>
+      <setting name="Scale Factor" value="1"/>
+      <parameter name="Input Metric" xsi:type="FilterFormulaParameterDefinition" filter="parttype=='Processor' &amp; name=='CurrentUtilization'"/>
+      <result name="VmInProblem" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsageMHz(S)" from="node"/>
+      <result name="UsageMHz" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.Division">
+      <setting name="scale" value="100"/>
+      <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="FreeCapacity"/>
+      <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="ProvisionedSize"/>
+      <result name="FreeSpace(%)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.ConditionalTimeValueCount">
+      <setting name="Comparison Type" value="'&gt;'"/>
+      <setting name="Base Value" value="90"/>
+      <setting name="Scale Factor" value="1"/>
+      <parameter name="Input Metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Availability' &amp; #APG:ALL"/>
+      <result name="IsRunning" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.ReplaceValue">
+      <setting name="Operator" value="'=='"/>
+      <setting name="Testing Value" value="5"/>
+      <setting name="Replacing Value" value="OK"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="HealthState(S)" from="node"/>
+      <result name="HealthState" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="parttype=='Memory' &amp; name=='Assigned' &amp; #APG:ALL"/>
+      <result name="AssignedMemory" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="true"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='TotalCpu'"/>
+      <result name="TotalCpu" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsageMHz'"/>
+      <result name="UsageMHz(S)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="true"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="false"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='HealthState'"/>
+      <result name="HealthState(S)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total IOPs"/>
+      <result name="Total IOPs" default="false" graphable="false"/>
+    </formula>
+    <report-layout hspan=".-a041377a-ff78ac44=3,:#HyperV-Virtual_Machines-Virtual_Disks-Rate=1,*:{HyperV-Virtual_Machines-Device-Other_Reports}-143a7458=3,.-5d687cea-5adfb494=3,.-e1cf34a3-df0fe913=3" order=":#HyperV-Virtual_Machines-Virtual_Disks-IO=9,.-5d687cea-5adfb494-b0f0cde1-4710d22f=12,*:#SHARED-AVAILABILITY=1,.-5d687cea-5adfb494=10,.-e1cf34a3-df0fe913=6,.-5d687cea-5adfb494-b0f0cde1-bcf2139b=11,:#HyperV-Virtual_Machines-Virtual_Disks-Allocation=7,:#HyperV-Virtual_Machines-Virtual_Disks-Rate=8,.-a041377a-ff78ac44=3,*:#SHARED_CPU_SUMMARY=2,*:{HyperV-Virtual_Machines-Device-Other_Reports}-143a7458=13,.-a041377a-bebbd370=4,.-a041377a-67ad6c80=5"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="Availability (%)" order="0" singleNodeId="d9b5a189" uid="SHARED-AVAILABILITY" type="entity">
+      <property xsi:type="NodeFilter" filterExpression="!(part) &amp; name=='Availability' &amp; source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrb" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="device part unit" maxValue="109.0" graphInfoDisplayMode="boxed"/>
+      <threshold name="critical" color="#ff0000" value="95.0"/>
+      <threshold name="major" color="#ff8000" value="99.0"/>
+      <formula formulaId="util.MakeRange">
+        <setting name="Fill Before" value="false"/>
+        <setting name="Fill After" value="true"/>
+        <setting name="Fill Between" value="true"/>
+        <setting name="Interpolated Points" value="false"/>
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Availability'"/>
+        <result name="Availability (%)" default="true" graphable="true"/>
+      </formula>
+    </node>
+    <node name="CPU" order="1" singleNodeId="e056ca34" uid="HyperV-Virtual_Machines-Device-CPU">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Processor' &amp; source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="3" defaultMode="mix" preferredPeriod="3600"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="CPU_Status" from="node"/>
+        <result name="Status" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+        <result name="CPU_Status" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan="*:#SHARED_CPU_SUMMARY=1" order="*:#SHARED_CPU_SUMMARY=1"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Overall Average CPU" order="1" singleNodeId="1cc9e30b">
+        <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" legendProperties="name" legendDisplayPolicy="visible" maxValue="109.0"/>
+        <formula formulaId="math.spatial.Average">
+          <setting name="Filter NaN Values" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="CPU"/>
+          <result name="Average CPU" default="false" graphable="true"/>
+        </formula>
+        <node name="part" singleNodeId="7d24191f">
+          <property xsi:type="NodeFilter" filterExpression="!(part=='System')"/>
+          <property xsi:type="NodeExpansion" expandOn="part"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+            <result name="CPU" default="false" graphable="false"/>
+          </formula>
+        </node>
+      </node>
+      <node name="CPU Utilization (per vCPU)" order="2" singleNodeId="4535bb00">
+        <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization' &amp; !(part=='System')"/>
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="" legendDisplayPolicy="visible" maxValue="109.0"/>
+        <formula formulaId="math.spatial.Average">
+          <setting name="Filter NaN Values" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="CPU"/>
+          <result name="Average CPU" default="false" graphable="true"/>
+        </formula>
+        <node name="part" singleNodeId="b6b10e73">
+          <property xsi:type="NodeFilter" filterExpression="!(part=='System')"/>
+          <property xsi:type="NodeExpansion" expandOn="part"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" legendProperties="" displayUnselectedVariables="false"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+            <result name="CPU" default="false" graphable="false"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+    <node name="Memory" order="2" singleNodeId="a041377a" uid="HyperV-Virtual_Machines-Device-Memory">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Memory' &amp; source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="TotalMemory"/>
+        <result name="TotalMemory" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+        <result name="Memory_Status" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Memory_Status" from="node"/>
+        <result name="Status" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-ff78ac44=2,.-67ad6c80=3" order=".-ff78ac44=1,.-bebbd370=2,.-67ad6c80=3"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Memory Details" order="0" singleNodeId="ff78ac44">
+        <property xsi:type="NodeFilter" filterExpression="parttype=='Memory' &amp; part=='System'"/>
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Virtual Machine" columnFilterCondition="\b\B" nodeProperty="name"/>
+        <property xsi:type="ValueNodeColumn" name="Total Memory" formatter="Number Status Graph" filterExpression="name=='TotalMemory'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Assigned Memory" formatter="Number Status Graph" filterExpression="name=='Assigned'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Memory" filterExpression="name=='UsedMemory'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Startup Memory" formatter="Number Status Graph" filterExpression="name=='Startup'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Dynamic Memory" property="dynamic"/>
+        <property xsi:type="ValueNodeColumn" name="Target Memory Buffer (%)" formatter="ValueToString&lt;rounding=2;key_-1.0=N/A&gt; Status" filterExpression="name=='TargetMemoryBuffer'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Memory Buffer (%)" formatter="ValueToString&lt;rounding=2;key_-1.0=N/A&gt; Status" filterExpression="name=='MemoryBuffer'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Weight" formatter="ValueToString&lt;key_-1.0=N/A&gt; Status" filterExpression="name=='Weight'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Memory (%)" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='CurrentUtilization'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+          <threshold severity="OK" value="-Infinity"/>
+          <threshold severity="MAJOR" value="70.0"/>
+          <threshold severity="CRITICAL" value="90.0"/>
+        </property>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+          <result name="Status" default="false" graphable="false"/>
+        </formula>
+        <node name="System" order="0" singleNodeId="4938be76">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Memory' &amp; part=='System'"/>
+          <property xsi:type="NodeExpansion" expandOn="part"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <formula formulaId="threshold.ThresholdWindow">
+            <setting name="Reverse result" value="no"/>
+            <setting name="Default threshold1" value="60"/>
+            <setting name="Default threshold2" value="90"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization' &amp; dynamic=='on'"/>
+            <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="60.0"/>
+            <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="90.0"/>
+            <result name="Status" default="false" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+      <node name="Memory Use Summary" order="1" singleNodeId="bebbd370">
+        <property xsi:type="NodeFilter" filterExpression="name=='TotalMemory' | name=='UsedMemory'"/>
+        <property xsi:type="ReportPreferences" defaultMode="hb" duration="l2w" preferredPeriod="86400" preferredAggregate="last" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+        <customization color="#3da115" filter="@report=='Memory, Free'"/>
+        <customization color="#ff9d00" filter="@report=='Memory, Allocated'"/>
+        <topn-report sectionGrouping="stacked"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="partdesc,Allocated" singleNodeId="e530c0af">
+          <property xsi:type="NodeFilter" filterExpression="name=='UsedMemory'"/>
+          <property xsi:type="NodeExpansion" expandOn="(partdesc),(part&lt;type=split;properties=part;level-up=0;name-override=Allocated&gt;)" filterMode="both"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Allocated" default="true" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+        <node name="partdesc,Free" singleNodeId="178a2393">
+          <property xsi:type="NodeExpansion" expandOn="(partdesc),(part&lt;type=split;properties=part;level-up=0;name-override=Free&gt;)"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" maxValue="109.0"/>
+          <formula formulaId="math.Subtraction">
+            <parameter name="base metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='TotalMemory'"/>
+            <parameter name="subtract metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedMemory'"/>
+            <result name="Free(S)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Free(S)" from="node"/>
+            <result name="Free" default="true" graphable="false"/>
+          </formula>
+          <axis scaleFactor="1.0" filterExpression="@result=='Maximum (GB)' | @result=='Used (GB)'"/>
+          <customization filter="@result=='Maximum (GB)'"/>
+          <customization filter="@result=='Used (GB)'"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+      <node name="Memory Use History" order="2" singleNodeId="67ad6c80">
+        <property xsi:type="NodeFilter" filterExpression="part=='System' &amp; (name=='UsedMemory' | name=='TotalMemory' | name=='Startup' | name=='Assigned')"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="TotalMemory"/>
+          <result name="TotalMemory" default="false" graphable="false"/>
+        </formula>
+        <customization color="#e80000" filter="name=='TotalMemory'"/>
+        <customization color="#000000" filter="name=='Startup'"/>
+        <customization color="#ff9d00" filter="name=='UsedMemory'"/>
+        <customization color="#0156d5" filter="name=='Assigned'"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Running Virtual Machine" singleNodeId="82be0f83">
+          <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;properties=device;level-up=2&gt;"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="TotalMemory"/>
+            <result name="TotalMemory" default="false" graphable="false"/>
+          </formula>
+          <node name="device" singleNodeId="8fe44cfc">
+            <property xsi:type="NodeFilter" filterExpression="state=='Running'"/>
+            <property xsi:type="NodeExpansion" expandOn="device"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+            <formula formulaId="math.Multiplication">
+              <setting name="scale" value="1"/>
+              <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="TotalMemory(S)" from="node"/>
+              <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1024.0"/>
+              <result name="TotalMemory" default="true" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='TotalMemory'"/>
+              <result name="TotalMemory(S)" default="false" graphable="false"/>
+            </formula>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="Virtual Disks (VHD Files)" order="3" singleNodeId="e1cf34a3" uid="HyperV-Virtual_Machines-Device-Virtual_Disk">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='File' &amp; parent=='N/A' &amp; source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskCount"/>
+        <result name="DiskCount" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Storage_Status" from="node"/>
+        <result name="Status" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+        <result name="Storage_Status" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total IOPs"/>
+        <result name="Total IOPs" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-df0fe913=3" order=":#HyperV-Virtual_Machines-Virtual_Disks-Rate=3,:#HyperV-Virtual_Machines-Virtual_Disks-IO=4,.-63750f81=5,.-df0fe913=1,:#HyperV-Virtual_Machines-Virtual_Disks-Allocation=2"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Virtual Disk List" order="0" singleNodeId="df0fe913">
+        <property xsi:type="NodeFilter" filterExpression="parttype=='File'"/>
+        <property xsi:type="ReportPreferences" displayMode="2" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="VHD File" sortMode="asc" nodeProperty="name"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" property="partdesc"/>
+        <property xsi:type="PropertyNodeColumn" name="Volume" property="volume"/>
+        <property xsi:type="ValueNodeColumn" name="Error Count" formatter="Number Status Graph" filterExpression="name=='ErrorCount'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel="">
+          <threshold severity="OK" value="-Infinity"/>
+          <threshold severity="CRITICAL" value="1.0"/>
+        </property>
+        <property xsi:type="ValueNodeColumn" name="Flush Count" formatter="Number Status Graph" filterExpression="name=='FlushCount'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="IOPS" filterExpression="name=='Requests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Throughput (/s)" filterExpression="name=='Throughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Disk Allocated (%)" filterExpression="name=='CurrentUtilization'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+          <threshold severity="OK" value="-Infinity"/>
+          <threshold severity="MAJOR" value="80.0"/>
+          <threshold severity="CRITICAL" value="90.0"/>
+        </property>
+        <property xsi:type="ValueNodeColumn" name="Size" formatter="Number&lt;rounding=0&gt; Status Graph" filterExpression="name=='RequestedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="0" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <formula formulaId="util.ChildCount">
+          <result name="DiskCount" default="true" graphable="false"/>
+        </formula>
+        <report-layout hspan=".=2" order=":#HyperV-Virtual_Machines-Virtual_Disks-Rate=3,:#HyperV-Virtual_Machines-Virtual_Disks-IO=4,.=1"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="SHARED_PART_VHD_FILE" singleNodeId="d8c4a19f" uid="SHARED_PART_VHD_FILE">
+          <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=.*\\(.+);value-replace=$1&gt;"/>
+          <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+            <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Read Requests" from="node"/>
+            <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+            <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Write Requests" from="node"/>
+            <result name="ReadThroughput" default="false" graphable="false"/>
+            <result name="ReadRequests" default="false" graphable="false"/>
+            <result name="WriteThroughput" default="false" graphable="false"/>
+            <result name="WriteRequests" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+            <result name="Read Throughput" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+            <result name="Read Requests" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+            <result name="Write Throughput" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+            <result name="Write Requests" default="false" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Allocation History" order="0" singleNodeId="49058fdd" uid="SHARED-VHD_FILE-ALLOCATION">
+            <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='RequestedCapacity' | name=='CurrentUtilization' | name=='FreeCapacity' | name=='UsedCapacity'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Allocation History&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+              <result name="AllocatedCapacity (GB)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RequestedCapacity'"/>
+              <result name="RequestedCapacity (GB)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+              <result name="Utilization (%)" default="false" graphable="true"/>
+            </formula>
+            <axis minValue="0.0" maxValue="109.0" scaleFactor="1.0" filterExpression="@result=='Utilization (%)'"/>
+            <customization color="#e80000" filter="@result=='RequestedCapacity (GB)'"/>
+            <customization color="#ff9d00" filter="@result=='AllocatedCapacity (GB)'"/>
+            <customization color="#0156d5" filter="@result=='Utilization (%)'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+          <node name="Disk Throughput (/s)" order="1" singleNodeId="5e8ac07c" uid="SHARED-VHD_FILE-RATE">
+            <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Disk Throughput (/s)&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <customization color="#0156d5" filter="name=='ReadThroughput'"/>
+            <customization color="#e80000" filter="name=='WriteThroughput'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+          <node name="I/O Operations (IOPS)" order="2" singleNodeId="2680be59" uid="SHARED-VHD_FILE-IO">
+            <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations (IOPS)&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <customization color="#0156d5" filter="name=='ReadRequests'"/>
+            <customization color="#e80000" filter="name=='WriteRequests'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+          <node name="I/O Operations Ratio (IOPS)" order="3" singleNodeId="5c9bde18" uid="SHARED-VHD_FILE-IO-RATIO">
+            <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations Ratio (IOPS)&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="pie"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <customization color="#0156d5" filter="name=='ReadRequests'"/>
+            <customization color="#e80000" filter="name=='WriteRequests'"/>
+          </node>
+        </node>
+      </node>
+      <node name="VHD File Allocation" order="1" singleNodeId="17c52aae" uid="HyperV-Virtual_Machines-Virtual_Disks-Allocation">
+        <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='CurrentUtilization' | name=='ErrorCount' | name=='UnallocatedCapacity'"/>
+        <property xsi:type="ReportPreferences" defaultMode="hb" duration="l2w" preferredPeriod="86400" preferredAggregate="last" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+        <formula formulaId="math.spatial.Max">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+          <result name="Status" default="false" graphable="false"/>
+        </formula>
+        <customization color="#ff9d00" filter="@node=='partdesc,AllocatedCapacity'"/>
+        <customization color="#3da115" filter="@node=='partdesc,UnalocatedCapacity'"/>
+        <topn-report sectionGrouping="stacked" sectionOrdering="alphabetical"/>
+        <node name="partdesc,AllocatedCapacity" singleNodeId="1265da83">
+          <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='CurrentUtilization' | name=='ErrorCount'"/>
+          <property xsi:type="NodeExpansion" expandOn="(filename),(name)"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+            <result name="Status" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+            <result name="result" default="true" graphable="false"/>
+          </formula>
+          <node name="Status" singleNodeId="7d2598cb">
+            <property xsi:type="ReportPreferences" defaultMode="lst"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="math.spatial.Max">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+            <node name="CurrentUtilization" singleNodeId="a69c104">
+              <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization' &amp; partdesc=='Dynamic VHD Image File'"/>
+              <property xsi:type="ReportPreferences" defaultMode="lst"/>
+              <formula formulaId="threshold.ThresholdWindow">
+                <setting name="Reverse result" value="no"/>
+                <setting name="Default threshold1" value="80"/>
+                <setting name="Default threshold2" value="90"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+                <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="80.0"/>
+                <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="90.0"/>
+                <result name="Status" default="false" graphable="false"/>
+              </formula>
+            </node>
+            <node name="ErrorCount" singleNodeId="269aa89f">
+              <property xsi:type="NodeFilter" filterExpression="name=='ErrorCount'"/>
+              <property xsi:type="ReportPreferences" defaultMode="lst"/>
+              <formula formulaId="threshold.ThresholdWindow">
+                <setting name="Reverse result" value="no"/>
+                <setting name="Default threshold1" value="0.5"/>
+                <setting name="Default threshold2" value="1"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ErrorCount'"/>
+                <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="0.5"/>
+                <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                <result name="Status" default="false" graphable="false"/>
+              </formula>
+            </node>
+          </node>
+        </node>
+        <node name="partdesc,UnalocatedCapacity" singleNodeId="13733e67">
+          <property xsi:type="NodeFilter" filterExpression="name=='UnallocatedCapacity'"/>
+          <property xsi:type="NodeExpansion" expandOn="(filename),(name)"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="true"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UnallocatedCapacity'"/>
+            <result name="result" default="true" graphable="false"/>
+          </formula>
+        </node>
+      </node>
+      <node name="Disk Throughput (/s)" order="2" singleNodeId="5e8ac07c" uid="HyperV-Virtual_Machines-Virtual_Disks-Rate">
+        <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="ReadThroughput" singleNodeId="6cd8f5af">
+          <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput"/>
+            <result name=" " default="true" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_PART_VHD_FILE" singleNodeId="efd647c9" uid="SHARED_PART_VHD_FILE">
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=.*\\(.+);value-replace=$1&gt;"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Read Requests" from="node"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Write Requests" from="node"/>
+              <result name="ReadThroughput" default="false" graphable="false"/>
+              <result name="ReadRequests" default="false" graphable="false"/>
+              <result name="WriteThroughput" default="false" graphable="false"/>
+              <result name="WriteRequests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+              <result name="Read Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+              <result name="Read Requests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+              <result name="Write Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+              <result name="Write Requests" default="false" graphable="false"/>
+            </formula>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Allocation History" order="0" singleNodeId="49058fdd" uid="SHARED-VHD_FILE-ALLOCATION">
+              <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='RequestedCapacity' | name=='CurrentUtilization' | name=='FreeCapacity' | name=='UsedCapacity'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Allocation History&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+                <result name="AllocatedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RequestedCapacity'"/>
+                <result name="RequestedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+                <result name="Utilization (%)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" maxValue="109.0" scaleFactor="1.0" filterExpression="@result=='Utilization (%)'"/>
+              <customization color="#e80000" filter="@result=='RequestedCapacity (GB)'"/>
+              <customization color="#ff9d00" filter="@result=='AllocatedCapacity (GB)'"/>
+              <customization color="#0156d5" filter="@result=='Utilization (%)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Disk Throughput (/s)" order="1" singleNodeId="5e8ac07c" uid="SHARED-VHD_FILE-RATE">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Disk Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadThroughput'"/>
+              <customization color="#e80000" filter="name=='WriteThroughput'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations (IOPS)" order="2" singleNodeId="2680be59" uid="SHARED-VHD_FILE-IO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations Ratio (IOPS)" order="3" singleNodeId="5c9bde18" uid="SHARED-VHD_FILE-IO-RATIO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations Ratio (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+            </node>
+          </node>
+        </node>
+        <node name="WriteThroughput" singleNodeId="f18a4714">
+          <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput"/>
+            <result name=" " default="true" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_PART_VHD_FILE" singleNodeId="87a99a05" uid="SHARED_PART_VHD_FILE">
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=.*\\(.+);value-replace=$1&gt;"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Read Requests" from="node"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Write Requests" from="node"/>
+              <result name="ReadThroughput" default="false" graphable="false"/>
+              <result name="ReadRequests" default="false" graphable="false"/>
+              <result name="WriteThroughput" default="false" graphable="false"/>
+              <result name="WriteRequests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+              <result name="Read Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+              <result name="Read Requests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+              <result name="Write Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+              <result name="Write Requests" default="false" graphable="false"/>
+            </formula>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Allocation History" order="0" singleNodeId="49058fdd" uid="SHARED-VHD_FILE-ALLOCATION">
+              <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='RequestedCapacity' | name=='CurrentUtilization' | name=='FreeCapacity' | name=='UsedCapacity'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Allocation History&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+                <result name="AllocatedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RequestedCapacity'"/>
+                <result name="RequestedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+                <result name="Utilization (%)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" maxValue="109.0" scaleFactor="1.0" filterExpression="@result=='Utilization (%)'"/>
+              <customization color="#e80000" filter="@result=='RequestedCapacity (GB)'"/>
+              <customization color="#ff9d00" filter="@result=='AllocatedCapacity (GB)'"/>
+              <customization color="#0156d5" filter="@result=='Utilization (%)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Disk Throughput (/s)" order="1" singleNodeId="5e8ac07c" uid="SHARED-VHD_FILE-RATE">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Disk Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadThroughput'"/>
+              <customization color="#e80000" filter="name=='WriteThroughput'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations (IOPS)" order="2" singleNodeId="2680be59" uid="SHARED-VHD_FILE-IO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations Ratio (IOPS)" order="3" singleNodeId="5c9bde18" uid="SHARED-VHD_FILE-IO-RATIO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations Ratio (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node name="I/O Operations (IOPS)" order="3" singleNodeId="2680be59" uid="HyperV-Virtual_Machines-Virtual_Disks-IO">
+        <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible"/>
+        <formula formulaId="math.Addition">
+          <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result=" Read IOPs"/>
+          <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result=" Write IOPs"/>
+          <result name="Total IOPs" default="false" graphable="false"/>
+        </formula>
+        <customization color="#0156d5" filter="@node=='Read Operations'"/>
+        <customization color="#e80000" filter="@node=='Write Operations'"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Read Operations" singleNodeId="5fe20ace">
+          <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadRequests"/>
+            <result name=" Read IOPs" default="true" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_PART_VHD_FILE" singleNodeId="d8d0a04b" uid="SHARED_PART_VHD_FILE">
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=.*\\(.+);value-replace=$1&gt;"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Read Requests" from="node"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Write Requests" from="node"/>
+              <result name="ReadThroughput" default="false" graphable="false"/>
+              <result name="ReadRequests" default="false" graphable="false"/>
+              <result name="WriteThroughput" default="false" graphable="false"/>
+              <result name="WriteRequests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+              <result name="Read Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+              <result name="Read Requests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+              <result name="Write Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+              <result name="Write Requests" default="false" graphable="false"/>
+            </formula>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Allocation History" order="0" singleNodeId="49058fdd" uid="SHARED-VHD_FILE-ALLOCATION">
+              <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='RequestedCapacity' | name=='CurrentUtilization' | name=='FreeCapacity' | name=='UsedCapacity'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Allocation History&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+                <result name="AllocatedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RequestedCapacity'"/>
+                <result name="RequestedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+                <result name="Utilization (%)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" maxValue="109.0" scaleFactor="1.0" filterExpression="@result=='Utilization (%)'"/>
+              <customization color="#e80000" filter="@result=='RequestedCapacity (GB)'"/>
+              <customization color="#ff9d00" filter="@result=='AllocatedCapacity (GB)'"/>
+              <customization color="#0156d5" filter="@result=='Utilization (%)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Disk Throughput (/s)" order="1" singleNodeId="5e8ac07c" uid="SHARED-VHD_FILE-RATE">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Disk Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadThroughput'"/>
+              <customization color="#e80000" filter="name=='WriteThroughput'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations (IOPS)" order="2" singleNodeId="2680be59" uid="SHARED-VHD_FILE-IO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations Ratio (IOPS)" order="3" singleNodeId="5c9bde18" uid="SHARED-VHD_FILE-IO-RATIO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations Ratio (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+            </node>
+          </node>
+        </node>
+        <node name="Write Operations" singleNodeId="46722ca9">
+          <property xsi:type="NodeFilter" filterExpression="name=='WriteRequests'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteRequests"/>
+            <result name=" Write IOPs" default="true" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_PART_VHD_FILE" singleNodeId="feb427e" uid="SHARED_PART_VHD_FILE">
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=.*\\(.+);value-replace=$1&gt;"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Read Requests" from="node"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Write Requests" from="node"/>
+              <result name="ReadThroughput" default="false" graphable="false"/>
+              <result name="ReadRequests" default="false" graphable="false"/>
+              <result name="WriteThroughput" default="false" graphable="false"/>
+              <result name="WriteRequests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+              <result name="Read Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+              <result name="Read Requests" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+              <result name="Write Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+              <result name="Write Requests" default="false" graphable="false"/>
+            </formula>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Allocation History" order="0" singleNodeId="49058fdd" uid="SHARED-VHD_FILE-ALLOCATION">
+              <property xsi:type="NodeFilter" filterExpression="name=='AllocatedCapacity' | name=='RequestedCapacity' | name=='CurrentUtilization' | name=='FreeCapacity' | name=='UsedCapacity'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Allocation History&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" minValue="NaN" graphScaleFactor="Byte::Storage::GB::Byte::Storage"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='AllocatedCapacity'"/>
+                <result name="AllocatedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RequestedCapacity'"/>
+                <result name="RequestedCapacity (GB)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+                <result name="Utilization (%)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" maxValue="109.0" scaleFactor="1.0" filterExpression="@result=='Utilization (%)'"/>
+              <customization color="#e80000" filter="@result=='RequestedCapacity (GB)'"/>
+              <customization color="#ff9d00" filter="@result=='AllocatedCapacity (GB)'"/>
+              <customization color="#0156d5" filter="@result=='Utilization (%)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Disk Throughput (/s)" order="1" singleNodeId="5e8ac07c" uid="SHARED-VHD_FILE-RATE">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Disk Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::MB::Byte::Storage"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadThroughput'"/>
+              <customization color="#e80000" filter="name=='WriteThroughput'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations (IOPS)" order="2" singleNodeId="2680be59" uid="SHARED-VHD_FILE-IO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="I/O Operations Ratio (IOPS)" order="3" singleNodeId="5c9bde18" uid="SHARED-VHD_FILE-IO-RATIO">
+              <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=I/O Operations Ratio (IOPS)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+              <customization color="#0156d5" filter="name=='ReadRequests'"/>
+              <customization color="#e80000" filter="name=='WriteRequests'"/>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node name="Virtual Disk IOPS Distribution" order="4" singleNodeId="63750f81">
+        <property xsi:type="NodeFilter" filterExpression="name=='Requests'"/>
+        <property xsi:type="ReportPreferences" defaultMode="pie" legendProperties="filename"/>
+      </node>
+    </node>
+    <node name="Network Interfaces" order="4" singleNodeId="5d687cea" uid="HyperV-Virtual_Machines-Device-Network">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Interface' &amp; !(part=='System') &amp; source=='HyperV-Collector' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Network_Status" from="node"/>
+        <result name="Status" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+        <result name="Network_Status" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-5adfb494=2"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Network Interface List" order="0" singleNodeId="5adfb494">
+        <property xsi:type="ReportPreferences" displayMode="2" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="PropertyNodeColumn" name="Interface ID" sortMode="asc" property="part"/>
+        <property xsi:type="PropertyNodeColumn" name="Interface Model" property="partdesc"/>
+        <property xsi:type="PropertyNodeColumn" name="MAC Address" property="ifacemac"/>
+        <property xsi:type="ValueNodeColumn" name="Throughput (/s)" filterExpression="name=='Throughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::B::Bit::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Packet Rate" filterExpression="name=='ifTotalPackets'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+        <formula formulaId="math.spatial.Max">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+          <result name="Status" default="false" graphable="false"/>
+        </formula>
+        <report-layout hspan=".=2"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Network Throughput (/s)" order="1" singleNodeId="4b29d0c4" uid="SHARED_NETWORK_RATE">
+          <property xsi:type="NodeFilter" filterExpression="name=='Throughput'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk" duration="l1w" graphScaleFactor="Byte::Storage::B::Bit::Storage"/>
+          <customization color="#0156d5" filter="name=='ifOutOctets'"/>
+          <customization color="#e80000" filter="name=='ifInOctets'"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_NETWORK_PART" singleNodeId="e25581e3" uid="SHARED_NETWORK_PART">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Interface'"/>
+            <property xsi:type="NodeExpansion" expandOn="part"/>
+            <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="device part[Interface Name] partdesc[Interface Model] ifacemac ifaceip"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+            <report-layout order=".-4710d22f=2,.-37565da0=3,.-bcf2139b=1"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Network Throughput (/s)" order="0" singleNodeId="bcf2139b">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInOctets' | name=='ifOutOctets'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendProperties="name" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::B::Bit::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+              <customization color="#75baff" filter="name=='ifOutOctets'"/>
+              <customization color="#ff9d00" filter="name=='ifInOctets'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Network Packet Rate" order="1" singleNodeId="4710d22f">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifOutTotalPackets' | name=='OutputQueueLength' | name=='ifOutErrors' | name=='ifInErrors'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Rate&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+                <result name="ifInTotalPackets (Pkts/s)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+                <result name="ifOutTotalPackets (Pkts/s)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInErrors'"/>
+                <result name="ifInErrors (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutErrors'"/>
+                <result name="ifOutErrors (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+                <result name="OutputQueueLength (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" scaleFactor="1.0" filterExpression="@result=='ifInErrors (Pkts)' | @result=='ifOutErrors (Pkts)' | @result=='OutputQueueLength (Pkts)'"/>
+              <customization color="#ef0000" filter="@result=='ifInErrors (Pkts)'"/>
+              <customization color="#75baff" filter="@result=='ifOutTotalPackets (Pkts/s)'"/>
+              <customization color="#ff9d00" filter="@result=='ifInTotalPackets (Pkts/s)'"/>
+              <customization color="#0156d5" filter="@result=='ifOutErrors (Pkts)'"/>
+              <customization color="#7c1eff" filter="@result=='OutputQueueLength (Pkts)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Network Packet Ratio" order="2" singleNodeId="37565da0">
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Ratio&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                <result name="Status" default="false" graphable="false"/>
+              </formula>
+              <customization color="#75baff" filter="@node=='Packets Sent'"/>
+              <customization color="#ff9d00" filter="@node=='Packets Received'"/>
+              <node name="Packets Received" singleNodeId="b8b5cc00">
+                <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifErrors' | name=='OutputQueueLength'"/>
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifInTotalPackets" from="node"/>
+                  <result name=" " default="true" graphable="false"/>
+                </formula>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                  <result name="Status" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="true"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+                  <result name="ifInTotalPackets" default="false" graphable="false"/>
+                </formula>
+                <node name="Status" singleNodeId="3f30ba2f">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  <formula formulaId="math.spatial.Max">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                    <result name="Status" default="false" graphable="false"/>
+                  </formula>
+                  <node name="ifErrors" singleNodeId="269aa89f">
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <formula formulaId="threshold.ThresholdWindow">
+                      <setting name="Reverse result" value="no"/>
+                      <setting name="Default threshold1" value="1"/>
+                      <setting name="Default threshold2" value="2"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifErrors'"/>
+                      <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                      <result name="Status" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                  <node name="OutputQueueLength" singleNodeId="a69c104">
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <formula formulaId="threshold.ThresholdWindow">
+                      <setting name="Reverse result" value="no"/>
+                      <setting name="Default threshold1" value="1"/>
+                      <setting name="Default threshold2" value="2"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+                      <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                      <result name="Status" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+              </node>
+              <node name="Packets Sent" singleNodeId="b4b8525a">
+                <property xsi:type="NodeFilter" filterExpression="name=='ifOutTotalPackets'"/>
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifOutTotalPackets" from="node"/>
+                  <result name=" " default="true" graphable="false"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+                  <result name="ifOutTotalPackets" default="false" graphable="false"/>
+                </formula>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node name="Network Packet Rate" order="2" singleNodeId="f994d8d3" uid="SHARED_NETWORK_PACKET_RATE">
+          <property xsi:type="NodeFilter" filterExpression="name=='ifTotalPackets'"/>
+          <property xsi:type="ReportPreferences" defaultMode="stk"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="SHARED_NETWORK_PART" singleNodeId="8850120b" uid="SHARED_NETWORK_PART">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Interface'"/>
+            <property xsi:type="NodeExpansion" expandOn="part"/>
+            <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="device part[Interface Name] partdesc[Interface Model] ifacemac ifaceip"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+            <report-layout order=".-4710d22f=2,.-37565da0=3,.-bcf2139b=1"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Network Throughput (/s)" order="0" singleNodeId="bcf2139b">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInOctets' | name=='ifOutOctets'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Throughput (/s)&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendProperties="name" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::B::Bit::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+              <customization color="#75baff" filter="name=='ifOutOctets'"/>
+              <customization color="#ff9d00" filter="name=='ifInOctets'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Network Packet Rate" order="1" singleNodeId="4710d22f">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifOutTotalPackets' | name=='OutputQueueLength' | name=='ifOutErrors' | name=='ifInErrors'"/>
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Rate&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+                <result name="ifInTotalPackets (Pkts/s)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+                <result name="ifOutTotalPackets (Pkts/s)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInErrors'"/>
+                <result name="ifInErrors (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutErrors'"/>
+                <result name="ifOutErrors (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+                <result name="OutputQueueLength (Pkts)" default="false" graphable="true"/>
+              </formula>
+              <axis minValue="0.0" scaleFactor="1.0" filterExpression="@result=='ifInErrors (Pkts)' | @result=='ifOutErrors (Pkts)' | @result=='OutputQueueLength (Pkts)'"/>
+              <customization color="#ef0000" filter="@result=='ifInErrors (Pkts)'"/>
+              <customization color="#75baff" filter="@result=='ifOutTotalPackets (Pkts/s)'"/>
+              <customization color="#ff9d00" filter="@result=='ifInTotalPackets (Pkts/s)'"/>
+              <customization color="#0156d5" filter="@result=='ifOutErrors (Pkts)'"/>
+              <customization color="#7c1eff" filter="@result=='OutputQueueLength (Pkts)'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Network Packet Ratio" order="2" singleNodeId="37565da0">
+              <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Ratio&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="pie"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                <result name="Status" default="false" graphable="false"/>
+              </formula>
+              <customization color="#75baff" filter="@node=='Packets Sent'"/>
+              <customization color="#ff9d00" filter="@node=='Packets Received'"/>
+              <node name="Packets Received" singleNodeId="b8b5cc00">
+                <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifErrors' | name=='OutputQueueLength'"/>
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifInTotalPackets" from="node"/>
+                  <result name=" " default="true" graphable="false"/>
+                </formula>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                  <result name="Status" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="true"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+                  <result name="ifInTotalPackets" default="false" graphable="false"/>
+                </formula>
+                <node name="Status" singleNodeId="3f30ba2f">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  <formula formulaId="math.spatial.Max">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                    <result name="Status" default="false" graphable="false"/>
+                  </formula>
+                  <node name="ifErrors" singleNodeId="269aa89f">
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <formula formulaId="threshold.ThresholdWindow">
+                      <setting name="Reverse result" value="no"/>
+                      <setting name="Default threshold1" value="1"/>
+                      <setting name="Default threshold2" value="2"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifErrors'"/>
+                      <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                      <result name="Status" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                  <node name="OutputQueueLength" singleNodeId="a69c104">
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <formula formulaId="threshold.ThresholdWindow">
+                      <setting name="Reverse result" value="no"/>
+                      <setting name="Default threshold1" value="1"/>
+                      <setting name="Default threshold2" value="2"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+                      <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                      <result name="Status" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+              </node>
+              <node name="Packets Sent" singleNodeId="b4b8525a">
+                <property xsi:type="NodeFilter" filterExpression="name=='ifOutTotalPackets'"/>
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifOutTotalPackets" from="node"/>
+                  <result name=" " default="true" graphable="false"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+                  <result name="ifOutTotalPackets" default="false" graphable="false"/>
+                </formula>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node name="SHARED_NETWORK_PART" singleNodeId="b0f0cde1" uid="SHARED_NETWORK_PART">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Interface'"/>
+          <property xsi:type="NodeExpansion" expandOn="part"/>
+          <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="device part[Interface Name] partdesc[Interface Model] ifacemac ifaceip"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+            <result name="Status" default="false" graphable="false"/>
+          </formula>
+          <report-layout order=".-4710d22f=2,.-37565da0=3,.-bcf2139b=1"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Network Throughput (/s)" order="0" singleNodeId="bcf2139b">
+            <property xsi:type="NodeFilter" filterExpression="name=='ifInOctets' | name=='ifOutOctets'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Throughput (/s)&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="stk" legendProperties="name" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::B::Bit::Storage"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+            <customization color="#75baff" filter="name=='ifOutOctets'"/>
+            <customization color="#ff9d00" filter="name=='ifInOctets'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+          <node name="Network Packet Rate" order="1" singleNodeId="4710d22f">
+            <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifOutTotalPackets' | name=='OutputQueueLength' | name=='ifOutErrors' | name=='ifInErrors'"/>
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Rate&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+              <result name="ifInTotalPackets (Pkts/s)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+              <result name="ifOutTotalPackets (Pkts/s)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInErrors'"/>
+              <result name="ifInErrors (Pkts)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutErrors'"/>
+              <result name="ifOutErrors (Pkts)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+              <result name="OutputQueueLength (Pkts)" default="false" graphable="true"/>
+            </formula>
+            <axis minValue="0.0" scaleFactor="1.0" filterExpression="@result=='ifInErrors (Pkts)' | @result=='ifOutErrors (Pkts)' | @result=='OutputQueueLength (Pkts)'"/>
+            <customization color="#ef0000" filter="@result=='ifInErrors (Pkts)'"/>
+            <customization color="#75baff" filter="@result=='ifOutTotalPackets (Pkts/s)'"/>
+            <customization color="#ff9d00" filter="@result=='ifInTotalPackets (Pkts/s)'"/>
+            <customization color="#0156d5" filter="@result=='ifOutErrors (Pkts)'"/>
+            <customization color="#7c1eff" filter="@result=='OutputQueueLength (Pkts)'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+          <node name="Network Packet Ratio" order="2" singleNodeId="37565da0">
+            <property xsi:type="NodeExpansion" expandOn="part&lt;type=split;properties=part;level-up=2;name-override=Network Packet Ratio&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="pie"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+            <customization color="#75baff" filter="@node=='Packets Sent'"/>
+            <customization color="#ff9d00" filter="@node=='Packets Received'"/>
+            <node name="Packets Received" singleNodeId="b8b5cc00">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifInTotalPackets' | name=='ifErrors' | name=='OutputQueueLength'"/>
+              <property xsi:type="ReportPreferences" defaultMode="lst"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifInTotalPackets" from="node"/>
+                <result name=" " default="true" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                <result name="Status" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="true"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifInTotalPackets'"/>
+                <result name="ifInTotalPackets" default="false" graphable="false"/>
+              </formula>
+              <node name="Status" singleNodeId="3f30ba2f">
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                <formula formulaId="math.spatial.Max">
+                  <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+                  <result name="Status" default="false" graphable="false"/>
+                </formula>
+                <node name="ifErrors" singleNodeId="269aa89f">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <formula formulaId="threshold.ThresholdWindow">
+                    <setting name="Reverse result" value="no"/>
+                    <setting name="Default threshold1" value="1"/>
+                    <setting name="Default threshold2" value="2"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifErrors'"/>
+                    <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                    <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                    <result name="Status" default="false" graphable="false"/>
+                  </formula>
+                </node>
+                <node name="OutputQueueLength" singleNodeId="a69c104">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <formula formulaId="threshold.ThresholdWindow">
+                    <setting name="Reverse result" value="no"/>
+                    <setting name="Default threshold1" value="1"/>
+                    <setting name="Default threshold2" value="2"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OutputQueueLength'"/>
+                    <parameter name="threshold1" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                    <parameter name="threshold2" xsi:type="ConstantFormulaParameterDefinition" value="2.0"/>
+                    <result name="Status" default="false" graphable="false"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+            <node name="Packets Sent" singleNodeId="b4b8525a">
+              <property xsi:type="NodeFilter" filterExpression="name=='ifOutTotalPackets'"/>
+              <property xsi:type="ReportPreferences" defaultMode="lst"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ifOutTotalPackets" from="node"/>
+                <result name=" " default="true" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ifOutTotalPackets'"/>
+                <result name="ifOutTotalPackets" default="false" graphable="false"/>
+              </formula>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

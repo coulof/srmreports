@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Isilon Quota Reports" order="1" singleNodeId="28453c7d" type="Copy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="source=='Isilon-Collector' &amp; (parttype=='NfsExport' | parttype=='Quota')"/>
+  <property xsi:type="ReportPreferences" preferredPeriod="3600" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;#NFS Export&lt;/b&gt;: Number of NFS Exports.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;#Hard Quotas&lt;/b&gt;: Number of Hard Quotas.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Cluster" sortMode="asc" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="# NFS export's" formatter="BasicFormatter" resultName="NfsExport count" period="3600" forcePeriod="never" timeThreshold="1" roundingAccuracy="0" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="# Hard Quota's" formatter="BasicFormatter" resultName="Quota count" period="3600" forcePeriod="never" timeThreshold="1" roundingAccuracy="0" summaryLabel=""/>
+  <node name="Summary" singleNodeId="3b8d8b2b">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" preferredPeriod="3600" paging="15"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Path" sortMode="asc#1" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Hard Threshold" resultName="Hard Quota Threshold" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Hard Usage (%)" sortMode="desc" formatter="Number&lt;rounding=2;color&gt; PerformanceChart Status" resultName="Hard Quota Utilization" period="3600" forcePeriod="never" timeThreshold="2" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="60.0"/>
+      <threshold severity="CRITICAL" value="80.0"/>
+    </property>
+    <property xsi:type="PropertyNodeColumn" name="Clients" property="clients"/>
+    <formula formulaId="util.Nop4">
+      <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="NfsExport count"/>
+      <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Quota count"/>
+      <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+      <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+      <result name="NfsExport count" default="false" graphable="false"/>
+      <result name="Quota count" default="false" graphable="false"/>
+      <result name="Third Result" default="false" graphable="false"/>
+      <result name="Fourth Result" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="LAST"/>
+      <setting name="partial" value="false"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Hard Quota Threshold"/>
+      <result name="Total Hard Quota Threshold" default="false" graphable="false"/>
+    </formula>
+    <node name="part" singleNodeId="cea7d105">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" displayedProperties="clients" maxValue="100.0"/>
+      <property xsi:type="PropertyNodeColumn" name="Clients" property="clients"/>
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="60.0"/>
+      <threshold severity="CRITICAL" value="80.0"/>
+      <formula formulaId="util.DistinctValueCountFormula">
+        <setting name="Filter" value="parttype=='Quota'"/>
+        <setting name="ExpandOn" value="serialnb,part"/>
+        <setting name="Level-Up" value="1"/>
+        <result name="Quota count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop4">
+        <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='HardQuotaCurrentUtilization'"/>
+        <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='HardThresholdCapacity'"/>
+        <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+        <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+        <result name="Hard Quota Utilization" default="false" graphable="true"/>
+        <result name="Hard Quota Threshold" default="false" graphable="false"/>
+        <result name="Third Result" default="false" graphable="false"/>
+        <result name="Fourth Result" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.DistinctValueCountFormula">
+        <setting name="Filter" value="parttype=='NfsExport'"/>
+        <setting name="ExpandOn" value="serialnb,part"/>
+        <setting name="Level-Up" value="1"/>
+        <result name="NfsExport count" default="false" graphable="false"/>
+      </formula>
+      <customization color="#072591" filter="@result=='Hard Quota Utilization'"/>
+    </node>
+  </node>
+</node>

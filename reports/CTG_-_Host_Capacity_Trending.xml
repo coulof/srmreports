@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="CTG - Host Capacity Trending (SRM 4.x)" singleNodeId="97b3b031" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b style=&quot;cursor:help;&quot; onclick=&quot;$(this).nextAll('ul').toggle()&quot;&gt;Click to display report description&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; style=&quot;display:none&quot;&gt; &#10;  &lt;br /&gt; &#10;  &lt;b&gt;Please note that these reports utilize the VIPR SRM Chargeback data points. Ensure you have the Chargeback SolutionPack installed and running as well as have your hosts discovered (actively or passively). Be sure you have met all of the prerequisites before running this report. &lt;br /&gt; &lt;br /&gt; &lt;li&gt;Presented Capacity maps to the Primary Presented Capacity chargeback metrics and represents the LUN size(s) presented to hosts.&lt;/li&gt; &lt;li&gt;Used Capacity maps to the Primary Used Capacity chargeback metrics and represents the LUN(s) used capacity value provided by the array. If a LUN is thick provisioned used capacity will show the full presented capacity.&lt;/li&gt; &lt;li&gt;Delta columns represent the delta between the previous (x) day metric (last 1 day metric of defined period) of the Primary Presented/Used Chargeable Capacity and the current Primary Presented/Used Chargeable Capacity metric.&lt;/li&gt;&lt;/b&gt; &#10; &lt;/ul&gt; &#10; &lt;b&gt; &lt;/b&gt; &#10;&lt;/div&gt;"/>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="Host Trending - Use Cases" order="0" singleNodeId="fe3768de">
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="Primary Used Capacity" order="0" singleNodeId="c154466c">
+      <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; source=='Chargeback-block-processor' &amp; (devtype=='Host' | devtype=='PassiveHost' &amp; !(actdisc=='1') | devtype=='Hypervisor' | devtype=='VirtualMachine') &amp; (name='Used%' | name='Presented%')"/>
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+      <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+      <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="5834b906" linkID=".-..-..-..-b5762c9b-3ba550e9-b6b71430"/>
+    </node>
+    <node name="Primary Presented Capacity" order="1" singleNodeId="dfd3112a">
+      <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; source=='Chargeback-block-processor' &amp; (devtype=='Host' | devtype=='PassiveHost' &amp; !(actdisc=='1') | devtype=='Hypervisor' | devtype=='VirtualMachine') &amp; (name='Used%' | name='Presented%')"/>
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+      <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+      <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="fced963f" linkID=".-..-..-..-b5762c9b-3ba550e9-b6b71430"/>
+    </node>
+    <node name="Both (Primary Presented &amp; Primary Used)" order="2" singleNodeId="487a5349">
+      <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; source=='Chargeback-block-processor' &amp; (devtype=='Host' | devtype=='PassiveHost' &amp; !(actdisc=='1') | devtype=='Hypervisor' | devtype=='VirtualMachine') &amp; (name='Used%' | name='Presented%')"/>
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+      <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+      <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="f90c093d" linkID=".-..-..-..-b5762c9b-3ba550e9-b6b71430"/>
+    </node>
+  </node>
+  <node name="Host Trending - Top 10 Dashboards" order="1" singleNodeId="d318c536">
+    <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; source=='Chargeback-block-processor' &amp; (devtype=='Host' | devtype=='Hypervisor' | devtype=='PassiveHost' &amp; !(actdisc=='1') | devtype=='VirtualMachine') &amp; (name='Used%' | name='Presented%')"/>
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="All Host Types" order="0" singleNodeId="4c4fd9c0">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Host' | devtype=='PassiveHost' &amp; !(actdisc=='1') | devtype=='Hypervisor' | devtype=='VirtualMachine'"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="8214827f" linkID=".-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="0"/>
+      <link singleNodeId="13e697dc" linkID=".-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="1"/>
+    </node>
+    <node name="Physical Hosts &amp;  Passive Hosts" order="1" singleNodeId="45b9e635">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Host' | devtype=='PassiveHost' &amp; !(actdisc=='1')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="806e9ec8" linkID=".-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="0"/>
+      <link singleNodeId="98407ba7" linkID=".-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="1"/>
+    </node>
+    <node name="Virtual Machines" order="2" singleNodeId="54b8cdeb">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='VirtualMachine'"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="c1e7e18a" linkID=".-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="0"/>
+      <link singleNodeId="84a6607a" linkID=".-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="1"/>
+    </node>
+    <node name="Hypervisors" order="3" singleNodeId="80dfcc28">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Hypervisor'"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="54baf0b4" linkID=".-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="0"/>
+      <link singleNodeId="11c038f0" linkID=".-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="1"/>
+    </node>
+  </node>
+  <node name="&lt;&lt;SOURCE&gt;&gt;" order="2" singleNodeId="b5762c9b">
+    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+    <node name="&lt;&lt;ReportSource&gt;&gt;" order="0" singleNodeId="3ba550e9">
+      <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+      <node name="Device" order="0" singleNodeId="b6b71430">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Used" from="node"/>
+          <result name="Used-Delta-30" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="90"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Used" from="node"/>
+          <result name="Used-Delta-90" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Used" from="node"/>
+          <result name="Used-Delta" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Presented" from="node"/>
+          <result name="Presented-Delta-30" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="90"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Presented" from="node"/>
+          <result name="Presented-Delta-90" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Presented" from="node"/>
+          <result name="Presented-Delta" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="180"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Used" from="node"/>
+          <result name="Used-Delta-180" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="180"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="MR-Presented" from="node"/>
+          <result name="Presented-Delta-180" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+          <result name="MR-Presented" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+          <result name="MR-Used" default="false" graphable="false"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Capacity Trend Graphs" order="0" singleNodeId="47027f34">
+          <property xsi:type="NodeFilter" filterExpression="(name=='PresentedChargeableCapacity' | name=='UsedChargeableCapacity') &amp; !(part) &amp; !(svclevel)"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Last 6 Months (Presented &amp; Used)" order="0" singleNodeId="5bf90781">
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="Presented Chargeable (GB)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="Used Chargeable (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" marker="diamond" filter="@result=='Presented Chargeable (GB)'"/>
+            <customization color="#050400" filter="@result=='Used Chargeable (GB)'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+        </node>
+        <node name="Capacity Trend Graphs by Service Level" order="1" singleNodeId="da14954f">
+          <property xsi:type="NodeFilter" filterExpression="(name=='PresentedChargeableCapacity' | name=='UsedChargeableCapacity') &amp; datagrp=='HOST_SL_AGGREGATE'"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Last 6 Months" order="0" singleNodeId="88980eee">
+            <property xsi:type="NodeExpansion" expandOn="svclevel"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity'"/>
+              <result name="Presented Chargeable (GB)" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="false"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity'"/>
+              <result name="Used Chargeable (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" marker="diamond" filter="@result=='Presented Chargeable (GB)'"/>
+            <customization color="#050400" filter="@result=='Used Chargeable (GB)'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+          </node>
+        </node>
+        <node name="Details" order="2" singleNodeId="a626039a">
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="200"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=link&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="Sum of primary presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable" description="Sum of primary used Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Present Chargeable Cost ($)" description="The Chargeable cost for the host based on primary presented chargeable capacity. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;prefix=$;rounding=2&gt; Status" filterExpression="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Chargeable Cost ($)" description="The Chargeable cost for the host based on primary used chargeable capacity. Its deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;prefix=$;rounding=2&gt; Status" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=00&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <wiring>
+            <jump-to-report>
+              <src-filter xsi:type="CellClickFilter" columnName="Host"/>
+              <report-path path="{EXPLORE-BRANCH-HOSTS}/(device)"/>
+            </jump-to-report>
+          </wiring>
+          <node name="&lt;hosts&gt;" singleNodeId="22caf365">
+            <property xsi:type="NodeFilter" filterExpression="devtype=='Host' | devtype=='Hypervisor' | devtype=='PassiveHost' &amp; !(actdisc=='1')"/>
+            <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+            <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;" paging="200"/>
+            <property xsi:type="NodePropertyNodeColumn" name="Host Device" description="WWN or name of the Disk." formatter="Text&lt;type=Default Style&gt;" nodeProperty="name"/>
+            <property xsi:type="PropertyNodeColumn" name="Array Name" description="Name of the Array. Its set to N/A when the array is not discovered." formatter="Text&lt;type=link&gt;" filterExpression="name=='UsedChargeableCapacity'" property="array"/>
+            <property xsi:type="PropertyNodeColumn" name="LUN ID" description="Identifier for each LUN.Its set to N/A when the array is not discovered." formatter="Text&lt;type=Default Style&gt;" filterExpression="name=='UsedChargeableCapacity'" property="lun"/>
+            <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='UsedChargeableCapacity'" property="svclevel"/>
+            <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="Presented capacity for the primary LUN or Virtual Volume allocated to the host. If the array or virtual storage is not discovered, it is the host disk used capacity." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Primary Used" display="no" description="Used Capacity of the primary LUN. If the array is not discovered, its the host disk used capacity." filterExpression="name=='UsedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="PropertyNodeColumn" name="Connected Hosts" description="List of all hosts connected to that LUN or virtual volume." formatter="Text&lt;type=Default Style&gt;" filterExpression="name=='UsedChargeableCapacity'" property="hosts"/>
+            <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Primary presented Chargeable Capacity for the host deduplicated by shared capacity. It is Primary presented capacity split equally between all the hosts sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable" description="The Chargeable Capacity for the disk deduplicated by shared capacity. It is is Primary used capacity split equally between all the hosts sharing the LUN." filterExpression="name=='UsedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="Status" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+              <threshold severity="CRITICAL" value="-Infinity"/>
+              <threshold severity="MAJOR" value="-1.0"/>
+              <threshold severity="OK" value="0.0"/>
+            </property>
+            <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="Status" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+              <threshold severity="CRITICAL" value="-Infinity"/>
+              <threshold severity="MAJOR" value="-1.0"/>
+              <threshold severity="OK" value="0.0"/>
+            </property>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Platinum'"/>
+              <result name="PlatinumCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Gold'"/>
+              <result name="GoldCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Silver'"/>
+              <result name="SilverCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Bronze'"/>
+              <result name="BronzeCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='FAST VP'"/>
+              <result name="FastVPCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='VirtualStorage'"/>
+              <result name="VirtualStorageCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Other'"/>
+              <result name="OtherCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedNonChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalChargeable" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedNonChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalNonChargeableCost" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalChargeableCost" default="false" graphable="false"/>
+            </formula>
+            <wiring>
+              <jump-to-report>
+                <src-filter xsi:type="CellClickFilter" columnName="Array Name"/>
+                <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/{}"/>
+              </jump-to-report>
+            </wiring>
+            <node name="Disks" singleNodeId="dad7208c">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk' &amp; ((devtype=='Host' | devtype=='Hypervisor') &amp; isremote=='true' | devtype=='PassiveHost' &amp; !(actdisc=='1'))"/>
+              <property xsi:type="NodeExpansion" expandOn="partsn" filterMode="both"/>
+              <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+                <result name="isbemon" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+                <result name="isvbemon" default="false" graphable="false"/>
+              </formula>
+              <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:#W4N-WWN-LINKER=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2,*:{W4N-VPLEX-WWN-LINKER}-46104e3c-44ceeb4e-ea68ff05=2"/>
+              <link singleNodeId="63b114b6" linkID="*:#W4N-WWN-LINKER" order="0"/>
+              <link singleNodeId="df61a719" linkID="*:#W4N-WWN-HOST-LINKER" order="1"/>
+              <link singleNodeId="a858f178" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+              <link singleNodeId="1ed25799" linkID="*:#W4N-VPLEX-WWN-LINKER" order="3"/>
+            </node>
+          </node>
+          <node name="&lt;vms&gt;" singleNodeId="65ecc6f7">
+            <property xsi:type="NodeFilter" filterExpression="devtype=='VirtualMachine'"/>
+            <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+            <property xsi:type="ReportPreferences" displayMode="1" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Platinum'"/>
+              <result name="PlatinumCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Gold'"/>
+              <result name="GoldCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Silver'"/>
+              <result name="SilverCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Bronze'"/>
+              <result name="BronzeCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='FAST VP'"/>
+              <result name="FastVPCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='VirtualStorage'"/>
+              <result name="VirtualStorageCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; svclevel=='Other'"/>
+              <result name="OtherCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedNonChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalCapacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalChargeable" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedNonChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalNonChargeableCost" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+              <result name="TotalChargeableCost" default="false" graphable="false"/>
+            </formula>
+            <node name="Physical LUN/Disks (RDM)" order="0" singleNodeId="2fea4118">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Virtual Disk' &amp; partsn &amp; rdmname"/>
+              <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;" paging="200"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Disk" description="Name of the Disk." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="WWN" description="The world wide number of the LUN." property="partsn"/>
+              <property xsi:type="PropertyNodeColumn" name="Array Name" description="Name of the Array. Its set to N/A when the array is not discovered." formatter="Text&lt;type=link&gt;" property="array"/>
+              <property xsi:type="PropertyNodeColumn" name="LUN ID" description="Identifier for each LUN. Its set to N/A when the array is not discovered." property="lun"/>
+              <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='UsedChargeableCapacity'" property="svclevel"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="Presented Capacity of the primary LUN or the virtual volume allocated to the VM. If the array or virtual storage is not discovered, it is equal to the RDM used capacity." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Used" display="no" description="Used Capacity of the primary LUN or the virtual volume allocated to the VM. If the array or virtual storage is not discovered, it is equal to the RDM used capacity." filterExpression="name=='UsedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="PropertyNodeColumn" name="Connected VMs" description="List of all Virtual machines connected to that LUN or virtual volume." property="hosts"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Primary Presented Capacity of the disk deduplicated by shared capacity. It is Primary Presented capacity split equally between all the Virtual machines sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable" description="The Primary used Capacity of the disk deduplicated by shared capacity. It is Primary used capacity split equally between all the Virtual machines sharing the LUN." filterExpression="name=='UsedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="Status" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+                <threshold severity="CRITICAL" value="-Infinity"/>
+                <threshold severity="MAJOR" value="-1.0"/>
+                <threshold severity="OK" value="0.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="Status" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+                <threshold severity="CRITICAL" value="-Infinity"/>
+                <threshold severity="MAJOR" value="-1.0"/>
+                <threshold severity="OK" value="0.0"/>
+              </property>
+              <wiring>
+                <jump-to-report>
+                  <src-filter xsi:type="CellClickFilter" columnName="Array Name"/>
+                  <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/{}"/>
+                </jump-to-report>
+              </wiring>
+              <node name="Physical LUN/Disks" singleNodeId="dad7208c">
+                <property xsi:type="NodeExpansion" expandOn="part" filterMode="both"/>
+                <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+                  <result name="isbemon" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+                  <result name="isvbemon" default="false" graphable="false"/>
+                </formula>
+                <report-layout hspan="*:{W4N-VPLEX-WWN-LINKER}-46104e3c=2,*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+                <link singleNodeId="63b114b6" linkID="*:#W4N-WWN-LINKER" order="0"/>
+                <node name="VM-LINKER" order="1" singleNodeId="a3d46e7d">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; parttype=='Virtual Disk' &amp; devtype=='VirtualMachine' &amp; rdmname"/>
+                  <property xsi:type="NodeExpansion" expandOn="partsn&lt;type=split;properties=partsn;level-up=99;name-override=Related Hosts&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="device"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideInReport"/>
+                  <property xsi:type="NodePropertyNodeColumn" name="device" description="Name of the device." nodeProperty="name"/>
+                  <formula formulaId="util.ChildCount">
+                    <result name="# of Connected devices" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DeviceName"/>
+                    <result name="DeviceName" default="false" graphable="false"/>
+                  </formula>
+                  <node name="device" singleNodeId="f9ac6380">
+                    <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL"/>
+                    <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;properties=device;level-up=99&gt;" filterMode="select"/>
+                    <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <formula formulaId="util.Nop">
+                      <parameter name="metric" properties="device" xsi:type="EmptyFormulaParameterDefinition"/>
+                      <result name="DeviceName" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+                <link singleNodeId="e5991be6" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+                <link singleNodeId="4c60ceab" linkID="*:#W4N-VPLEX-WWN-LINKER" order="3"/>
+              </node>
+            </node>
+            <node name="Files on Datastore" order="1" singleNodeId="c959fac8">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='File'"/>
+              <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;" paging="200"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+              <property xsi:type="NodePropertyNodeColumn" name="File Name" description="Name of the vmdk file." nodeProperty="name"/>
+              <property xsi:type="PropertyNodeColumn" name="Datastore" description="Name of the datastore." property="linkedto"/>
+              <property xsi:type="PropertyNodeColumn" name="VDisk Name" description="Name of the virtual disk." property="rdmname"/>
+              <property xsi:type="ValueNodeColumn" name="Is RDM Definition?" description="Is raw device mapping enabled; values are Yes or No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="HasRDMName" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='UsedChargeableCapacity'" property="svclevel"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="It is the capacity of the VMDK file." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Used" display="no" description="It is the used capacity of the VMDK file." filterExpression="name=='UsedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="PropertyNodeColumn" name="Connected VMs" description="List of all virtual machines connected to that LUN." property="hosts"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Chargeable Capacity for the VMDK file deduplicated by shared capacity. It is Primary presented capacity split equally between all the virtual machines sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable" description="The Chargeable Capacity for the VMDK file deduplicated by shared capacity. It is Primary used capacity split equally between all the virtual machines sharing the LUN." filterExpression="name=='UsedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="Status" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+                <threshold severity="CRITICAL" value="-Infinity"/>
+                <threshold severity="MAJOR" value="-1.0"/>
+                <threshold severity="OK" value="0.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="Status" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+                <threshold severity="CRITICAL" value="-Infinity"/>
+                <threshold severity="MAJOR" value="-1.0"/>
+                <threshold severity="OK" value="0.0"/>
+              </property>
+              <node name="VMDK File Link To Datastore" order="0" singleNodeId="1374de46">
+                <property xsi:type="NodeFilter" filterExpression="!(dtype=='VVOL')"/>
+                <property xsi:type="NodeExpansion" expandOn="part" filterMode="select"/>
+                <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="linkedto[Datastore]"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+                  <result name="isbemon" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+                  <result name="isvbemon" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="availability.ActivityFormula">
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="rdmname"/>
+                  <result name="HasRDMName" default="false" graphable="false"/>
+                </formula>
+                <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,.-e343c325=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+                <node name="File to Datastore Linker" order="0" singleNodeId="e343c325">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; devtype=='Datastore'"/>
+                  <property xsi:type="NodeExpansion" expandOn="linkedto&lt;type=split;properties=device;level-up=9999;name-override=Select Backing Storage:&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" displayMode="2" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                  <property xsi:type="NodePropertyNodeColumn" name="Backing Storage WWN" description="The World Wide Name of the backing storage device." nodeProperty="name"/>
+                  <property xsi:type="ValueNodeColumn" name="Is Monitored" description="Indicates if the backing storage Array LUN/Virtual Volume is monitored or not." formatter="Status" resultName="IsMonitored" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel="">
+                    <threshold severity="CRITICAL" value="-Infinity"/>
+                    <threshold severity="MAJOR" value="-1.0"/>
+                    <threshold severity="OK" value="0.0"/>
+                  </property>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="PlatinumExist"/>
+                    <result name="PlatinumExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="GoldExist"/>
+                    <result name="GoldExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SilverExist"/>
+                    <result name="SilverExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="BronzeExist"/>
+                    <result name="BronzeExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="FastVPExist"/>
+                    <result name="FastVPExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="OtherExist"/>
+                    <result name="OtherExist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Custom1Exist"/>
+                    <result name="Custom1Exist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Custom2Exist"/>
+                    <result name="Custom2Exist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Custom3Exist"/>
+                    <result name="Custom3Exist" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUNCapacity"/>
+                    <result name="LUNCapacity" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ConstantFormulaParameterDefinition" value="0.0"/>
+                    <result name="RDMCapacity" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ServiceLevel"/>
+                    <result name="ServiceLevel" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="HasVVolCapacity"/>
+                    <result name="HasVVolCapacity" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VStorageExist"/>
+                    <result name="VStorageExist" default="false" graphable="false"/>
+                  </formula>
+                  <report-layout hspan=".=2,.-903f7ef3=2"/>
+                  <node name="Link to backing component(s)" singleNodeId="903f7ef3">
+                    <property xsi:type="NodeExpansion" expandOn="partsn&lt;type=split;value-separator=|;properties=partsn;level-up=9999&gt;"/>
+                    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <formula formulaId="availability.ActivityFormula">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+                      <result name="CapacityIsMonitored" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="availability.ActivityFormula">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+                      <result name="VVolCapacityIsMonitored" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.spatial.Max">
+                      <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+                        <parameter xsi:type="ResultFormulaParameterDefinition" result="CapacityIsMonitored" from="node"/>
+                        <parameter xsi:type="ResultFormulaParameterDefinition" result="VVolCapacityIsMonitored" from="node"/>
+                      </parameter>
+                      <result name="IsMonitored" default="false" graphable="false"/>
+                    </formula>
+                    <link singleNodeId="df043b28" linkID="*:#W4N-WWN-LINKER" order="0"/>
+                    <link singleNodeId="60d46487" linkID="*:#W4N-VPLEX-WWN-LINKER" order="1"/>
+                    <link singleNodeId="fb653195" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+                  </node>
+                </node>
+              </node>
+              <node name="VMDK File Link Direct To LUN" order="1" singleNodeId="5af01183">
+                <property xsi:type="NodeFilter" filterExpression="dtype=='VVOL'"/>
+                <property xsi:type="NodeExpansion" expandOn="part" filterMode="select"/>
+                <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="linkedto[Datastore]"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+                  <result name="isbemon" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.Nop">
+                  <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+                  <result name="isvbemon" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="availability.ActivityFormula">
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="rdmname"/>
+                  <result name="HasRDMName" default="false" graphable="false"/>
+                </formula>
+                <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+                <link singleNodeId="2e6e6ee9" linkID="*:#W4N-SVC-WWN-LINKER"/>
+                <link singleNodeId="63888b68" linkID="*:#W4N-VPLEX-WWN-LINKER"/>
+                <link singleNodeId="5611e3fd" linkID="*:#W4N-WWN-LINKER"/>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="&lt;&lt;DashboardReportSource&gt;&gt;" order="1" singleNodeId="24aa1e07">
+      <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+      <node name="Presented Capacity Growth" order="0" singleNodeId="3c966a3f">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=link&gt;" nodeProperty="expandedNames[0]"/>
+        <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+        <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous 30 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous 90 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous 180 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <wiring>
+          <jump-to-report>
+            <src-filter xsi:type="CellClickFilter" columnName="Host"/>
+            <report-path path="{EXPLORE-BRANCH-HOSTS}/(device)"/>
+          </jump-to-report>
+        </wiring>
+        <node name="Presented Capacity (30 Days)" order="0" singleNodeId="8c106564">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" display="no" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="7d53a1e2" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+        <node name="Presented Capacity (90 Days)" order="1" singleNodeId="cec26517">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" display="no" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="7d53a1e2" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+        <node name="Presented Capacity (180 Days)" order="2" singleNodeId="f69a4177">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" display="no" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="7d53a1e2" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+      </node>
+      <node name="Used Capacity Growth" singleNodeId="8c3d5eb9">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Used Capacity (30 days)" order="0" singleNodeId="95057ce8">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" display="no" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity- Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="5834b906" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+        <node name="Used Capacity (90 Days)" order="1" singleNodeId="ac3ad84f">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" display="no" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity- Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="5834b906" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+        <node name="Used Capacity (180 days)" order="2" singleNodeId="44f60653">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="-10"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=Default Style&gt;" nodeProperty="expandedNames[0]"/>
+          <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+          <property xsi:type="ValueNodeColumn" name="Presented - Current" display="no" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Presented" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity- Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="MR-Used" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Primary Presented/Used Chargeable Capacity metric." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <link singleNodeId="5834b906" linkID=".-..-..-..-..-3ba550e9-b6b71430"/>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

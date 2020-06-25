@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="CTG - Management Performance Dashboard" order="2" singleNodeId="af9846eb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="dmx"/>
+  <node name="VMAX  - Performance Dashboard" order="0" singleNodeId="25b3b31">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='VMAX-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="FA - % Busy" order="0" singleNodeId="3817850d">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Array' &amp; name=='CurrentUtilization' &amp; parttype=='Controller' &amp; partgrp=='Front-End'"/>
+      <property xsi:type="ReportPreferences" defaultMode="hm" legendProperties="part unit"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+      <threshold name="0-19%" color="#005eff" value="0.0"/>
+      <threshold name="20-39%" color="#00fffb" value="20.0"/>
+      <threshold name="40-59%" color="#00f75f" value="40.0"/>
+      <threshold name="60-79%" color="#fffb00" value="60.0"/>
+      <threshold name="80-89%" color="#ffc800" value="80.0"/>
+      <threshold name="90-100%" color="#ff0000" value="90.0"/>
+      <heatmap-report grid="true">
+        <info properties="device director"/>
+      </heatmap-report>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="expansion" singleNodeId="eabe83d1">
+        <property xsi:type="NodeExpansion" expandOn="(part),(device)"/>
+        <property xsi:type="ReportPreferences" defaultMode="mix"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilization %"/>
+          <result name="Current Utilization %" default="false" graphable="true"/>
+        </formula>
+        <node name="Current Utilization %" order="0" singleNodeId="709ec07">
+          <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+            <result name="Current Utilization %" default="false" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+    <node name="Throughput (IOPS)" order="1" singleNodeId="62d49f28">
+      <property xsi:type="NodeFilter" filterExpression="datagrp=='VMAX-Array' &amp; (name=='ReadRequests' | name=='WriteRequests')"/>
+      <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+      <customization filter="@result=='Throughput (IOPS)'"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Device Expansion" singleNodeId="b98111ea">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="lst"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests' &amp; !(part)"/>
+          <result name="Read Throughput" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests' &amp; !(part)"/>
+          <result name="Write Throughput" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Addition">
+          <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="Read Throughput" from="node"/>
+          <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="Write Throughput" from="node"/>
+          <result name="Throughput (IOPS)" default="true" graphable="true"/>
+        </formula>
+      </node>
+    </node>
+  </node>
+  <node name="VNX  - Performance Dashboard" order="1" singleNodeId="881582a4">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source='%VNXBlock%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="SP - Utilization %" order="0" singleNodeId="9f522a86">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='Array' &amp; name=='CurrentUtilization' &amp; parttype=='Controller'"/>
+      <property xsi:type="ReportPreferences" defaultMode="hm" legendProperties="part unit"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeaf" propagateTimeSelection="true"/>
+      <threshold name="0-19%" color="#005eff" value="0.0"/>
+      <threshold name="20-39%" color="#00fffb" value="20.0"/>
+      <threshold name="40-59%" color="#00f75f" value="40.0"/>
+      <threshold name="60-79%" color="#fffb00" value="60.0"/>
+      <threshold name="80-89%" color="#ffc800" value="80.0"/>
+      <threshold name="90-100%" color="#ff0000" value="90.0"/>
+      <heatmap-report grid="true">
+        <info properties="device director"/>
+      </heatmap-report>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="expansion" singleNodeId="eabe83d1">
+        <property xsi:type="NodeExpansion" expandOn="(part),(device)"/>
+        <property xsi:type="ReportPreferences" defaultMode="mix"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilization %"/>
+          <result name="Current Utilization %" default="false" graphable="true"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Current Utilization %" order="0" singleNodeId="709ec07">
+          <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+            <result name="Current Utilization %" default="false" graphable="true"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+    </node>
+    <node name="SP - Total Throughput (IOPS)" order="1" singleNodeId="c14699e1">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Controller' &amp; name=='TotalThroughput' &amp; devtype=='Array'"/>
+      <property xsi:type="ReportPreferences" defaultMode="mix" legendProperties="part name unit" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="SP Total Throughput (IOPS)" order="0" singleNodeId="cbf49d94">
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="part name unit" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total Throughput (IOPS)"/>
+          <result name="Total Throughput (IOPS)" default="false" graphable="false"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Expansion" singleNodeId="a10f3f18">
+          <property xsi:type="NodeExpansion" expandOn="device,part"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='TotalThroughput'"/>
+            <result name="Total Throughput (IOPS)" default="true" graphable="true"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node name="XIO - Performance Dashboard" order="2" singleNodeId="72714327">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source='%XtremIO%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="Utilization %" order="0" singleNodeId="4c1dee78">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Xenvs' &amp; name=='CpuUsage'"/>
+      <property xsi:type="ReportPreferences" defaultMode="hm" legendProperties="part unit"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeaf" propagateTimeSelection="true"/>
+      <threshold name="0-19%" color="#005eff" value="0.0"/>
+      <threshold name="20-39%" color="#00fffb" value="20.0"/>
+      <threshold name="40-59%" color="#00f75f" value="40.0"/>
+      <threshold name="60-79%" color="#fffb00" value="60.0"/>
+      <threshold name="80-89%" color="#ffc800" value="80.0"/>
+      <threshold name="90-100%" color="#ff0000" value="90.0"/>
+      <heatmap-report grid="true">
+        <info properties="device director"/>
+      </heatmap-report>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="expansion" singleNodeId="e05a144">
+        <property xsi:type="NodeExpansion" expandOn="(part),(device)"/>
+        <property xsi:type="ReportPreferences" defaultMode="mix"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilzation %"/>
+          <result name="Current Utilzation %" default="false" graphable="false"/>
+        </formula>
+        <node name="name" singleNodeId="4aa62b4e">
+          <property xsi:type="NodeExpansion" expandOn="name"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CpuUsage'"/>
+            <result name="Current Utilzation %" default="false" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+    <node name="Total Throughput (IOPS)" order="1" singleNodeId="8880a08f">
+      <property xsi:type="NodeFilter" filterExpression="(!(parttype) | parttype=='Xenvs') &amp; name=='TotalThroughput'"/>
+      <property xsi:type="ReportPreferences" defaultMode="mix" legendProperties="part name unit" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Total Throughput (IOPS)" order="0" singleNodeId="ea52faf6">
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="part name unit" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total Throughput (IOPS)"/>
+          <result name="Total Throughput (IOPS)" default="true" graphable="true"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Expansion" singleNodeId="32a9b298">
+          <property xsi:type="NodeExpansion" expandOn="xmsip,cluster"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+            <result name="Total Throughput (IOPS)" default="true" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node name="Isilon  - Performance Dashboard" order="3" singleNodeId="8b48065e">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='Isilon-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="% Utilization" order="0" singleNodeId="594c064f">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Node' &amp; name=='CurrentUtilization'"/>
+      <property xsi:type="ReportPreferences" defaultMode="hm" legendProperties="part unit"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+      <threshold name="0-19%" color="#005eff" value="0.0"/>
+      <threshold name="20-39%" color="#00fffb" value="20.0"/>
+      <threshold name="40-59%" color="#00f75f" value="40.0"/>
+      <threshold name="60-79%" color="#fffb00" value="60.0"/>
+      <threshold name="80-89%" color="#ffc800" value="80.0"/>
+      <threshold name="90-100%" color="#ff0000" value="90.0"/>
+      <heatmap-report grid="true">
+        <info properties="device director"/>
+      </heatmap-report>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="expansion" singleNodeId="eabe83d1">
+        <property xsi:type="NodeExpansion" expandOn="(part),(device)"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilization %"/>
+          <result name="Current Utilization %" default="false" graphable="true"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Current Utilization %" order="0" singleNodeId="709ec07">
+          <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='CurrentUtilization'"/>
+            <result name="Current Utilization %" default="false" graphable="true"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+    </node>
+    <node name="Cluster - Total Bandwidth (Mb/s)" order="1" singleNodeId="ce5f1ff7">
+      <property xsi:type="NodeFilter" filterExpression="(name=='ReadThroughput' | name=='WriteThroughput') &amp; !(parttype) &amp; !(node)"/>
+      <property xsi:type="ReportPreferences" defaultMode="mix" legendProperties="part name unit" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Cluster - Total Bandwidth (Mb/s)" order="0" singleNodeId="a131f2cc">
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="part name unit" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic::Mb/s" graphInfoDisplayMode="pinpoint boxed"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Total Bandwidth"/>
+          <result name="Total Bandwidth" default="false" graphable="true"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Expansion" singleNodeId="4f9476f1">
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="lst"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+            <result name="Write Bandwidth" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+            <result name="Read Bandwidth" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Addition">
+            <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="Read Bandwidth" from="node"/>
+            <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="Write Bandwidth" from="node"/>
+            <result name="Total Bandwidth" default="true" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

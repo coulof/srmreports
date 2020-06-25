@@ -1,0 +1,695 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="SolutionPacks Metric Count w/ Metrics per Device - (SRM 4)" order="1" singleNodeId="fac144ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL"/>
+  <property xsi:type="ReportPreferences" duration="l1w" preferredPeriod="3600" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+  <property xsi:type="NodePropertyNodeColumn" name="SolutionPack" sortMode="asc#2" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Active Metric count" sortMode="desc" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Active Metric Count" period="inherit" forcePeriod="never" timeThreshold="3000" summaryLabel=""/>
+  <property xsi:type="ValueNodeColumn" name="Inactive Metric count" sortMode="desc#1" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Inactive Metric Count" period="inherit" forcePeriod="never" timeThreshold="3000" summaryLabel=""/>
+  <node name="&lt;&lt; Source &gt;&gt; (Hidden)" singleNodeId="501b8229">
+    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+    <node name="Device" singleNodeId="6fcbdf01">
+      <property xsi:type="NodePropertyNodeColumn" name="Device" nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Model" property="model"/>
+      <property xsi:type="ValueNodeColumn" name="Active Metric count" sortMode="desc" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Active Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" roundingAccuracy="0" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Inactive Metric count" sortMode="desc#1" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Inactive Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" roundingAccuracy="0" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Total Metric count" resultName="Total Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="PropertyNodeColumn" name="SRM DB" property="apgdb"/>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+        <result name="Active Metric Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+        <result name="Inactive Metric Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL"/>
+        <result name="Total Metric Count" default="true" graphable="false"/>
+      </formula>
+      <node name="device" singleNodeId="ba0f9989">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="lst"/>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+          <result name="Active Metric Count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+          <result name="Inactive Metric Count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL"/>
+          <result name="Total Metric Count" default="true" graphable="false"/>
+        </formula>
+      </node>
+    </node>
+    <node name="vCenter" singleNodeId="cfe0b00c">
+      <property xsi:type="NodePropertyNodeColumn" name="Device" nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Model" property="model"/>
+      <property xsi:type="ValueNodeColumn" name="Active Metric count" sortMode="desc" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Active Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" roundingAccuracy="0" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Inactive Metric count" sortMode="desc#1" formatter="Number&lt;rounding=0;color&gt; PerformanceChart Status" resultName="Inactive Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" roundingAccuracy="0" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Total Metric count" resultName="Total Metric Count" period="inherit" forcePeriod="never" useTimeRange="true" valuesAggregationFunc="last" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="PropertyNodeColumn" name="SRM DB" property="apgdb"/>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+        <result name="Active Metric Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+        <result name="Inactive Metric Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MetricCount">
+        <setting name="Filter" value="#APG:ALL"/>
+        <result name="Total Metric Count" default="true" graphable="false"/>
+      </formula>
+      <node name="device" singleNodeId="ba0f9989">
+        <property xsi:type="NodeExpansion" expandOn="vcenter"/>
+        <property xsi:type="ReportPreferences" defaultMode="lst"/>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+          <result name="Active Metric Count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+          <result name="Inactive Metric Count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.MetricCount">
+          <setting name="Filter" value="#APG:ALL"/>
+          <result name="Total Metric Count" default="true" graphable="false"/>
+        </formula>
+      </node>
+    </node>
+  </node>
+  <node name="Brocade FC Switch" singleNodeId="adfcdbb0">
+    <property xsi:type="NodeFilter" filterExpression="source=='Brocade-Collector' | datagrp='BROCADE_FCSWITCH%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="75f496b" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="ChargeBack Processor" singleNodeId="92b9dc32">
+    <property xsi:type="NodeFilter" filterExpression="source=='Chargeback-block-processor'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+  </node>
+  <node name="Cisco MDS/Nexus Switch" singleNodeId="ceaf4eae">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='FabricSwitch' &amp; (devdesc='%Cisco%' | datagrp=='CISCO-MDS-NEXUS-ENVIRONMENT' | datagrp=='CISCO-ACTIVE-ZONE-PASSIVE-HOST' | datagrp=='CISCO-ACTIVE-ZONE')"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="dce15010" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Cisco UCS" singleNodeId="f8f6823c">
+    <property xsi:type="NodeFilter" filterExpression="source=='Cisco-UCS-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="42657347" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Converged Infrastructure" singleNodeId="7ba3d75d">
+    <property xsi:type="NodeFilter" filterExpression="source=='Converged-Infrastructure-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="dd32c717" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Atmos" singleNodeId="77689bb1">
+    <property xsi:type="NodeFilter" filterExpression="source=='ATMOS-SMI' | source=='ATMOS-ACDP'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="1af695d7" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Centera" singleNodeId="885f4d8c">
+    <property xsi:type="NodeFilter" filterExpression="source=='Centera-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="93f0de57" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Data Domain" singleNodeId="e65e3575">
+    <property xsi:type="NodeFilter" filterExpression="devdesc='Data Domain%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="e4a8c6d0" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Data Protection Advisor" singleNodeId="c9fd63fe">
+    <property xsi:type="NodeFilter" filterExpression="source=='DPA-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="c38a2d5a" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Host Interface" singleNodeId="ed009b23">
+    <property xsi:type="NodeFilter" filterExpression="source=='HostAgent'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="279c0ed7" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC Isilon" singleNodeId="1ed77b27">
+    <property xsi:type="NodeFilter" filterExpression="source=='Isilon-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="f50f25af" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC M&amp;R Health" singleNodeId="a638f02b">
+    <property xsi:type="NodeFilter" filterExpression="source=='APG_HEALTH'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="6f0762ec" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC RecoverPoint" singleNodeId="678228ec">
+    <property xsi:type="NodeFilter" filterExpression="source=='RP-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="128a5c3c" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC ScaleIO" singleNodeId="6d2a6b9b">
+    <property xsi:type="NodeFilter" filterExpression="source=='ScaleIO-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="92cdda58" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC ViPR" singleNodeId="99154a91">
+    <property xsi:type="NodeFilter" filterExpression="source=='ViPR'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="5939580" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC VMAX" singleNodeId="f1792dfe">
+    <property xsi:type="NodeFilter" filterExpression="source=='VMAX-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="45b69a11" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC VNX" singleNodeId="131cb8d0">
+    <property xsi:type="NodeFilter" filterExpression="source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="be599aa0" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC VPLEX" singleNodeId="b849b8ad">
+    <property xsi:type="NodeFilter" filterExpression="source=='VPLEX-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="510ed8b0" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="EMC XtremIO" singleNodeId="5ee21e32">
+    <property xsi:type="NodeFilter" filterExpression="source=='XtremIO-Collector' | source=='XtremIO-Sparql-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="bca68a7b" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Hitachi Device Manager" singleNodeId="52fab8f3">
+    <property xsi:type="NodeFilter" filterExpression="source=='HDS-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="8394c899" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="HP 3PAR StoreServ" singleNodeId="4333ff11">
+    <property xsi:type="NodeFilter" filterExpression="source=='HP-3PAR-Collector' | source=='HP-3PAR-Performance'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="9036bf0a" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="HP EVA" singleNodeId="8913761c">
+    <property xsi:type="NodeFilter" filterExpression="source=='HP-EVA-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="7ce055fc" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="HP StorageWorks P9000" singleNodeId="ae69584a">
+    <property xsi:type="NodeFilter" filterExpression="source=='P9000-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="ecf6d0e0" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="IBM DS" singleNodeId="a3009ba0">
+    <property xsi:type="NodeFilter" filterExpression="source=='IBMDS-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="f6a04a45" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="IBM LPAR" singleNodeId="faf2afc0">
+    <property xsi:type="NodeFilter" filterExpression="source=='HMC_Collection'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="344fec00" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="IBM SAN Volume Controller/Storwize" singleNodeId="2906b2cd">
+    <property xsi:type="NodeFilter" filterExpression="source=='SVC-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="b33d052b" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="IBM XIV" singleNodeId="83cad2fa">
+    <property xsi:type="NodeFilter" filterExpression="source=='XIV-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="27383020" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Microsoft Hyper-V" singleNodeId="ed28eeb3">
+    <property xsi:type="NodeFilter" filterExpression="source=='HyperV-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="b3c01c65" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Microsoft SQL Server" singleNodeId="2f3a5717">
+    <property xsi:type="NodeFilter" filterExpression="source=='MicrosoftSqlServerCollector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="1257bbd8" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="NetApp Filer" singleNodeId="fc59db83">
+    <property xsi:type="NodeFilter" filterExpression="datagrp='NETAPP%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="c0fa591e" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Oracle Database" singleNodeId="8f8e9c2b">
+    <property xsi:type="NodeFilter" filterExpression="devdesc='Oracle Database%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="1b35f1eb" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Oracle MySQL Database" singleNodeId="4cdcf374">
+    <property xsi:type="NodeFilter" filterExpression="source=='MySQL-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="7d780749" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="Physical Hosts" singleNodeId="e4304cdb">
+    <property xsi:type="NodeFilter" filterExpression="source='RSC-%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="6535214d" linkID=".-..-..-501b8229-6fcbdf01"/>
+  </node>
+  <node name="VMware vCenter" singleNodeId="a810e1c">
+    <property xsi:type="NodeFilter" filterExpression="source=='VMWareCollector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; ! vstatus=='inactive'"/>
+      <result name="Active Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL &amp; vstatus=='inactive'"/>
+      <result name="Inactive Metric Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MetricCount">
+      <setting name="Filter" value="#APG:ALL"/>
+      <result name="Total Metric Count" default="true" graphable="false"/>
+    </formula>
+    <link singleNodeId="5ad9c468" linkID=".-..-..-501b8229-cfe0b00c"/>
+  </node>
+</node>

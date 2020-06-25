@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Storage Systems - Health" singleNodeId="a2789181" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="devtype='%Array' | devtype=='FileServer'"/>
+  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+  <property xsi:type="PropertyNodeColumn" name="Storage System Type" description="Possible values are Block, File, Unified, Virtual and Object." property="sstype"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Storage System Alias" description="User defined name for the Array, default is serial number." nodeProperty="name"/>
+  <property xsi:type="PropertyNodeColumn" name="Serial Number" description="Vendor-specified serial number for the storage system." property="serialnb"/>
+  <property xsi:type="PropertyNodeColumn" name="Model" description="Vendor-specified name for the storage model within a product line." property="model"/>
+  <property xsi:type="PropertyNodeColumn" name="Vendor" description="Name of vendor." property="vendor"/>
+  <property xsi:type="ValueNodeColumn" name="No. Critical" sortMode="desc" formatter="Number Status" resultName="No. Critical" forcePeriod="never" timeThreshold="600" roundingAccuracy="-1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="CRITICAL" value="1.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="No. Major" sortMode="desc#1" formatter="Number Status" resultName="No. Major" forcePeriod="never" timeThreshold="600" roundingAccuracy="-1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="MAJOR" value="1.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="No. Minor" sortMode="desc#2" formatter="Number Status" resultName="No. Minor" forcePeriod="never" timeThreshold="600" roundingAccuracy="-1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="MINOR" value="1.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="No. Unknown" sortMode="desc#3" formatter="Number Status" resultName="No. Unknown" forcePeriod="never" timeThreshold="600" roundingAccuracy="-1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="UNKNOWN" value="1.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="No. Info" sortMode="desc#4" formatter="Number Status" resultName="No. Informational" forcePeriod="never" timeThreshold="600" roundingAccuracy="-1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="INFORMATIONAL" value="1.0"/>
+  </property>
+  <node name="device" singleNodeId="483bce83">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <formula formulaId="util.CurrentUnixEpoch">
+      <result name="currentTime" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='RawCapacity' &amp; !(parttype) | name=='Capacity' &amp; !(parttype) | name=='NASCapacity' &amp; !(parttype) | name=='Availability' &amp; !(parttype)"/>
+      <result name="lastCollectionTime" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.Subtraction">
+      <parameter name="base metric" xsi:type="ResultFormulaParameterDefinition" result="currentTime" from="node"/>
+      <parameter name="subtract metric" xsi:type="ResultFormulaParameterDefinition" result="lastCollectionTime" from="node"/>
+      <result name="differenceInSeconds" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop4">
+      <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="No. Critical"/>
+      <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="No. Informational"/>
+      <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="No. Major"/>
+      <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="No. Minor"/>
+      <result name="No. Critical" default="false" graphable="false"/>
+      <result name="No. Informational" default="false" graphable="false"/>
+      <result name="No. Major" default="false" graphable="false"/>
+      <result name="No. Minor" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="No. Unknown"/>
+      <result name="No. Unknown" default="false" graphable="false"/>
+    </formula>
+    <report-layout vspan="*:#W4N-TEMPLATE-OBJECT-SUMMARY=1,*:#VIPR_LIST_HOSTS_BY_TYPE=1,*:#W4N-TEMPLATE-VIPR-SUMMARY=1,*:#W4N-OBJECT-USABLE-CAP-BY-SL=1,*:#W4N-TEMPLATE-ENTERPRISE-SUMMARY=1,*:#W4N-TEMPLATE-NAS-SUMMARY=1,*:#W4N-OBJECT-USED-BY-POOL=1,*:#W4N-TEMPLATE-UNIFIED-SUMMARY=1" hspan="*:#VIPR_SHARED_PERFORMANCE_FS=3,*:#W4N-ENTERPRISE-USED-BY-TYPE=1,*:#W4N-VIRTUAL-VVOL-DETAILS=3,:#W4N-EMC-VMAX-STORAGEGROUP-SUMMARY=2,*:{W4N-TEMPLATE-VIRTUAL-PATH-DETAILS}-961f3843=3,*:#VIPR_LIST_HOSTS_BY_TYPE=2,*:#W4N-NAS-FILE-PATH-DETAILS=3,*:{W4N-TEMPLATE-VIRTUAL-PATH-DETAILS}-1ef91326=3,*:#W4N-TEMPLATE-UNIFIED-SUMMARY=1,*:#VIPR_VSA_VP_UTILIZATION=3,*:{W4N-TEMPLATE-VIRTUAL-PATH-DETAILS}-b1457439=3,*:#VIPR_LIST_OF_VIRTUAL_POOLS=3,*:{W4N-TEMPLATE-ENTERPRISE-SUMMARY}-80e60ed7=3,*:{W4N-TEMPLATE-OBJECT-SUMMARY}-80e60ed7=3,*:{W4N-TEMPLATE-UNIFIED-SUMMARY}-80e60ed7=3,*:#W4N-BLOCK-PATH-DETAILS=3,*:#W4N-ENTERPRISE-RAW-CAP=1,*:#W4N-OBJECT-USABLE-CAP-BY-SL=2,*:{VIPR_VSA}-4534fb16=2,*:#VIPR_LIST_VOLUMES=3,*:#W4N-OBJECT-USED-BY-POOL=3,*:#W4N-DASHBOARD-USED-BY-POOL=3,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-a9d64e30-481c5789=3,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-20368526-481c5789=3,*:#W4N-VIRTUAL-VDISK-DETAILS=3,*:#W4N-VIRTUAL-TOPOLOGY=3,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-bbbd616c-f3cb7b06=3,*:#VIPR_LIST_CLUSTERS=3,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-a9d64e30-54225da3=2,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-20368526-54225da3=3,*:#W4N-VPLEX-DIRECTORS=3,*:#W4N-BLOCK-VMAX-PATH-DETAILS-BACK=3,.-..-..-72cc8c83-432541f7-7d9a731a-cd188f45-671e08-bbbd616c-9a1e5fcd=3,*:#VIPR_LIST_STORAGEPORTS=3,*:#W4N-BLOCK-VMAX-PATH-DETAILS-FRONT=3,*:#VIPR_SHARED_PERFORMANCE_VDC=2,*:#VIPR_LIST_STORAGESYSTEMS=3,*:{W4N-TEMPLATE-NAS-SUMMARY}-742f4b5a=3,*:#W4N-VPLEX-VIRTUAL-VOLUMES=3,*:#W4N-BLOCK-STORAGE-CONNECTIVITY=3,*:#VIPR_LIST_STORAGEPOOLS=3,:#W4N-EMC-VMAX-FRONTEND-DIRECTOR-SUMMARY=2,*:#W4N-FILE-STORAGE-CONNECTIVITY=2,*:#VIPR_SHARED_PERFORMANCE_VSP=3,*:#VIPR_LIST_HOSTS=3,*:#VIPR_LIST_TENANTS=3,*:{W4N-TEMPLATE-VIPR-SUMMARY}-203c21fc=3,*:#VIPR_LIST_FILESYSTEMS=3,*:#VIPR_SHARED_PERFORMANCE_STORAGE_SYSTEMS=3,*:#VIPR_SHARED_PERFORMANCE_BLOCK_VOLUMES=3" order="*:#W4N-OBJECT-USED-CAP=5,*:#W4N-TEMPLATE-OBJECT-SUMMARY=2,*:#W4N-OBJECT-OBJECTCOUNTREND=6,*:#W4N-OBJECT-USABLE-CAP-BY-SL=7,*:#W4N-OBJECT-USABLE-CAP=3,*:#W4N-OBJECT-USABLETREND=4,*:#W4N-OBJECT-USED-BY-POOL=8"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="Alerts by Severity" order="0" singleNodeId="a832e23">
+      <property xsi:type="NodeFilter" filterExpression="#EVENTS-GENERIC:ALL &amp; active=='1' &amp; !(eventSource=='ImpactAnalysis-GenericEvent')"/>
+      <property xsi:type="ReportPreferences" defaultMode="hb"/>
+      <formula formulaId="util.Nop4">
+        <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="No. Critical"/>
+        <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="No. Informational"/>
+        <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="No. Major"/>
+        <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="No. Minor"/>
+        <result name="No. Critical" default="false" graphable="false"/>
+        <result name="No. Informational" default="false" graphable="false"/>
+        <result name="No. Major" default="false" graphable="false"/>
+        <result name="No. Minor" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="No. Unknown"/>
+        <result name="No. Unknown" default="false" graphable="false"/>
+      </formula>
+      <customization color="#ff0000" filter="@result=='No. Critical'"/>
+      <customization color="#f08811" filter="@result=='No. Major'"/>
+      <customization color="#2d0fd4" filter="@result=='No. Informational'"/>
+      <customization color="#8f1515" filter="@result=='No. Unknown'"/>
+      <customization color="#f7ea39" filter="@result=='No. Minor'"/>
+      <topn-report/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Critical" order="0" singleNodeId="1d60b2aa">
+        <property xsi:type="NodeFilter" filterExpression="severity=='1'"/>
+        <property xsi:type="ValueNodeColumn" name="#" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." formatter="Status" resultName="Severity" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Severity" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." property="severityAsString"/>
+        <property xsi:type="ValueNodeColumn" name="Ack?" description="A YES (1) value indicates that the alert has been acknowledged by a user." formatter="ValueToString&lt;rounding=0;key_1.0=YES;key_0.0= &gt; Status" resultName="Ack" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Owner" description="The current owner of the alert." property="owner"/>
+        <property xsi:type="PropertyNodeColumn" name="Component Type" description="The component type that the alert occurred on." property="parttypedisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Component" description="The component that the alert occurred on." property="partdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Name" description="The name of the alert." property="eventdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Source" description="The source of the alert." property="eventSource"/>
+        <property xsi:type="PropertyNodeColumn" name="Device" description="The device that the alert occurred on." property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Device Type" description="The device type that the alert occurred on." property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Created At" sortMode="desc#1" description="The date and time when the alert first occurs." property="openedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" description="The type of alert, (MOMENTARY, DURABLE)." property="eventtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Active?" display="no" description="A YES (1) value indicates this alert is currently active on the system." property="active"/>
+        <property xsi:type="PropertyNodeColumn" name="Category" display="no" description="The category of the alert." property="category"/>
+        <property xsi:type="PropertyNodeColumn" name="Closed At" display="no" description="The date-time when the alert was closed." property="closedat"/>
+        <property xsi:type="ValueNodeColumn" name="Count" display="no" description="Shows how many times an alert has occurred." formatter="Number Status Graph" resultName="alertCount" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Duration" display="no" description="The duration between when the alert was ACTIVE to INACTIVE." property="duration"/>
+        <property xsi:type="PropertyNodeColumn" name="ID" display="no" description="The ID of the alert occurrence as it exists in the database." property="id"/>
+        <property xsi:type="PropertyNodeColumn" name="Last Changed At" display="no" description="The date and time when an alert was last updated." property="lastchangedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Message" display="no" description="A message used to describe more information about the alert." property="fullmsg"/>
+        <property xsi:type="ValueNodeColumn" name="Problem?" display="no" description="A YES (1) value indicates this alert was discovered via Codebook Correlation." formatter="ValueToString&lt;rounding=0;key_1.0=YES;key_0.0= &gt; Status" resultName="Prob" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Root?" display="no" description="A YES (1) value indicates this alert is has no known deeper underlying cause." formatter="ValueToString&lt;rounding=0;key_1.0=YES;key_0.0= &gt; Status" resultName="Root" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="State" display="no" description="The current state of the alert, (ACTIVE or INACTIVE)." property="eventstate"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 1" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 2" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 3" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 4" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 5" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="Text" display="no" description="A description of the alert." property="eventtext"/>
+        <property xsi:type="PropertyNodeColumn" name="Trouble Ticket Id" display="no" description="The ID of this alerting in an external ticket management system." property="troubleticketid"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 1" display="no" description="A custom field that can be modified by the system administrator." property="userdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 2" display="no" description="A custom field that can be modified by the system administrator." property="userdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 3" display="no" description="A custom field that can be modified by the system administrator." property="userdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 4" display="no" description="A custom field that can be modified by the system administrator." property="userdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 5" display="no" description="A custom field that can be modified by the system administrator." property="userdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 6" display="no" description="A custom field that can be modified by the system administrator." property="userdefined6"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 7" display="no" description="A custom field that can be modified by the system administrator." property="userdefined7"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 8" display="no" description="A custom field that can be modified by the system administrator." property="userdefined8"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 9" display="no" description="A custom field that can be modified by the system administrator." property="userdefined9"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 10" display="no" description="A custom field that can be modified by the system administrator." property="userdefined10"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 11" display="no" description="A custom field that can be modified by the system administrator." property="userdefined11"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 12" display="no" description="A custom field that can be modified by the system administrator." property="userdefined12"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 13" display="no" description="A custom field that can be modified by the system administrator." property="userdefined13"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 14" display="no" description="A custom field that can be modified by the system administrator." property="userdefined14"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 15" display="no" description="A custom field that can be modified by the system administrator." property="userdefined15"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 16" display="no" description="A custom field that can be modified by the system administrator." property="userdefined16"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 17" display="no" description="A custom field that can be modified by the system administrator." property="userdefined17"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 18" display="no" description="A custom field that can be modified by the system administrator." property="userdefined18"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 19" display="no" description="A custom field that can be modified by the system administrator." property="userdefined19"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 20" display="no" description="A custom field that can be modified by the system administrator." property="userdefined20"/>
+        <property xsi:type="ValueNodeColumn" name="SeverityForRowColor" sortMode="asc" display="never" description="A value used to set the table row colors based on the severity of the alert." formatter="Number&lt;rounding=0&gt; RowBackground" resultName="sevac" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+          <threshold name="Inactive" color="#fffcff" value="7.0"/>
+        </property>
+        <formula formulaId="util.ChildCount">
+          <result name="No. Critical" default="true" graphable="true"/>
+        </formula>
+        <link singleNodeId="3f870c54" linkID="*:#ALERT-DETAILS-EXPANSION-ON-NAME"/>
+      </node>
+      <node name="Major" order="1" singleNodeId="c15be71d">
+        <property xsi:type="NodeFilter" filterExpression="severity=='Major'"/>
+        <property xsi:type="ValueNodeColumn" name="#" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." formatter="BlankFormatter" resultName="Severity" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Severity" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." property="severityAsString"/>
+        <property xsi:type="ValueNodeColumn" name="Ack?" description="A YES (1) value indicates that the alert has been acknowledged by a user." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Ack" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Owner" description="The current owner of the alert." property="owner"/>
+        <property xsi:type="PropertyNodeColumn" name="Component Type" description="The component type that the alert occurred on." property="parttypedisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Component" description="The component that the alert occurred on." property="partdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Name" description="The name of the alert." property="eventdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Source" description="The source of the alert." property="eventSource"/>
+        <property xsi:type="PropertyNodeColumn" name="Device" description="The device that the alert occurred on." property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Device Type" description="The device type that the alert occurred on." property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Created At" sortMode="desc#1" description="The date and time when the alert first occurs." property="openedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" description="The type of alert, (MOMENTARY, DURABLE)." property="eventtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Active?" display="no" description="A YES (1) value indicates this alert is currently active on the system." property="active"/>
+        <property xsi:type="PropertyNodeColumn" name="Category" display="no" description="The category of the alert." property="category"/>
+        <property xsi:type="PropertyNodeColumn" name="Closed At" display="no" description="The date-time when the alert was closed." property="closedat"/>
+        <property xsi:type="ValueNodeColumn" name="Count" display="no" description="Shows how many times an alert has occurred." resultName="alertCount" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Duration" display="no" description="The duration between when the alert was ACTIVE to INACTIVE." property="duration"/>
+        <property xsi:type="PropertyNodeColumn" name="ID" display="no" description="The ID of the alert occurrence as it exists in the database." property="id"/>
+        <property xsi:type="PropertyNodeColumn" name="Last Changed At" display="no" description="The date and time when an alert was last updated." property="lastchangedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Message" display="no" description="A message used to describe more information about the alert." property="fullmsg"/>
+        <property xsi:type="ValueNodeColumn" name="Problem?" display="no" description="A YES (1) value indicates this alert was discovered via Codebook Correlation." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Prob" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Root?" display="no" description="A YES (1) value indicates this alert is has no known deeper underlying cause." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Root" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="State" display="no" description="The current state of the alert, (ACTIVE or INACTIVE)." property="eventstate"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 1" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 2" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 3" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 4" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 5" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="Text" display="no" description="A description of the alert." property="eventtext"/>
+        <property xsi:type="PropertyNodeColumn" name="Trouble Ticket Id" display="no" description="The ID of this alerting in an external ticket management system." property="troubleticketid"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 1" display="no" description="A custom field that can be modified by the system administrator." property="userdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 2" display="no" description="A custom field that can be modified by the system administrator." property="userdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 3" display="no" description="A custom field that can be modified by the system administrator." property="userdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 4" display="no" description="A custom field that can be modified by the system administrator." property="userdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 5" display="no" description="A custom field that can be modified by the system administrator." property="userdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 6" display="no" description="A custom field that can be modified by the system administrator." property="userdefined6"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 7" display="no" description="A custom field that can be modified by the system administrator." property="userdefined7"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 8" display="no" description="A custom field that can be modified by the system administrator." property="userdefined8"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 9" display="no" description="A custom field that can be modified by the system administrator." property="userdefined9"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 10" display="no" description="A custom field that can be modified by the system administrator." property="userdefined10"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 11" display="no" description="A custom field that can be modified by the system administrator." property="userdefined11"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 12" display="no" description="A custom field that can be modified by the system administrator." property="userdefined12"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 13" display="no" description="A custom field that can be modified by the system administrator." property="userdefined13"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 14" display="no" description="A custom field that can be modified by the system administrator." property="userdefined14"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 15" display="no" description="A custom field that can be modified by the system administrator." property="userdefined15"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 16" display="no" description="A custom field that can be modified by the system administrator." property="userdefined16"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 17" display="no" description="A custom field that can be modified by the system administrator." property="userdefined17"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 18" display="no" description="A custom field that can be modified by the system administrator." property="userdefined18"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 19" display="no" description="A custom field that can be modified by the system administrator." property="userdefined19"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 20" display="no" description="A custom field that can be modified by the system administrator." property="userdefined20"/>
+        <property xsi:type="ValueNodeColumn" name="SeverityForRowColor" sortMode="asc" display="never" description="A value used to set the table row colors based on the severity of the alert." formatter="RowBackgroundFormatter" resultName="sevac" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+          <threshold name="Inactive" color="#fffcff" value="7.0"/>
+        </property>
+        <formula formulaId="util.ChildCount">
+          <result name="No. Major" default="true" graphable="true"/>
+        </formula>
+        <link singleNodeId="c7a774a8" linkID="*:#ALERT-DETAILS-EXPANSION-ON-NAME"/>
+      </node>
+      <node name="Minor" order="2" singleNodeId="580d185a">
+        <property xsi:type="NodeFilter" filterExpression="severity=='3'"/>
+        <property xsi:type="ValueNodeColumn" name="#" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." formatter="BlankFormatter" resultName="Severity" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Severity" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." property="severityAsString"/>
+        <property xsi:type="ValueNodeColumn" name="Ack?" description="A YES (1) value indicates that the alert has been acknowledged by a user." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Ack" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Owner" description="The current owner of the alert." property="owner"/>
+        <property xsi:type="PropertyNodeColumn" name="Component Type" description="The component type that the alert occurred on." property="parttypedisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Component" description="The component that the alert occurred on." property="partdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Name" description="The name of the alert." property="eventdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Source" description="The source of the alert." property="eventSource"/>
+        <property xsi:type="PropertyNodeColumn" name="Device" description="The device that the alert occurred on." property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Device Type" description="The device type that the alert occurred on." property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Created At" sortMode="desc#1" description="The date and time when the alert first occurs." property="openedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" description="The type of alert, (MOMENTARY, DURABLE)." property="eventtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Active?" display="no" description="A YES (1) value indicates this alert is currently active on the system." property="active"/>
+        <property xsi:type="PropertyNodeColumn" name="Category" display="no" description="The category of the alert." property="category"/>
+        <property xsi:type="PropertyNodeColumn" name="Closed At" display="no" description="The date-time when the alert was closed." property="closedat"/>
+        <property xsi:type="ValueNodeColumn" name="Count" display="no" description="Shows how many times an alert has occurred." resultName="alertCount" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Duration" display="no" description="The duration between when the alert was ACTIVE to INACTIVE." property="duration"/>
+        <property xsi:type="PropertyNodeColumn" name="ID" display="no" description="The ID of the alert occurrence as it exists in the database." property="id"/>
+        <property xsi:type="PropertyNodeColumn" name="Last Changed At" display="no" description="The date and time when an alert was last updated." property="lastchangedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Message" display="no" description="A message used to describe more information about the alert." property="fullmsg"/>
+        <property xsi:type="ValueNodeColumn" name="Problem?" display="no" description="A YES (1) value indicates this alert was discovered via Codebook Correlation." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Prob" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Root?" display="no" description="A YES (1) value indicates this alert is has no known deeper underlying cause." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Root" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="State" display="no" description="The current state of the alert, (ACTIVE or INACTIVE)." property="eventstate"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 1" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 2" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 3" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 4" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 5" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="Text" display="no" description="A description of the alert." property="eventtext"/>
+        <property xsi:type="PropertyNodeColumn" name="Trouble Ticket Id" display="no" description="The ID of this alerting in an external ticket management system." property="troubleticketid"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 1" display="no" description="A custom field that can be modified by the system administrator." property="userdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 2" display="no" description="A custom field that can be modified by the system administrator." property="userdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 3" display="no" description="A custom field that can be modified by the system administrator." property="userdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 4" display="no" description="A custom field that can be modified by the system administrator." property="userdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 5" display="no" description="A custom field that can be modified by the system administrator." property="userdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 6" display="no" description="A custom field that can be modified by the system administrator." property="userdefined6"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 7" display="no" description="A custom field that can be modified by the system administrator." property="userdefined7"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 8" display="no" description="A custom field that can be modified by the system administrator." property="userdefined8"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 9" display="no" description="A custom field that can be modified by the system administrator." property="userdefined9"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 10" display="no" description="A custom field that can be modified by the system administrator." property="userdefined10"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 11" display="no" description="A custom field that can be modified by the system administrator." property="userdefined11"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 12" display="no" description="A custom field that can be modified by the system administrator." property="userdefined12"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 13" display="no" description="A custom field that can be modified by the system administrator." property="userdefined13"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 14" display="no" description="A custom field that can be modified by the system administrator." property="userdefined14"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 15" display="no" description="A custom field that can be modified by the system administrator." property="userdefined15"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 16" display="no" description="A custom field that can be modified by the system administrator." property="userdefined16"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 17" display="no" description="A custom field that can be modified by the system administrator." property="userdefined17"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 18" display="no" description="A custom field that can be modified by the system administrator." property="userdefined18"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 19" display="no" description="A custom field that can be modified by the system administrator." property="userdefined19"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 20" display="no" description="A custom field that can be modified by the system administrator." property="userdefined20"/>
+        <property xsi:type="ValueNodeColumn" name="SeverityForRowColor" sortMode="asc" display="never" description="A value used to set the table row colors based on the severity of the alert." formatter="RowBackgroundFormatter" resultName="sevac" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+          <threshold name="Inactive" color="#fffcff" value="7.0"/>
+        </property>
+        <formula formulaId="util.ChildCount">
+          <result name="No. Minor" default="true" graphable="true"/>
+        </formula>
+        <link singleNodeId="31afb23e" linkID="*:#ALERT-DETAILS-EXPANSION-ON-NAME"/>
+      </node>
+      <node name="Unknown" order="3" singleNodeId="ea4b569e">
+        <property xsi:type="NodeFilter" filterExpression="severity=='4'"/>
+        <property xsi:type="ValueNodeColumn" name="#" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." formatter="BlankFormatter" resultName="Severity" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Severity" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." property="severityAsString"/>
+        <property xsi:type="ValueNodeColumn" name="Ack?" description="A YES (1) value indicates that the alert has been acknowledged by a user." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Ack" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Owner" description="The current owner of the alert." property="owner"/>
+        <property xsi:type="PropertyNodeColumn" name="Component Type" description="The component type that the alert occurred on." property="parttypedisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Component" description="The component that the alert occurred on." property="partdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Name" description="The name of the alert." property="eventdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Source" description="The source of the alert." property="eventSource"/>
+        <property xsi:type="PropertyNodeColumn" name="Device" description="The device that the alert occurred on." property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Device Type" description="The device type that the alert occurred on." property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Created At" sortMode="desc#1" description="The date and time when the alert first occurs." property="openedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" description="The type of alert, (MOMENTARY, DURABLE)." property="eventtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Active?" display="no" description="A YES (1) value indicates this alert is currently active on the system." property="active"/>
+        <property xsi:type="PropertyNodeColumn" name="Category" display="no" description="The category of the alert." property="category"/>
+        <property xsi:type="PropertyNodeColumn" name="Closed At" display="no" description="The date-time when the alert was closed." property="closedat"/>
+        <property xsi:type="ValueNodeColumn" name="Count" display="no" description="Shows how many times an alert has occurred." resultName="alertCount" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Duration" display="no" description="The duration between when the alert was ACTIVE to INACTIVE." property="duration"/>
+        <property xsi:type="PropertyNodeColumn" name="ID" display="no" description="The ID of the alert occurrence as it exists in the database." property="id"/>
+        <property xsi:type="PropertyNodeColumn" name="Last Changed At" display="no" description="The date and time when an alert was last updated." property="lastchangedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Message" display="no" description="A message used to describe more information about the alert." property="fullmsg"/>
+        <property xsi:type="ValueNodeColumn" name="Problem?" display="no" description="A YES (1) value indicates this alert was discovered via Codebook Correlation." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Prob" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Root?" display="no" description="A YES (1) value indicates this alert is has no known deeper underlying cause." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Root" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="State" display="no" description="The current state of the alert, (ACTIVE or INACTIVE)." property="eventstate"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 1" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 2" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 3" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 4" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 5" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="Text" display="no" description="A description of the alert." property="eventtext"/>
+        <property xsi:type="PropertyNodeColumn" name="Trouble Ticket Id" display="no" description="The ID of this alerting in an external ticket management system." property="troubleticketid"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 1" display="no" description="A custom field that can be modified by the system administrator." property="userdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 2" display="no" description="A custom field that can be modified by the system administrator." property="userdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 3" display="no" description="A custom field that can be modified by the system administrator." property="userdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 4" display="no" description="A custom field that can be modified by the system administrator." property="userdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 5" display="no" description="A custom field that can be modified by the system administrator." property="userdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 6" display="no" description="A custom field that can be modified by the system administrator." property="userdefined6"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 7" display="no" description="A custom field that can be modified by the system administrator." property="userdefined7"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 8" display="no" description="A custom field that can be modified by the system administrator." property="userdefined8"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 9" display="no" description="A custom field that can be modified by the system administrator." property="userdefined9"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 10" display="no" description="A custom field that can be modified by the system administrator." property="userdefined10"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 11" display="no" description="A custom field that can be modified by the system administrator." property="userdefined11"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 12" display="no" description="A custom field that can be modified by the system administrator." property="userdefined12"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 13" display="no" description="A custom field that can be modified by the system administrator." property="userdefined13"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 14" display="no" description="A custom field that can be modified by the system administrator." property="userdefined14"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 15" display="no" description="A custom field that can be modified by the system administrator." property="userdefined15"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 16" display="no" description="A custom field that can be modified by the system administrator." property="userdefined16"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 17" display="no" description="A custom field that can be modified by the system administrator." property="userdefined17"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 18" display="no" description="A custom field that can be modified by the system administrator." property="userdefined18"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 19" display="no" description="A custom field that can be modified by the system administrator." property="userdefined19"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 20" display="no" description="A custom field that can be modified by the system administrator." property="userdefined20"/>
+        <property xsi:type="ValueNodeColumn" name="SeverityForRowColor" sortMode="asc" display="never" description="A value used to set the table row colors based on the severity of the alert." formatter="RowBackgroundFormatter" resultName="sevac" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+          <threshold name="Inactive" color="#fffcff" value="7.0"/>
+        </property>
+        <formula formulaId="util.ChildCount">
+          <result name="No. Unknown" default="true" graphable="true"/>
+        </formula>
+        <link singleNodeId="9f8dde79" linkID="*:#ALERT-DETAILS-EXPANSION-ON-NAME"/>
+      </node>
+      <node name="Informational" order="4" singleNodeId="e7ddbdc8">
+        <property xsi:type="NodeFilter" filterExpression="severity=='5'"/>
+        <property xsi:type="ValueNodeColumn" name="#" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." formatter="BlankFormatter" resultName="Severity" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Severity" description="The severity of the alert, (CRITICAL, MAJOR, MINOR, UNKNOWN, INFORMATIONAL, OK)." property="severityAsString"/>
+        <property xsi:type="ValueNodeColumn" name="Ack?" description="A YES (1) value indicates that the alert has been acknowledged by a user." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Ack" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Owner" description="The current owner of the alert." property="owner"/>
+        <property xsi:type="PropertyNodeColumn" name="Component Type" description="The component type that the alert occurred on." property="parttypedisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Component" description="The component that the alert occurred on." property="partdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Name" description="The name of the alert." property="eventdisplayname"/>
+        <property xsi:type="PropertyNodeColumn" name="Source" description="The source of the alert." property="eventSource"/>
+        <property xsi:type="PropertyNodeColumn" name="Device" description="The device that the alert occurred on." property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Device Type" description="The device type that the alert occurred on." property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Created At" sortMode="desc#1" description="The date and time when the alert first occurs." property="openedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Type" description="The type of alert, (MOMENTARY, DURABLE)." property="eventtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Active?" display="no" description="A YES (1) value indicates this alert is currently active on the system." property="active"/>
+        <property xsi:type="PropertyNodeColumn" name="Category" display="no" description="The category of the alert." property="category"/>
+        <property xsi:type="PropertyNodeColumn" name="Closed At" display="no" description="The date-time when the alert was closed." property="closedat"/>
+        <property xsi:type="ValueNodeColumn" name="Count" display="no" description="Shows how many times an alert has occurred." resultName="alertCount" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="-1" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="Duration" display="no" description="The duration between when the alert was ACTIVE to INACTIVE." property="duration"/>
+        <property xsi:type="PropertyNodeColumn" name="ID" display="no" description="The ID of the alert occurrence as it exists in the database." property="id"/>
+        <property xsi:type="PropertyNodeColumn" name="Last Changed At" display="no" description="The date and time when an alert was last updated." property="lastchangedat"/>
+        <property xsi:type="PropertyNodeColumn" name="Message" display="no" description="A message used to describe more information about the alert." property="fullmsg"/>
+        <property xsi:type="ValueNodeColumn" name="Problem?" display="no" description="A YES (1) value indicates this alert was discovered via Codebook Correlation." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Prob" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Root?" display="no" description="A YES (1) value indicates this alert is has no known deeper underlying cause." formatter="ValueToStringFormatter&lt;key_1.0=YES;key_0.0= &gt;" resultName="Root" forcePeriod="never" useTimeRange="true" roundingAccuracy="0" summaryLabel=""/>
+        <property xsi:type="PropertyNodeColumn" name="State" display="no" description="The current state of the alert, (ACTIVE or INACTIVE)." property="eventstate"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 1" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 2" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 3" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 4" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="System Defined 5" display="no" description="A custom field that is reserved for M&amp;R Platform and SolutionPack use." property="systemdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="Text" display="no" description="A description of the alert." property="eventtext"/>
+        <property xsi:type="PropertyNodeColumn" name="Trouble Ticket Id" display="no" description="The ID of this alerting in an external ticket management system." property="troubleticketid"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 1" display="no" description="A custom field that can be modified by the system administrator." property="userdefined1"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 2" display="no" description="A custom field that can be modified by the system administrator." property="userdefined2"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 3" display="no" description="A custom field that can be modified by the system administrator." property="userdefined3"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 4" display="no" description="A custom field that can be modified by the system administrator." property="userdefined4"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 5" display="no" description="A custom field that can be modified by the system administrator." property="userdefined5"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 6" display="no" description="A custom field that can be modified by the system administrator." property="userdefined6"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 7" display="no" description="A custom field that can be modified by the system administrator." property="userdefined7"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 8" display="no" description="A custom field that can be modified by the system administrator." property="userdefined8"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 9" display="no" description="A custom field that can be modified by the system administrator." property="userdefined9"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 10" display="no" description="A custom field that can be modified by the system administrator." property="userdefined10"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 11" display="no" description="A custom field that can be modified by the system administrator." property="userdefined11"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 12" display="no" description="A custom field that can be modified by the system administrator." property="userdefined12"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 13" display="no" description="A custom field that can be modified by the system administrator." property="userdefined13"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 14" display="no" description="A custom field that can be modified by the system administrator." property="userdefined14"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 15" display="no" description="A custom field that can be modified by the system administrator." property="userdefined15"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 16" display="no" description="A custom field that can be modified by the system administrator." property="userdefined16"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 17" display="no" description="A custom field that can be modified by the system administrator." property="userdefined17"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 18" display="no" description="A custom field that can be modified by the system administrator." property="userdefined18"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 19" display="no" description="A custom field that can be modified by the system administrator." property="userdefined19"/>
+        <property xsi:type="PropertyNodeColumn" name="User Defined 20" display="no" description="A custom field that can be modified by the system administrator." property="userdefined20"/>
+        <property xsi:type="ValueNodeColumn" name="SeverityForRowColor" sortMode="asc" display="never" description="A value used to set the table row colors based on the severity of the alert." formatter="RowBackgroundFormatter" resultName="sevac" period="inherit" forcePeriod="never" aggregationFunc="min" useTimeRange="true" valuesAggregationFunc="min" roundingAccuracy="0" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="1.0"/>
+          <threshold severity="MINOR" value="2.0"/>
+          <threshold severity="UNKNOWN" value="3.0"/>
+          <threshold severity="INFORMATIONAL" value="4.0"/>
+          <threshold severity="OK" value="5.0"/>
+          <threshold name="Inactive" color="#fffcff" value="7.0"/>
+        </property>
+        <formula formulaId="util.ChildCount">
+          <result name="No. Informational" default="true" graphable="true"/>
+        </formula>
+        <link singleNodeId="efa76bcd" linkID="*:#ALERT-DETAILS-EXPANSION-ON-NAME"/>
+      </node>
+    </node>
+    <node name="Trend" order="1" singleNodeId="308bd7ef">
+      <property xsi:type="NodeFilter" filterExpression="#EVENTS-GENERIC:ALL &amp; !(eventSource=='ImpactAnalysis-GenericEvent')"/>
+      <property xsi:type="ReportPreferences" defaultMode="stk" duration="l3M" preferredPeriod="86400" preferredAggregate="nbvalues" description="This graph shows the trend of incoming alerts at point of time for the selected device." legendProperties="" legendDisplayPolicy="visible" displayUnselectedVariables="false" graphInfoDisplayMode="trend"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <customization color="#ed1f26" filter="severity=='1'"/>
+      <customization color="#d68317" filter="severity=='2'"/>
+      <customization color="#ebeb11" filter="severity=='3'"/>
+      <customization color="#8a550f" filter="severity=='4'"/>
+      <customization color="#4522d1" filter="severity=='5'"/>
+      <topn-report>
+        <section-properties properties="lastchangedat[Last Occurred At]"/>
+      </topn-report>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Alerts Details" singleNodeId="39aa058b">
+        <property xsi:type="NodeExpansion" expandOn="severityAsString"/>
+        <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <link singleNodeId="30455d24" linkID="*:#ALERTS_REPORT"/>
+      </node>
+    </node>
+  </node>
+</node>

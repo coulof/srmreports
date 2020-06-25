@@ -1,0 +1,1798 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="CTG - Array / Pool Capacity Reports (SRM 4)" order="0" singleNodeId="88c33ce6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+  <node name="Report Examples" order="0" singleNodeId="fbd3e90f">
+    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <node name="Scott's - (5) Report Demo (Example)" order="0" singleNodeId="5e85192e">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <link singleNodeId="2b22d140" linkID=".-..-..-e7df4069" order="0"/>
+      <link singleNodeId="61668944" linkID=".-..-..-60788d50" order="1"/>
+      <link singleNodeId="12adf793" linkID=".-..-..-4d8a72ed" order="2"/>
+      <link singleNodeId="d74ffa1a" linkID=".-..-..-21e748e5" order="3"/>
+      <link singleNodeId="5484e3d3" linkID=".-..-..-1ef8ef98" order="4"/>
+    </node>
+    <node name="Array - Pool Capacity Report by Array Type &amp; Device" order="1" singleNodeId="21e748e5">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array Type Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <node name="Device Expansion" singleNodeId="f7268510">
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <node name="Array - Pool Capacity Details" singleNodeId="a45c8c67">
+            <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <link singleNodeId="710fc795" linkID=".-..-..-..-..-..-..-123f76fb-d503a712-edd8bb02-b66889fe" order="0"/>
+            <link singleNodeId="3bfd4143" linkID=".-..-..-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="1"/>
+            <link singleNodeId="85478db6" linkID=".-..-..-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="2"/>
+          </node>
+          <node name="Pool Capacity Details (Interactive)" singleNodeId="1463c26">
+            <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <link singleNodeId="dd53c7fa" linkID=".-..-..-..-..-..-..-123f76fb-d503a712-3686572f-57fc750e-7e21118c"/>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Array Type" order="2" singleNodeId="f54c7284">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array Type Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <link singleNodeId="5b8a3ad7" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+        <link singleNodeId="f82f207b" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="1"/>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Array Type (Interactive)" order="3" singleNodeId="b7a62659">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array Type Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <link singleNodeId="c8fa3b21" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+        <link singleNodeId="40ccf483" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-e818f4b1" order="1"/>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Trend by Device" order="4" singleNodeId="1ef8ef98">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <link singleNodeId="5150994e" linkID=".-..-..-..-123f76fb-d503a712-edd8bb02-3669d44d"/>
+    </node>
+    <node name="Array - Pool Capacity Projection - (BETA)" order="5" singleNodeId="7446e5f9">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <link singleNodeId="73cfb9a3" linkID=".-..-..-..-123f76fb-d503a712-edd8bb02-6376fd45"/>
+    </node>
+    <node name="Array - Pool Capacity Forecast by Array Type &amp; Device" order="6" singleNodeId="e1f92a14">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array Type Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <node name="Device Expansion" singleNodeId="9e3fba38">
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <link singleNodeId="b1fc699a" linkID=".-..-..-..-..-..-123f76fb-d503a712-edd8bb02-b66889fe" order="0"/>
+          <link singleNodeId="a44b5004" linkID=".-..-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="1"/>
+        </node>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Forecast by Array Type" order="7" singleNodeId="18acaffa">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array Type Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <link singleNodeId="b1fc699a" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-b66889fe" order="0"/>
+        <link singleNodeId="a44b5004" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="1"/>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report (All Arrays)" order="8" singleNodeId="e7df4069">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <link singleNodeId="b9a576ba" linkID=".-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+      <link singleNodeId="ec78a3aa" linkID=".-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="1"/>
+    </node>
+    <node name="Array - Pool Capacity Report (All Arrays) - (Interactive)" order="9" singleNodeId="b9ab3883">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <link singleNodeId="59245fb0" linkID=".-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+      <link singleNodeId="5306ca21" linkID=".-..-..-..-123f76fb-d503a712-3686572f-e818f4b1" order="1"/>
+    </node>
+    <node name="Array - Pool Capacity Report by Device" order="10" singleNodeId="cccfc5a1">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Device Expansion" singleNodeId="ec53b20c">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <node name="Array - Pool Capacity Details" singleNodeId="a45c8c67">
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <link singleNodeId="710fc795" linkID=".-..-..-..-..-..-123f76fb-d503a712-edd8bb02-b66889fe" order="0"/>
+          <link singleNodeId="3bfd4143" linkID=".-..-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="1"/>
+          <link singleNodeId="85478db6" linkID=".-..-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="2"/>
+        </node>
+        <node name="Pool Capacity Details (Interactive)" singleNodeId="1463c26">
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <link singleNodeId="dd53c7fa" linkID=".-..-..-..-..-..-123f76fb-d503a712-3686572f-57fc750e-7e21118c"/>
+        </node>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Location" order="11" singleNodeId="60788d50">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; location &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array - Pool Capacity Report" order="0" singleNodeId="8461fc68">
+        <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block'"/>
+        <property xsi:type="NodeExpansion" expandOn="location"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <link singleNodeId="19243997" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+        <link singleNodeId="5789df76" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91" order="1"/>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Location (Interactive)" order="12" singleNodeId="c3c01a60">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; location &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array - Pool Capacity Report" order="0" singleNodeId="8461fc68">
+        <property xsi:type="NodeExpansion" expandOn="location"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <link singleNodeId="d22238c1" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+        <link singleNodeId="41718d2f" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-e818f4b1" order="1"/>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Location &amp; Array Type" order="13" singleNodeId="4d8a72ed">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; location &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array - Pool Capacity Report" order="0" singleNodeId="8461fc68">
+        <property xsi:type="NodeExpansion" expandOn="location"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <node name="Array Type Expansion" order="0" singleNodeId="2bb1afae">
+          <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <link singleNodeId="d22238c1" linkID=".-..-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+          <link singleNodeId="5574f9f8" linkID=".-..-..-..-..-..-123f76fb-d503a712-3686572f-b5dc0b91"/>
+        </node>
+      </node>
+    </node>
+    <node name="Array - Pool Capacity Report by Location &amp; Array Type (Interactive)" order="14" singleNodeId="6b114e4a">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; location &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <node name="Array - Pool Capacity Report" order="0" singleNodeId="8461fc68">
+        <property xsi:type="NodeExpansion" expandOn="location"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <node name="Array Type" order="0" singleNodeId="9abbd0dd">
+          <property xsi:type="NodeExpansion" expandOn="arraytyp"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <link singleNodeId="d22238c1" linkID=".-..-..-..-..-..-123f76fb-d503a712-edd8bb02-d2148b9" order="0"/>
+          <link singleNodeId="41718d2f" linkID=".-..-..-..-..-..-123f76fb-d503a712-3686572f-e818f4b1" order="1"/>
+        </node>
+      </node>
+    </node>
+    <node name="Pool Capacity Report" order="15" singleNodeId="b8b5428f">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <node name="Pool Capacity Details" singleNodeId="1878f12c">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <link singleNodeId="a9cd3f33" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-5ae5d239" order="0"/>
+        <link singleNodeId="29332280" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-57fc750e-f9f07b10" order="1"/>
+      </node>
+    </node>
+    <node name="Pool Capacity Report by Location (Interactive)" order="16" singleNodeId="cda8109f">
+      <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; location &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <node name="Tab -&gt; Location" singleNodeId="1878f12c">
+        <property xsi:type="NodeExpansion" expandOn="location"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <link singleNodeId="e42528fb" linkID=".-..-..-..-..-123f76fb-d503a712-edd8bb02-5ae5d239" order="0"/>
+        <link singleNodeId="4f0ce4d9" linkID=".-..-..-..-..-123f76fb-d503a712-3686572f-57fc750e-f9f07b10" order="1"/>
+      </node>
+    </node>
+  </node>
+  <node name="&lt;&lt; Source &gt;&gt; (Hidden)" order="1" singleNodeId="123f76fb">
+    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <node name="SS - Array / Pool Capacity Report" singleNodeId="d503a712">
+      <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <node name="Graphs" singleNodeId="edd8bb02">
+        <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <node name="Array - Pool Capacity Trend Graphs" order="0" singleNodeId="d2148b9">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+          <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+          <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+          <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+          <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+          <node name="3 Months" order="0" singleNodeId="535549a0">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <link singleNodeId="3c20390" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="6 Months" order="1" singleNodeId="17857478">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <link singleNodeId="3c20390" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="1 Year" order="2" singleNodeId="27db9caf">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <link singleNodeId="3c20390" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="3 Years" order="3" singleNodeId="87c4ecde">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <link singleNodeId="3c20390" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+        </node>
+        <node name="Array - Pool Capacity Forecast Graphs" order="1" singleNodeId="b66889fe">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+          <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+          <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+          <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+          <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+          <node name="3 Months" order="3" singleNodeId="3b741fd2">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity Forecasting"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="PurchasePoint (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Capacity Forecasting" default="false" graphable="true"/>
+              <result name="Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable" default="false" graphable="true"/>
+            </formula>
+            <customization color="#ff0000" width="1.0" marker="diamond" filter="@result=='Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#ffc800" width="1.0" marker="triangle_down" curve="spline" filter="@result=='Array-&gt; Pool Used Capacity Forecasting'"/>
+            <customization color="#050400" width="6.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <link singleNodeId="f756f84d" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="6 Months" order="3" singleNodeId="abe3be07">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity Forecasting"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="PurchasePoint (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Capacity Forecasting" default="false" graphable="true"/>
+              <result name="Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable" default="false" graphable="true"/>
+            </formula>
+            <customization color="#ff0000" width="1.0" marker="diamond" filter="@result=='Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#ffc800" width="1.0" marker="triangle_down" curve="spline" filter="@result=='Array-&gt; Pool Used Capacity Forecasting'"/>
+            <customization color="#050400" width="6.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <link singleNodeId="f756f84d" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="1 Year" order="3" singleNodeId="744c6405">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity Forecasting"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="PurchasePoint (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Capacity Forecasting" default="false" graphable="true"/>
+              <result name="Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable" default="false" graphable="true"/>
+            </formula>
+            <customization color="#ff0000" width="1.0" marker="diamond" filter="@result=='Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#ffc800" width="1.0" marker="triangle_down" curve="spline" filter="@result=='Array-&gt; Pool Used Capacity Forecasting'"/>
+            <customization color="#050400" width="6.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <link singleNodeId="f756f84d" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="3 Years" order="3" singleNodeId="4473ceb1">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity Forecasting"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="PurchasePoint (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Capacity Forecasting" default="false" graphable="true"/>
+              <result name="Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable" default="false" graphable="true"/>
+            </formula>
+            <customization color="#ff0000" width="1.0" marker="diamond" filter="@result=='Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#ffc800" width="1.0" marker="triangle_down" curve="spline" filter="@result=='Array-&gt; Pool Used Capacity Forecasting'"/>
+            <customization color="#050400" width="6.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <link singleNodeId="f756f84d" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+        </node>
+        <node name="Pool Capacity Trend Graphs" order="2" singleNodeId="5ae5d239">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+          <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+          <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+          <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+          <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+          <node name="3 Months" order="0" singleNodeId="f6eac422">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <link singleNodeId="626beb87" linkID=".-..-..-..-..-3686572f-57fc750e-f9f07b10"/>
+          </node>
+          <node name="6 Months" order="1" singleNodeId="31a32a8f">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <link singleNodeId="626beb87" linkID=".-..-..-..-..-3686572f-57fc750e-f9f07b10"/>
+          </node>
+          <node name="1 Year" order="2" singleNodeId="cd7d3c98">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <link singleNodeId="626beb87" linkID=".-..-..-..-..-3686572f-57fc750e-f9f07b10"/>
+          </node>
+          <node name="3 Years" order="3" singleNodeId="ed8db6d5">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3y" preferredPeriod="604800" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <link singleNodeId="626beb87" linkID=".-..-..-..-..-3686572f-57fc750e-f9f07b10"/>
+          </node>
+        </node>
+        <node name="Array - Pool Capacity Projection (BETA)" order="3" singleNodeId="6376fd45">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="c2y" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+            <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+            <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+            <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+            <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="false"/>
+            <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="false"/>
+            <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="false"/>
+            <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="forecasting.ScenarioBasedForecast">
+            <setting name="extension mode" value="TREND"/>
+            <setting name="scenario" value="PoolExpansion"/>
+            <setting name="matching properties" value="devtype,device,parttype,part"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+            <parameter name="static properties filter" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="Usable Capacity Projection" default="false" graphable="true"/>
+            <result name="ArrayPoolUsableTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="forecasting.ScenarioBasedForecast">
+            <setting name="extension mode" value="TREND"/>
+            <setting name="scenario" value="PoolExpansion"/>
+            <setting name="matching properties" value="devtype,device,parttype,part"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+            <parameter name="static properties filter" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="Subscribed Projection" default="false" graphable="true"/>
+            <result name="ArrayPoolSubscribedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="forecasting.ScenarioBasedForecast">
+            <setting name="extension mode" value="TREND"/>
+            <setting name="scenario" value="PoolExpansion"/>
+            <setting name="matching properties" value="devtype,device,parttype,part"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+            <parameter name="static properties filter" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="Used Projection" default="false" graphable="true"/>
+            <result name="ArrayPoolUsedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="3c20390" linkID=".-..-..-..-3686572f-b5dc0b91"/>
+        </node>
+        <node name="Array - Pool Capacity Trend -&gt; Expanded by Device" order="4" singleNodeId="3669d44d">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+            <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+            <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+            <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+            <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+            <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+            <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+            <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+          </formula>
+          <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+          <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+          <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+          <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+          <link singleNodeId="e873c009" linkID=".-..-..-..-3686572f-b5dc0b91"/>
+        </node>
+        <node name="Old Graphs - DELETE" singleNodeId="e8086cc3">
+          <property xsi:type="ReportPreferences" defaultMode="lst"/>
+          <node name="Pool Capacity Trend (OLD)" order="0" singleNodeId="38da4cc0">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <link singleNodeId="626beb87" linkID=".-..-..-..-..-3686572f-57fc750e-f9f07b10"/>
+          </node>
+          <node name="Array - Pool Capacity Trend (OLD)" order="1" singleNodeId="c6d16a2e">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolFreeTotal (GB)*"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolSubscribedTotal (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Free Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Subscribed Total (GB)" default="false" graphable="true"/>
+            </formula>
+            <customization color="#050400" width="2.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#bf00ff" width="2.0" filter="@result=='Array-&gt; Pool Subscribed Total (GB)'"/>
+            <customization color="#00f74e" width="2.0" filter="@result=='Array-&gt; Pool Free Total (GB)'"/>
+            <link singleNodeId="3c20390" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+          <node name="Array - Pool Capacity Forecast (OLD)" order="2" singleNodeId="334d2903">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool'"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible" displayUnselectedVariables="false"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsableTotal (GB)*"/>
+              <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*"/>
+              <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity Forecasting"/>
+              <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="PurchasePoint (GB)*"/>
+              <result name="Array-&gt; Pool Usable Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Total (GB)" default="false" graphable="true"/>
+              <result name="Array-&gt; Pool Used Capacity Forecasting" default="false" graphable="true"/>
+              <result name="Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable" default="false" graphable="true"/>
+            </formula>
+            <customization color="#ff0000" width="1.0" marker="diamond" filter="@result=='Array -&gt; Pool Purchase Point (GB) - 75% of TotalUsable'"/>
+            <customization color="#00a6ff" width="2.0" filter="@result=='Array-&gt; Pool Usable Total (GB)'"/>
+            <customization color="#ffc800" width="1.0" marker="triangle_down" curve="spline" filter="@result=='Array-&gt; Pool Used Capacity Forecasting'"/>
+            <customization color="#050400" width="6.0" filter="@result=='Array-&gt; Pool Used Total (GB)'"/>
+            <link singleNodeId="639c9c74" linkID=".-..-..-..-..-3686572f-b5dc0b91"/>
+          </node>
+        </node>
+      </node>
+      <node name="Sub Reports" singleNodeId="3686572f">
+        <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+        <node name="Array - Pool Capacity Details" order="0" singleNodeId="b5dc0b91">
+          <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." formatter="Text&lt;type=link&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Array Type" property="arraytyp"/>
+          <property xsi:type="PropertyNodeColumn" name="Array Model" property="model"/>
+          <property xsi:type="PropertyNodeColumn" name="Serial Number" formatter="Text&lt;type=Default Style&gt;" property="serialnb"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Usable (GB)" description="Total space available within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="UsableTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Used (GB)" description="Space allocated within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="UsedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Free (GB)" description="Unallocated space within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="FreeTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Free LUN (GB)" display="never" description="Capacity of LUNs that are not marked as used." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt; Graph" resultName="FreeLUNTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Used Trend (GB)" description="Trend of pool capacity that has been masked and mapped, including local and remote copies." formatter="Number&lt;rounding=2;color&gt; SparkLine Status Style&lt;type=Default Style&gt;" resultName="UsedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="% Pool Used" sortMode="desc" description="Percentage of pool capacity that is used." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt;" resultName="UsedTotal%*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="MAJOR" value="80.0"/>
+            <threshold severity="CRITICAL" value="90.0"/>
+          </property>
+          <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." resultName="SubscribedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="% Pool Subscribed" description="Percentage of pool that has been subscribed by pool devices." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="SubscribedTotal%*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="MAJOR" value="150.0"/>
+            <threshold severity="CRITICAL" value="200.0"/>
+          </property>
+          <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." resultName="OverSubscribedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="# Days Until Full" description="Projected number of weeks until full." formatter="Duration&lt;format=DHms&gt; Status" resultName="Time to threshold" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="CRITICAL" value="-Infinity"/>
+            <threshold severity="MAJOR" value="2592000.0"/>
+            <threshold severity="OK" value="7776000.0"/>
+          </property>
+          <property xsi:type="PropertyNodeColumn" name="Location" display="noIfEmpty" property="location"/>
+          <property xsi:type="PropertyNodeColumn" name="Customer" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="customer"/>
+          <property xsi:type="PropertyNodeColumn" name="Business Unit" columnFilterCondition="\b\B" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="bunit"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+            <result name="ArrayPoolUsableTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+            <result name="ArrayPoolUsedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+            <result name="ArrayPoolFreeTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+            <result name="ArrayPoolSubscribedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="forecasting.LinearForecast">
+            <setting name="before" value="180"/>
+            <setting name="after" value="30"/>
+            <setting name="threshold" value="100"/>
+            <setting name="max time to threshold" value="1825"/>
+            <setting name="min value" value=""/>
+            <setting name="max value" value=""/>
+            <setting name="aggregation" value="DEFAULT"/>
+            <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*" from="node"/>
+            <result name="Last Used Space" default="false" graphable="false"/>
+            <result name="Expected Used Space" default="false" graphable="false"/>
+            <result name="Date to threshold (N/A)" default="false" graphable="false"/>
+            <result name="Time to threshold (N/A)" default="false" graphable="false"/>
+            <result name="Used Space Deviation" default="false" graphable="false"/>
+            <result name="Base Value  (N/A)" default="false" graphable="false"/>
+            <result name="UsedCapacity Forecasting" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.75"/>
+            <result name="PurchasePoint (GB)*" default="false" graphable="false"/>
+          </formula>
+          <wiring>
+            <jump-to-report>
+              <src-filter xsi:type="CellClickFilter" columnName="Array"/>
+              <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+            </jump-to-report>
+          </wiring>
+          <link singleNodeId="28a34343" linkID=".-..-..-57fc750e-7e21118c"/>
+        </node>
+        <node name="Array - Pool Capacity Details (Interactive)" order="1" singleNodeId="e818f4b1">
+          <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" groupFilterExpansion="pltfmgrp&lt;type=groupping-ui;level-separator=/;expansion-separator=|&gt; location customer bunit"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." formatter="Text&lt;type=link&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Array Type" property="arraytyp"/>
+          <property xsi:type="PropertyNodeColumn" name="Array Model" property="model"/>
+          <property xsi:type="PropertyNodeColumn" name="Serial Number" property="serialnb"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Usable (GB)" description="Total space available within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="UsableTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Used (GB)" description="Space allocated within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="UsedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Free (GB)" description="Unallocated space within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="FreeTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Free LUN (GB)" display="never" description="Capacity of LUNs that are not marked as used." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt; Graph" resultName="FreeLUNTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Pool Used Trend (GB)" description="Trend of pool capacity that has been masked and mapped, including local and remote copies." formatter="Number&lt;rounding=2;color&gt; SparkLine Status Style&lt;type=Default Style&gt;" resultName="UsedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="% Pool Used" sortMode="desc" description="Percentage of pool capacity that is used." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt;" resultName="UsedTotal%*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="MAJOR" value="80.0"/>
+            <threshold severity="CRITICAL" value="90.0"/>
+          </property>
+          <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." resultName="SubscribedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="% Pool Subscribed" description="Percentage of pool that has been subscribed by pool devices." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="SubscribedTotal%*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="MAJOR" value="150.0"/>
+            <threshold severity="CRITICAL" value="200.0"/>
+          </property>
+          <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." resultName="OverSubscribedTotal*" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="# Days Until Full" description="Projected number of weeks until full." formatter="Duration&lt;format=DHms&gt; Status" resultName="Time to threshold" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="CRITICAL" value="-Infinity"/>
+            <threshold severity="MAJOR" value="2592000.0"/>
+            <threshold severity="OK" value="7776000.0"/>
+          </property>
+          <property xsi:type="PropertyNodeColumn" name="Location" display="noIfEmpty" property="location"/>
+          <property xsi:type="PropertyNodeColumn" name="Customer" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="customer"/>
+          <property xsi:type="PropertyNodeColumn" name="Business Unit" columnFilterCondition="\b\B" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="bunit"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+            <result name="ArrayPoolUsableTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="UsedTotal*"/>
+            <result name="ArrayPoolUsedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*"/>
+            <result name="ArrayPoolFreeTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SubscribedTotal*"/>
+            <result name="ArrayPoolSubscribedTotal (GB)*" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="forecasting.LinearForecast">
+            <setting name="before" value="180"/>
+            <setting name="after" value="30"/>
+            <setting name="threshold" value="100"/>
+            <setting name="max time to threshold" value="1825"/>
+            <setting name="min value" value=""/>
+            <setting name="max value" value=""/>
+            <setting name="aggregation" value="DEFAULT"/>
+            <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="ArrayPoolUsedTotal (GB)*" from="node"/>
+            <result name="Last Used Space" default="false" graphable="false"/>
+            <result name="Expected Used Space" default="false" graphable="false"/>
+            <result name="Date to threshold (N/A)" default="false" graphable="false"/>
+            <result name="Time to threshold (N/A)" default="false" graphable="false"/>
+            <result name="Used Space Deviation" default="false" graphable="false"/>
+            <result name="Base Value  (N/A)" default="false" graphable="false"/>
+            <result name="UsedCapacity Forecasting" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Multiplication">
+            <setting name="scale" value="1"/>
+            <parameter name="first operand" xsi:type="ResultFormulaParameterDefinition" result="UsableTotal*"/>
+            <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="0.75"/>
+            <result name="PurchasePoint (GB)*" default="false" graphable="false"/>
+          </formula>
+          <wiring>
+            <jump-to-report>
+              <src-filter xsi:type="CellClickFilter" columnName="Array"/>
+              <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+            </jump-to-report>
+          </wiring>
+          <link singleNodeId="28a34343" linkID=".-..-..-57fc750e-7e21118c"/>
+        </node>
+        <node name="Storage Pools - Update each one (Link to below)" order="2" singleNodeId="57fc750e">
+          <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+          <node name="Storage Pools (No Expansion)" order="0" singleNodeId="f9f07b10" type="Pool">
+            <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+            <property xsi:type="ReportPreferences" displayMode="1" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" paging="200"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+            <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." property="Device"/>
+            <property xsi:type="PropertyNodeColumn" name="Pool" description="System-defined pool name." formatter="Text&lt;type=Default Style&gt;" property="part"/>
+            <property xsi:type="PropertyNodeColumn" name="Pool Type" description="Type of pool." property="pooltype"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Usable (GB)" description="Total space available within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Capacity (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Used (GB)" description="Space allocated within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Used (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for Block (GB)" display="never" description="Capacity that is made available to storage area network." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='BlockUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for File (GB)" display="never" description="Capacity that is made available to network attached storage." filterExpression="name=='FileUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for Virtual Storage (GB)" display="never" description="Capacity that is made available to virtual storage." filterExpression="name=='VirtualUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Free (GB)" description="Unallocated space within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Free (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Free LUN (GB)" display="never" description="Capacity of LUNs that are not marked as used." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt; Graph" filterExpression="name=='FreeLunUsedCapacity' &amp; parttype=='Storage Pool'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Used Trend (GB)" description="Trend of pool capacity that has been masked and mapped, including local and remote copies." formatter="Number&lt;rounding=2;color&gt; SparkLine Status Style&lt;type=Default Style&gt;" resultName="Used (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="% Pool Used" sortMode="desc" description="Percentage of pool capacity that is used." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt;" resultName="UsedPercent" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="MAJOR" value="80.0"/>
+              <threshold severity="CRITICAL" value="90.0"/>
+            </property>
+            <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." filterExpression="name=='SubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="% Pool Subscribed" description="Percentage of pool that has been subscribed by pool devices." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="% Subscribed_Pools" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="MAJOR" value="150.0"/>
+              <threshold severity="CRITICAL" value="200.0"/>
+            </property>
+            <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." filterExpression="name=='OversubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="# Days Until Full" description="Projected number of weeks until full." formatter="Duration&lt;format=DHms&gt; Status" resultName="Time to threshold" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="CRITICAL" value="-Infinity"/>
+              <threshold severity="MAJOR" value="2592000.0"/>
+              <threshold severity="OK" value="7776000.0"/>
+            </property>
+            <property xsi:type="PropertyNodeColumn" name="Disk Location" display="never" description="Indicates whether underlying disks are internal or external to array." property="diskloc"/>
+            <property xsi:type="PropertyNodeColumn" name="Location" display="noIfEmpty" property="location"/>
+            <property xsi:type="PropertyNodeColumn" name="Customer" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="customer"/>
+            <property xsi:type="PropertyNodeColumn" name="Business Unit" columnFilterCondition="\b\B" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="bunit"/>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="UsableTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)"/>
+              <result name="UsedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Free (GB)"/>
+              <result name="FreeTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)"/>
+              <result name="SubscribedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="OverSubscribed (GB)*"/>
+              <result name="OverSubscribedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="100"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="UsedTotal%*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="100"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="SubscribedTotal%*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="forecasting.LinearForecast">
+              <setting name="before" value="30"/>
+              <setting name="after" value="7"/>
+              <setting name="threshold" value="0"/>
+              <setting name="max time to threshold" value="1825"/>
+              <setting name="min value" value=""/>
+              <setting name="max value" value=""/>
+              <setting name="aggregation" value="DEFAULT"/>
+              <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*" from="node"/>
+              <result name="Last Available Space" default="false" graphable="false"/>
+              <result name="Expected Available Space" default="false" graphable="false"/>
+              <result name="Date to threshold" default="false" graphable="false"/>
+              <result name="Time to threshold" default="false" graphable="false"/>
+              <result name="Available Space Deviation" default="false" graphable="false"/>
+              <result name="Base Value" default="false" graphable="false"/>
+              <result name="Regression" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Free LUN (GB)*"/>
+              <result name="FreeLUNTotal*" default="false" graphable="false"/>
+            </formula>
+            <report-layout hspan="*:#W4N-EXPLORE-STORAGE-POOLS-DETAILS-BLOCK=3"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Child Reports" singleNodeId="5e4e5332">
+              <property xsi:type="NodeExpansion" expandOn="device,part,pooltype"/>
+              <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="Details about the selected pool."/>
+              <formula formulaId="forecasting.LinearForecast">
+                <setting name="before" value="30"/>
+                <setting name="after" value="7"/>
+                <setting name="threshold" value="0"/>
+                <setting name="max time to threshold" value="1825"/>
+                <setting name="min value" value=""/>
+                <setting name="max value" value=""/>
+                <setting name="aggregation" value="DEFAULT"/>
+                <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="Free (GB)" from="node"/>
+                <result name="Last Available Space" default="false" graphable="false"/>
+                <result name="Expected Available Space" default="false" graphable="false"/>
+                <result name="Date to threshold" default="false" graphable="false"/>
+                <result name="Time to threshold" default="false" graphable="false"/>
+                <result name="Available Space Deviation" default="false" graphable="false"/>
+                <result name="Base Value" default="false" graphable="false"/>
+                <result name="Regression" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.Division">
+                <setting name="scale" value="100"/>
+                <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+                <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)" from="node"/>
+                <result name="UsedPercent" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.Division">
+                <setting name="scale" value="100"/>
+                <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)" from="node"/>
+                <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)" from="node"/>
+                <result name="% Subscribed_Pools" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+                <result name="Free (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                <result name="Used (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                <result name="Capacity (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='SubscribedCapacity'"/>
+                <result name="Subscribed (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OversubscribedCapacity'"/>
+                <result name="OverSubscribed (GB)*" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeLunUsedCapacity' &amp; parttype=='Storage Pool'"/>
+                <result name="Free LUN (GB)*" default="false" graphable="false"/>
+              </formula>
+              <node name="Capacity charts" order="0" singleNodeId="f1b74333">
+                <property xsi:type="ReportPreferences" displayMode="2" defaultMode="mix" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <report-rendering>
+                  <charts mode="dynamic"/>
+                </report-rendering>
+                <node name="Capacity" order="0" singleNodeId="65452895">
+                  <property xsi:type="ReportPreferences" defaultMode="stk" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="unit" legendDisplayPolicy="visible"/>
+                  <report-rendering>
+                    <charts mode="dynamic"/>
+                  </report-rendering>
+                  <node name="Free Capacity (GB)" singleNodeId="80c5b98">
+                    <property xsi:type="NodeFilter" filterExpression="name=='FreeCapacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.Nop">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result=" " from="node"/>
+                      <result name="FreeCapacity" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                  <node name="Used Capacity (GB)" singleNodeId="d613017e">
+                    <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.Nop">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result=" " from="node"/>
+                      <result name="UsedCapacity" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+                <node name="Percentage Over Time" order="1" singleNodeId="ddc19eaa">
+                  <property xsi:type="ReportPreferences" defaultMode="ncr" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="" legendDisplayPolicy="visible"/>
+                  <customization color="#e80000" filter="@node=='Current Utilization (%)'"/>
+                  <customization color="#0f75cf" filter="@node=='Subscribed (%)'"/>
+                  <report-rendering>
+                    <charts mode="dynamic"/>
+                  </report-rendering>
+                  <node name="Current Utilization (%)" singleNodeId="317079c4">
+                    <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity' | name=='Capacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="math.Division">
+                      <setting name="scale" value="100"/>
+                      <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity" from="node"/>
+                      <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+                      <result name="Current Utilization (%)" default="false" graphable="true"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                      <result name="UsedCapacity" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                      <result name="Capacity" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilization (%)" from="node"/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <report-rendering>
+                      <charts mode="dynamic"/>
+                    </report-rendering>
+                  </node>
+                  <node name="Subscribed (%)" singleNodeId="f39180cd">
+                    <property xsi:type="NodeFilter" filterExpression="name=='Subscription'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Subscription'"/>
+                      <result name="Subscribed (%)" default="false" graphable="true"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Subscription'"/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <report-rendering>
+                      <charts mode="dynamic"/>
+                    </report-rendering>
+                  </node>
+                </node>
+              </node>
+              <node name="LUN Consumers" order="1" singleNodeId="474885a1">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplxExp to LUNs" order="0" singleNodeId="95ae3cb6">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='LUN' | parttype=='Snapshot') &amp; ispolcsu=='1' &amp; csupolnm"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=in-list;value-separator=,;list-property=csupolnm;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN Type" description="Specifies the information about each LUN, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="dgraid"/>
+                  <property xsi:type="PropertyNodeColumn" name="Is Thinly Provisioned" description="Thin provisioned state. Possible values are Thick or Thin." property="dgstype"/>
+                  <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Total presented capacity of the LUN." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Used (GB)" description="Storage capacity that has been consumed by write operations." filterExpression="name=='UsedCapacity' | name=='PoolUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Metadata Used (GB)" display="noIfEmpty" description="Pool overall metadata allocated capacity" filterExpression="name=='MetadataUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Is Masked?" description="Masking state; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismasked" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Mapped?" description="Mapped state; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismapped" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Bound?" display="noIfEmpty" description="Bound to pool; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="isbound" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Used?" description="Pool LUNs, system resources, mapped and masked thick LUNs, including local and remote copies. Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="isused" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="PropertyNodeColumn" name="Purpose" description="Values are Primary, Local Replica, Remote Replica, System Resource." property="purpose"/>
+                  <node name="device,part" singleNodeId="b57192eb">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismasked"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="ismasked" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismapped"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="ismapped" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="isbound"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="isbound" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="isused"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="isused" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+              </node>
+              <node name="File System / Flex Vols Consumers" order="2" singleNodeId="7a34eef0">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplxExp to File System / Flex Vols Consumers" order="0" singleNodeId="a4de1232">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='FileSystem' | parttype=='Volume') &amp; ispolcsu=='1'"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="File System" description="System-defined string for the File System." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="File System Type" description="Specifies the information about each File System, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="type"/>
+                  <property xsi:type="PropertyNodeColumn" name="Is Thinly Provisioned" description="Thin provisioned state. Possible values are Thick or Thin." property="dgstype"/>
+                  <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Total capacity of the File System." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Presented Capacity (GB)" description="Array device capacity that can be presented to NAS or NetApp." filterExpression="name=='PresentedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Used (GB)" description="Storage capacity that has been consumed by write operations." filterExpression="name=='UsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Free (GB)" description="Storage capacity that has not been allocated." filterExpression="name=='FreeCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Overhead Capacity (GB)" description="Pool space used for meta data or overhead." filterExpression="name=='OverheadCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Snapshot Capacity (GB)" description="Total capacity of Snapshot File System." filterExpression="name=='SnapshotCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Snapshot Used Capacity (GB)" description="Allocated capacity of Snapshot File System." filterExpression="name=='SnapshotUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <node name="device,part" singleNodeId="b57192eb">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="LUN Contributors" order="3" singleNodeId="69ffd70c">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplexExp to LUNs" order="0" singleNodeId="e6635739">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; parttype=='LUN' &amp; ispolctr=='1'"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN Type" description="Specifies the information about each LUN, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="dgraid"/>
+                  <property xsi:type="ValueNodeColumn" name="LUN Capacity (GB)" description="Total presented capacity of the LUN." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk Technology" description="Base storage architecture (ATA, SATA, SAS, Flash, FC)." property="disktype"/>
+                  <node name="device,part" singleNodeId="e4f3b41e">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="Disk Contributors" order="4" singleNodeId="c05f4c28">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplexExp to Disks" order="0" singleNodeId="fd510dcc">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='Disk' | parttype=='Logical Disk' &amp; arraytyp=='HP3PAR')"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk" description="Name assigned by the system." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk Technology" description="Base storage architecture (ATA, SATA, SAS, Flash, FC)." property="disktype"/>
+                  <property xsi:type="ValueNodeColumn" name="Disk Capacity (GB)" description="Capacity of the formatted physical disk." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk RPM" description="Speed of the disk." property="diskrpm"/>
+                  <node name="device,part" singleNodeId="42da091b">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="Subscriptions" order="5" singleNodeId="1d236714">
+                <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Enabled (GB)" description="Enabled pool capacity excluding disabled data devices." filterExpression="name=='EnabledCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+                <property xsi:type="ValueNodeColumn" name="Pool Overhead (GB)" display="noIfEmpty" description="Pool space used for meta data or overhead (not available for some storage system types)." filterExpression="name=='OverheadCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." filterExpression="name=='SubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." filterExpression="name=='OversubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool System Used (GB)" display="noIfEmpty" description="Capacity reserved for array internal operations (not available for some storage system types)." filterExpression="name=='SystemUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Snapshot Capacity (GB)" display="noIfEmpty" description="Snapshot total size (not available for some storage system types)." filterExpression="name=='SnapshotTotalCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Snapshot Used Capacity (GB)" display="noIfEmpty" description="Snapshot allocated size (not available for some storage system types)." filterExpression="name=='SnapshotUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <node name="(empty)" singleNodeId="d5592a60">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                </node>
+              </node>
+              <node name="Pool Capacity Graphs - 6 Months" order="5" singleNodeId="79bfcf01">
+                <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool' &amp; devtype=='Array' &amp; (name=='Capacity' | name=='FreeCapacity' | name=='UsedCapacity' | name=='SubscribedCapacity')"/>
+                <property xsi:type="NodeExpansion" expandOn="part,device" filterMode="both"/>
+                <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Free Capacity (GB)"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Subscribed Capacity (GB)"/>
+                  <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Usable Capacity (GB)"/>
+                  <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Used Capacity (GB)"/>
+                  <result name="Pool - Free Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Subscribed Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Usable Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Used Capacity (GB)" default="false" graphable="true"/>
+                </formula>
+                <customization color="#bf00ff" width="2.0" filter="@result=='Pool - Subscribed Capacity (GB)'"/>
+                <customization color="#00f74e" width="2.0" filter="@result=='Pool - Free Capacity (GB)'"/>
+                <customization color="#00a6ff" width="2.0" filter="@result=='Pool - Usable Capacity (GB)'"/>
+                <customization color="#050400" width="2.0" filter="@result=='Pool - Used Capacity (GB)'"/>
+                <node name="Free Capacity" singleNodeId="4819ac32">
+                  <property xsi:type="NodeFilter" filterExpression="name=='FreeCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+                    <result name="Pool - Free Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#00f74e" width="2.0" filter="@result=='Pool - Free Capacity (GB)'"/>
+                </node>
+                <node name="Subscribed Capacity" singleNodeId="69089e22">
+                  <property xsi:type="NodeFilter" filterExpression="name=='SubscribedCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='SubscribedCapacity'"/>
+                    <result name="Pool - Subscribed Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#bf00ff" width="2.0" filter="@result=='Pool - Subscribed Capacity (GB)'"/>
+                </node>
+                <node name="Usable Capacity" singleNodeId="48475990">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Capacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                    <result name="Pool - Usable Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#00a6ff" width="2.0" filter="@result=='Pool - Usable Capacity (GB)'"/>
+                </node>
+                <node name="Used Capacity" singleNodeId="eb6ea4f2">
+                  <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                    <result name="Pool - Used Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#050400" width="2.0" filter="@result=='Pool - Used Capacity (GB)'"/>
+                </node>
+              </node>
+            </node>
+          </node>
+          <node name="Storage Pools" order="0" singleNodeId="7e21118c" type="Pool">
+            <property xsi:type="NodeFilter" filterExpression="(w4ncert='1.%' | w4ncert=='S1.0') &amp; (#APG:ALL | #TOPO-DB:ALL) &amp; w4ncert=='1.0' &amp; parttype=='Storage Pool' &amp; datatype=='Block' &amp; !(vstatus=='inactive')"/>
+            <property xsi:type="NodeExpansion" expandOn="device"/>
+            <property xsi:type="ReportPreferences" displayMode="1" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;" paging="200"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+            <property xsi:type="PropertyNodeColumn" name="Array" description="User-defined name for the array (serial number)." property="Device"/>
+            <property xsi:type="PropertyNodeColumn" name="Pool" description="System-defined pool name." formatter="Text&lt;type=Default Style&gt;" property="part"/>
+            <property xsi:type="PropertyNodeColumn" name="Pool Type" description="Type of pool." property="pooltype"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Usable (GB)" description="Total space available within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Capacity (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Used (GB)" description="Space allocated within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Used (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for Block (GB)" display="never" description="Capacity that is made available to storage area network." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='BlockUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for File (GB)" display="never" description="Capacity that is made available to network attached storage." filterExpression="name=='FileUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Used for Virtual Storage (GB)" display="never" description="Capacity that is made available to virtual storage." filterExpression="name=='VirtualUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Free (GB)" description="Unallocated space within the pool." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Free (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Free LUN (GB)" display="never" description="Capacity of LUNs that are not marked as used." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt; Graph" filterExpression="name=='FreeLunUsedCapacity' &amp; parttype=='Storage Pool'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="Pool Used Trend (GB)" description="Trend of pool capacity that has been masked and mapped, including local and remote copies." formatter="Number&lt;rounding=2;color&gt; SparkLine Status Style&lt;type=Default Style&gt;" resultName="Used (GB)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+            <property xsi:type="ValueNodeColumn" name="% Pool Used" sortMode="desc" description="Percentage of pool capacity that is used." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt;" resultName="UsedPercent" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="MAJOR" value="80.0"/>
+              <threshold severity="CRITICAL" value="90.0"/>
+            </property>
+            <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." filterExpression="name=='SubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="% Pool Subscribed" description="Percentage of pool that has been subscribed by pool devices." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="% Subscribed_Pools" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="MAJOR" value="150.0"/>
+              <threshold severity="CRITICAL" value="200.0"/>
+            </property>
+            <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." filterExpression="name=='OversubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+            <property xsi:type="ValueNodeColumn" name="# Days Until Full" description="Projected number of weeks until full." formatter="Duration&lt;format=DHms&gt; Status" resultName="Time to threshold" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+              <threshold severity="CRITICAL" value="-Infinity"/>
+              <threshold severity="MAJOR" value="2592000.0"/>
+              <threshold severity="OK" value="7776000.0"/>
+            </property>
+            <property xsi:type="PropertyNodeColumn" name="Disk Location" display="never" description="Indicates whether underlying disks are internal or external to array." property="diskloc"/>
+            <property xsi:type="PropertyNodeColumn" name="Location" display="noIfEmpty" property="location"/>
+            <property xsi:type="PropertyNodeColumn" name="Customer" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="customer"/>
+            <property xsi:type="PropertyNodeColumn" name="Business Unit" columnFilterCondition="\b\B" display="noIfEmpty" formatter="Text&lt;type=Default Style&gt;" property="bunit"/>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="UsableTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)"/>
+              <result name="UsedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Free (GB)"/>
+              <result name="FreeTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)"/>
+              <result name="SubscribedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="OverSubscribed (GB)*"/>
+              <result name="OverSubscribedTotal*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="100"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="UsedTotal%*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="100"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)"/>
+              <result name="SubscribedTotal%*" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="forecasting.LinearForecast">
+              <setting name="before" value="30"/>
+              <setting name="after" value="7"/>
+              <setting name="threshold" value="0"/>
+              <setting name="max time to threshold" value="1825"/>
+              <setting name="min value" value=""/>
+              <setting name="max value" value=""/>
+              <setting name="aggregation" value="DEFAULT"/>
+              <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="FreeTotal*" from="node"/>
+              <result name="Last Available Space" default="false" graphable="false"/>
+              <result name="Expected Available Space" default="false" graphable="false"/>
+              <result name="Date to threshold" default="false" graphable="false"/>
+              <result name="Time to threshold" default="false" graphable="false"/>
+              <result name="Available Space Deviation" default="false" graphable="false"/>
+              <result name="Base Value" default="false" graphable="false"/>
+              <result name="Regression" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Free LUN (GB)*"/>
+              <result name="FreeLUNTotal*" default="false" graphable="false"/>
+            </formula>
+            <report-layout hspan="*:#W4N-EXPLORE-STORAGE-POOLS-DETAILS-BLOCK=3"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <node name="Child Reports" singleNodeId="5e4e5332">
+              <property xsi:type="NodeExpansion" expandOn="device,part,pooltype"/>
+              <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="Details about the selected pool."/>
+              <formula formulaId="forecasting.LinearForecast">
+                <setting name="before" value="30"/>
+                <setting name="after" value="7"/>
+                <setting name="threshold" value="0"/>
+                <setting name="max time to threshold" value="1825"/>
+                <setting name="min value" value=""/>
+                <setting name="max value" value=""/>
+                <setting name="aggregation" value="DEFAULT"/>
+                <parameter name="data" xsi:type="ResultFormulaParameterDefinition" result="Free (GB)" from="node"/>
+                <result name="Last Available Space" default="false" graphable="false"/>
+                <result name="Expected Available Space" default="false" graphable="false"/>
+                <result name="Date to threshold" default="false" graphable="false"/>
+                <result name="Time to threshold" default="false" graphable="false"/>
+                <result name="Available Space Deviation" default="false" graphable="false"/>
+                <result name="Base Value" default="false" graphable="false"/>
+                <result name="Regression" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.Division">
+                <setting name="scale" value="100"/>
+                <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+                <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)" from="node"/>
+                <result name="UsedPercent" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.Division">
+                <setting name="scale" value="100"/>
+                <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Subscribed (GB)" from="node"/>
+                <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity (GB)" from="node"/>
+                <result name="% Subscribed_Pools" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+                <result name="Free (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                <result name="Used (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                <result name="Capacity (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='SubscribedCapacity'"/>
+                <result name="Subscribed (GB)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='OversubscribedCapacity'"/>
+                <result name="OverSubscribed (GB)*" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.MakeRange">
+                <setting name="Fill Before" value="false"/>
+                <setting name="Fill After" value="false"/>
+                <setting name="Fill Between" value="true"/>
+                <setting name="Interpolated Points" value="true"/>
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeLunUsedCapacity' &amp; parttype=='Storage Pool'"/>
+                <result name="Free LUN (GB)*" default="false" graphable="false"/>
+              </formula>
+              <node name="Capacity charts" order="0" singleNodeId="f1b74333">
+                <property xsi:type="ReportPreferences" displayMode="2" defaultMode="mix" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <report-rendering>
+                  <charts mode="dynamic"/>
+                </report-rendering>
+                <node name="Capacity" order="0" singleNodeId="65452895">
+                  <property xsi:type="ReportPreferences" defaultMode="stk" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="unit" legendDisplayPolicy="visible"/>
+                  <report-rendering>
+                    <charts mode="dynamic"/>
+                  </report-rendering>
+                  <node name="Free Capacity (GB)" singleNodeId="80c5b98">
+                    <property xsi:type="NodeFilter" filterExpression="name=='FreeCapacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.Nop">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result=" " from="node"/>
+                      <result name="FreeCapacity" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                  <node name="Used Capacity (GB)" singleNodeId="d613017e">
+                    <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.Nop">
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result=" " from="node"/>
+                      <result name="UsedCapacity" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+                <node name="Percentage Over Time" order="1" singleNodeId="ddc19eaa">
+                  <property xsi:type="ReportPreferences" defaultMode="ncr" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendProperties="" legendDisplayPolicy="visible"/>
+                  <customization color="#e80000" filter="@node=='Current Utilization (%)'"/>
+                  <customization color="#0f75cf" filter="@node=='Subscribed (%)'"/>
+                  <report-rendering>
+                    <charts mode="dynamic"/>
+                  </report-rendering>
+                  <node name="Current Utilization (%)" singleNodeId="317079c4">
+                    <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity' | name=='Capacity'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="math.Division">
+                      <setting name="scale" value="100"/>
+                      <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedCapacity" from="node"/>
+                      <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Capacity" from="node"/>
+                      <result name="Current Utilization (%)" default="false" graphable="true"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                      <result name="UsedCapacity" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                      <result name="Capacity" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Current Utilization (%)" from="node"/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <report-rendering>
+                      <charts mode="dynamic"/>
+                    </report-rendering>
+                  </node>
+                  <node name="Subscribed (%)" singleNodeId="f39180cd">
+                    <property xsi:type="NodeFilter" filterExpression="name=='Subscription'"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Subscription'"/>
+                      <result name="Subscribed (%)" default="false" graphable="true"/>
+                    </formula>
+                    <formula formulaId="util.MakeRange">
+                      <setting name="Fill Before" value="false"/>
+                      <setting name="Fill After" value="true"/>
+                      <setting name="Fill Between" value="true"/>
+                      <setting name="Interpolated Points" value="true"/>
+                      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Subscription'"/>
+                      <result name=" " default="true" graphable="false"/>
+                    </formula>
+                    <report-rendering>
+                      <charts mode="dynamic"/>
+                    </report-rendering>
+                  </node>
+                </node>
+              </node>
+              <node name="LUN Consumers" order="1" singleNodeId="474885a1">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplxExp to LUNs" order="0" singleNodeId="95ae3cb6">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='LUN' | parttype=='Snapshot') &amp; ispolcsu=='1' &amp; csupolnm"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=in-list;value-separator=,;list-property=csupolnm;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN Type" description="Specifies the information about each LUN, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="dgraid"/>
+                  <property xsi:type="PropertyNodeColumn" name="Is Thinly Provisioned" description="Thin provisioned state. Possible values are Thick or Thin." property="dgstype"/>
+                  <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Total presented capacity of the LUN." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Used (GB)" description="Storage capacity that has been consumed by write operations." filterExpression="name=='UsedCapacity' | name=='PoolUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Metadata Used (GB)" display="noIfEmpty" description="Pool overall metadata allocated capacity" filterExpression="name=='MetadataUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Is Masked?" description="Masking state; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismasked" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Mapped?" description="Mapped state; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="ismapped" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Bound?" display="noIfEmpty" description="Bound to pool; Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="isbound" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="ValueNodeColumn" name="Is Used?" description="Pool LUNs, system resources, mapped and masked thick LUNs, including local and remote copies. Values are Yes, No." formatter="ValueToString&lt;key_1.0=Yes;key_0.0=No&gt; Status" resultName="isused" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+                  <property xsi:type="PropertyNodeColumn" name="Purpose" description="Values are Primary, Local Replica, Remote Replica, System Resource." property="purpose"/>
+                  <node name="device,part" singleNodeId="b57192eb">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismasked"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="ismasked" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="ismapped"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="ismapped" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="isbound"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="isbound" default="false" graphable="false"/>
+                    </formula>
+                    <formula formulaId="math.Multiplication">
+                      <setting name="scale" value="1"/>
+                      <parameter name="first operand" xsi:type="PropertyFormulaParameterDefinition" property="isused"/>
+                      <parameter name="second operand" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+                      <result name="isused" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+              </node>
+              <node name="File System / Flex Vols Consumers" order="2" singleNodeId="7a34eef0">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplxExp to File System / Flex Vols Consumers" order="0" singleNodeId="a4de1232">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='FileSystem' | parttype=='Volume') &amp; ispolcsu=='1'"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="File System" description="System-defined string for the File System." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="File System Type" description="Specifies the information about each File System, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="type"/>
+                  <property xsi:type="PropertyNodeColumn" name="Is Thinly Provisioned" description="Thin provisioned state. Possible values are Thick or Thin." property="dgstype"/>
+                  <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="Total capacity of the File System." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Presented Capacity (GB)" description="Array device capacity that can be presented to NAS or NetApp." filterExpression="name=='PresentedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Used (GB)" description="Storage capacity that has been consumed by write operations." filterExpression="name=='UsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Free (GB)" description="Storage capacity that has not been allocated." filterExpression="name=='FreeCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Overhead Capacity (GB)" description="Pool space used for meta data or overhead." filterExpression="name=='OverheadCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Snapshot Capacity (GB)" description="Total capacity of Snapshot File System." filterExpression="name=='SnapshotCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="ValueNodeColumn" name="Snapshot Used Capacity (GB)" description="Allocated capacity of Snapshot File System." filterExpression="name=='SnapshotUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="" summaryAggregate="6"/>
+                  <node name="device,part" singleNodeId="b57192eb">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="LUN Contributors" order="3" singleNodeId="69ffd70c">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplexExp to LUNs" order="0" singleNodeId="e6635739">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; parttype=='LUN' &amp; ispolctr=='1'"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN" description="System-defined name or alias for the LUN." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="LUN Type" description="Specifies the information about each LUN, which consists of the type of storage device and the protection type for that storage device, as applicable. Some examples include: VDEV, RAID-5, RAID-6, DLDEV, 2-Way Mir, RDF1+TDEV, RDF1+R-6." property="dgraid"/>
+                  <property xsi:type="ValueNodeColumn" name="LUN Capacity (GB)" description="Total presented capacity of the LUN." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk Technology" description="Base storage architecture (ATA, SATA, SAS, Flash, FC)." property="disktype"/>
+                  <node name="device,part" singleNodeId="e4f3b41e">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="Disk Contributors" order="4" singleNodeId="c05f4c28">
+                <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <node name="CplexExp to Disks" order="0" singleNodeId="fd510dcc">
+                  <property xsi:type="NodeFilter" filterExpression="w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (parttype=='Disk' | parttype=='Logical Disk' &amp; arraytyp=='HP3PAR')"/>
+                  <property xsi:type="NodeExpansion" expandOn="device&lt;type=hide&gt;,part&lt;type=split;properties=poolname;level-up=9999&gt;" filterMode="select"/>
+                  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk" description="Name assigned by the system." property="part"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk Technology" description="Base storage architecture (ATA, SATA, SAS, Flash, FC)." property="disktype"/>
+                  <property xsi:type="ValueNodeColumn" name="Disk Capacity (GB)" description="Capacity of the formatted physical disk." filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                  <property xsi:type="PropertyNodeColumn" name="Disk RPM" description="Speed of the disk." property="diskrpm"/>
+                  <node name="device,part" singleNodeId="42da091b">
+                    <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                    <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                    <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                  </node>
+                </node>
+              </node>
+              <node name="Subscriptions" order="5" singleNodeId="1d236714">
+                <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+                <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Enabled (GB)" description="Enabled pool capacity excluding disabled data devices." filterExpression="name=='EnabledCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+                <property xsi:type="ValueNodeColumn" name="Pool Overhead (GB)" display="noIfEmpty" description="Pool space used for meta data or overhead (not available for some storage system types)." filterExpression="name=='OverheadCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Subscribed (GB)" description="Pool capacity that has been subscribed by pool devices." filterExpression="name=='SubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool Oversubscribed (GB)" description="Pool capacity that has been oversubscribed by pool devices." filterExpression="name=='OversubscribedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Pool System Used (GB)" display="noIfEmpty" description="Capacity reserved for array internal operations (not available for some storage system types)." filterExpression="name=='SystemUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Snapshot Capacity (GB)" display="noIfEmpty" description="Snapshot total size (not available for some storage system types)." filterExpression="name=='SnapshotTotalCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <property xsi:type="ValueNodeColumn" name="Snapshot Used Capacity (GB)" display="noIfEmpty" description="Snapshot allocated size (not available for some storage system types)." filterExpression="name=='SnapshotUsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+                <node name="(empty)" singleNodeId="d5592a60">
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+                </node>
+              </node>
+              <node name="Pool Capacity Graphs - 6 Months" order="5" singleNodeId="79bfcf01">
+                <property xsi:type="NodeFilter" filterExpression="parttype=='Storage Pool' &amp; devtype=='Array' &amp; (name=='Capacity' | name=='FreeCapacity' | name=='UsedCapacity' | name=='SubscribedCapacity')"/>
+                <property xsi:type="NodeExpansion" expandOn="part,device" filterMode="both"/>
+                <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Free Capacity (GB)"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Subscribed Capacity (GB)"/>
+                  <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Usable Capacity (GB)"/>
+                  <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="Pool - Used Capacity (GB)"/>
+                  <result name="Pool - Free Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Subscribed Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Usable Capacity (GB)" default="false" graphable="true"/>
+                  <result name="Pool - Used Capacity (GB)" default="false" graphable="true"/>
+                </formula>
+                <customization color="#bf00ff" width="2.0" filter="@result=='Pool - Subscribed Capacity (GB)'"/>
+                <customization color="#00f74e" width="2.0" filter="@result=='Pool - Free Capacity (GB)'"/>
+                <customization color="#00a6ff" width="2.0" filter="@result=='Pool - Usable Capacity (GB)'"/>
+                <customization color="#050400" width="2.0" filter="@result=='Pool - Used Capacity (GB)'"/>
+                <node name="Free Capacity" singleNodeId="4819ac32">
+                  <property xsi:type="NodeFilter" filterExpression="name=='FreeCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+                    <result name="Pool - Free Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#00f74e" width="2.0" filter="@result=='Pool - Free Capacity (GB)'"/>
+                </node>
+                <node name="Subscribed Capacity" singleNodeId="69089e22">
+                  <property xsi:type="NodeFilter" filterExpression="name=='SubscribedCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='SubscribedCapacity'"/>
+                    <result name="Pool - Subscribed Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#bf00ff" width="2.0" filter="@result=='Pool - Subscribed Capacity (GB)'"/>
+                </node>
+                <node name="Usable Capacity" singleNodeId="48475990">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Capacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+                    <result name="Pool - Usable Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#00a6ff" width="2.0" filter="@result=='Pool - Usable Capacity (GB)'"/>
+                </node>
+                <node name="Used Capacity" singleNodeId="eb6ea4f2">
+                  <property xsi:type="NodeFilter" filterExpression="name=='UsedCapacity' &amp; parttype=='Storage Pool'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+                  <formula formulaId="util.MakeRange">
+                    <setting name="Fill Before" value="false"/>
+                    <setting name="Fill After" value="true"/>
+                    <setting name="Fill Between" value="true"/>
+                    <setting name="Interpolated Points" value="true"/>
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+                    <result name="Pool - Used Capacity (GB)" default="false" graphable="true"/>
+                  </formula>
+                  <customization color="#050400" width="2.0" filter="@result=='Pool - Used Capacity (GB)'"/>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

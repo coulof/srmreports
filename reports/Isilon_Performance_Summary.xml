@@ -1,0 +1,822 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Isilon Performance Summary" singleNodeId="e338fe41" type="graph" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="source=='Isilon-Collector'"/>
+  <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;Drill down into performance details for each Isilon cluster &lt;/b&gt; &#10;&lt;/div&gt;"/>
+  <node name="Isilon Clusters" order="0" singleNodeId="5c3e557b" type="graph">
+    <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="PropertyNodeColumn" name="Cluster" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="Description" property="devdesc"/>
+    <property xsi:type="ValueNodeColumn" name="# Nodes" formatter="Number&lt;rounding=0&gt; Status" resultName="NodeCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="0" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Inbound" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" filterExpression="name=='WriteThroughput' &amp; !(node)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Outbound" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" filterExpression="name=='ReadThroughput' &amp; !(node)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Total" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" resultName="Cluster Throughput" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToString&lt;rounding=0;key_0.0=Down;key_100.0=Healthy;key_50.0=Attention&gt; Status" filterExpression="name=='Availability' &amp; !(parttype) &amp; !(node)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="CRITICAL" value="0.0"/>
+      <threshold severity="MAJOR" value="49.0"/>
+      <threshold severity="OK" value="99.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="CPU Utilization" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="ClusterCPUUtil" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Disk %Busy" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="ClusterDiskBusy" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Disk IO Queue" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="ClusterIOsched" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" summaryLabel=""/>
+    <node name="device(cluster)" singleNodeId="3a2f655d">
+      <property xsi:type="NodeExpansion" expandOn="device"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop4">
+        <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ClusterCPUUtil"/>
+        <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="ClusterDiskBusy"/>
+        <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="ClusterIOsched"/>
+        <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="NodeCount"/>
+        <result name="ClusterCPUUtil" default="false" graphable="false"/>
+        <result name="ClusterDiskBusy" default="false" graphable="false"/>
+        <result name="ClusterIOsched" default="false" graphable="false"/>
+        <result name="NodeCount" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput"/>
+        <result name="Cluster Throughput" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-61415de6-f8f4c2dd=2,.-61415de6-966b2b06=3,.-61415de6-cff57b07=2,.-61415de6-79c3f225=2,.-61415de6-202342f8=2" order=".-61415de6-f8f4c2dd=3,.-61415de6-966b2b06=4,.-61415de6-cff57b07=2,.-61415de6-79c3f225=1,.-61415de6-202342f8=5"/>
+      <node name="Cluster Throughput" order="0" singleNodeId="f0e3b615">
+        <property xsi:type="NodeFilter" filterExpression="(name=='ReadThroughput' | name=='WriteThroughput') &amp; !(parttype) &amp; !(node)"/>
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+        <formula formulaId="math.Addition">
+          <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput"/>
+          <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput"/>
+          <result name="Throughput" default="true" graphable="false"/>
+        </formula>
+        <customization color="#555a61" curve="spline" filter="@node=='Inbound'"/>
+        <customization color="#1447e0" curve="spline" filter="@node=='Outbound'"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Inbound" singleNodeId="aa8b8ec3">
+          <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+            <result name="ReadThroughput" default="false" graphable="true"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+        <node name="Outbound" singleNodeId="3f58e80f">
+          <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+          <formula formulaId="util.MakeRange">
+            <setting name="Fill Before" value="false"/>
+            <setting name="Fill After" value="false"/>
+            <setting name="Fill Between" value="true"/>
+            <setting name="Interpolated Points" value="true"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+            <result name="WriteThroughput" default="false" graphable="true"/>
+          </formula>
+        </node>
+      </node>
+      <node name="Node Performance" singleNodeId="61415de6">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <formula formulaId="math.spatial.Average">
+          <setting name="Filter NaN Values" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgCPUUtil"/>
+          <result name="ClusterCPUUtil" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.spatial.Average">
+          <setting name="Filter NaN Values" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgClusterDiskBusy"/>
+          <result name="ClusterDiskBusy" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.spatial.Average">
+          <setting name="Filter NaN Values" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgClusterIOsched"/>
+          <result name="ClusterIOsched" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.DistinctValueCountFormula">
+          <setting name="Filter" value="*"/>
+          <setting name="ExpandOn" value="serialnb,node"/>
+          <setting name="Level-Up" value="0"/>
+          <result name="NodeCount" default="false" graphable="false"/>
+        </formula>
+        <node name="Node IO Queue" order="0" singleNodeId="79c3f225">
+          <property xsi:type="ReportPreferences" defaultMode="ncr" legendDisplayPolicy="visible"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="node" singleNodeId="f93d0cde">
+            <property xsi:type="NodeExpansion" expandOn="node"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="nrx" displayedProperties="devdesc"/>
+            <property xsi:type="PropertyNodeColumn" name="Address" property="ip"/>
+            <formula formulaId="math.spatial.Average">
+              <setting name="Filter NaN Values" value="false"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgIOsched"/>
+              <result name="Avg IO Queue" default="true" graphable="false"/>
+            </formula>
+            <report-layout hspan=".-2d0d5938=2" order=".-2d0d5938=3"/>
+            <node name="Bays" order="0" singleNodeId="2d0d5938">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" defaultMode="lst" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+              <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="BasicFormatter" filterExpression="name=='RawCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToStringFormatter&lt;key_0=Down;key_50=Attention;key_100=Healthy;key_-1=N/A&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" resultName="IOschedVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0" mode="absolute"/>
+              <threshold name="major" color="#ff8000" value="8.0E8" mode="absolute"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9" mode="absolute"/>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOschedVar"/>
+                <result name="AvgIOsched" default="true" graphable="false"/>
+              </formula>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="IOschedQueue"/>
+                  <parameter name="Second Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="IOschedVar" default="true" graphable="false"/>
+                  <result name="Second Result" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="IO Scheduler" singleNodeId="9c6b5435">
+                  <property xsi:type="NodeFilter" filterExpression="name=='IOschedQueue'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+                  <formula formulaId="util.Nop4">
+                    <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='IOschedQueue'"/>
+                    <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='IOschedLatency'"/>
+                    <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                    <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                    <result name="IOschedQueue" default="false" graphable="false"/>
+                    <result name="IOschedLatency" default="false" graphable="false"/>
+                    <result name="Third Result" default="false" graphable="false"/>
+                    <result name="Fourth Result" default="false" graphable="false"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node name="Node CPU" order="1" singleNodeId="cff57b07">
+          <property xsi:type="ReportPreferences" defaultMode="ncr" legendDisplayPolicy="visible"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="node" singleNodeId="f93d0cde">
+            <property xsi:type="NodeExpansion" expandOn="node"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="nrx" displayedProperties="devdesc"/>
+            <property xsi:type="PropertyNodeColumn" name="Address" property="ip"/>
+            <formula formulaId="math.spatial.Average">
+              <setting name="Filter NaN Values" value="false"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="CPUUtil"/>
+              <result name="CPU Utilization" default="true" graphable="false"/>
+            </formula>
+            <node name="Node CPU Usage (%)" order="1" singleNodeId="525809d2">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Node' &amp; name=='CurrentUtilization'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" maxValue="109.0" graphInfoDisplayMode="boxed"/>
+              <threshold name="major" color="#ff8000" value="60.0"/>
+              <threshold name="critical" color="#ff0000" value="80.0"/>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="parttype=='Node' &amp; name=='CurrentUtilization'"/>
+                <result name="CPUUtil" default="false" graphable="true"/>
+              </formula>
+              <customization color="#9e999e" filter="@result=='User'"/>
+              <customization color="#0f7dd1" filter="@result=='System'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+          </node>
+        </node>
+        <node name="Node Disk Busy" order="2" singleNodeId="f8f4c2dd">
+          <property xsi:type="ReportPreferences" defaultMode="ncr" legendDisplayPolicy="visible"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="node" singleNodeId="f93d0cde">
+            <property xsi:type="NodeExpansion" expandOn="node"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="nrx" displayedProperties="devdesc"/>
+            <property xsi:type="PropertyNodeColumn" name="Address" property="ip"/>
+            <formula formulaId="math.spatial.Average">
+              <setting name="Filter NaN Values" value="false"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgDiskBusy"/>
+              <result name="Disk Busy %" default="true" graphable="false"/>
+            </formula>
+            <node name="Bays" order="1" singleNodeId="d638e91">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="BasicFormatter" filterExpression="name=='RawCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToStringFormatter&lt;key_0=Down;key_50=Attention;key_100=Healthy;key_-1=N/A&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" resultName="DiskBusyVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" resultName="IOschedVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0" mode="absolute"/>
+              <threshold name="major" color="#ff8000" value="8.0E8" mode="absolute"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9" mode="absolute"/>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskBusyVar"/>
+                <result name="AvgDiskBusy" default="false" graphable="false"/>
+              </formula>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="mix"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Busy"/>
+                  <parameter name="Second Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="DiskBusyVar" default="false" graphable="false"/>
+                  <result name="Second Result" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="Busy" singleNodeId="399929aa">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Busy'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Busy'"/>
+                    <result name="Busy" default="false" graphable="true"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node name="Active and Connected Connections" order="3" singleNodeId="966b2b06">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Protocol' &amp; (name=='ConnectedConnection' | name=='ActiveConnection')"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" preferredAggregate="max" legendDisplayPolicy="visible"/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ConnectedConnection"/>
+            <result name="ConnectedConnections" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ActiveConnection"/>
+            <result name="ActiveConnections" default="false" graphable="true"/>
+          </formula>
+          <topn-report maxNbSections="30" expandOthers="true"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="(part),(node)" singleNodeId="e7650713">
+            <property xsi:type="NodeExpansion" expandOn="(part),(node)"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx" preferredAggregate="max"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ConnectedConnection'"/>
+              <result name="ConnectedConnection" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ActiveConnection'"/>
+              <result name="ActiveConnection" default="false" graphable="false"/>
+            </formula>
+          </node>
+        </node>
+        <node name="Node Details" order="4" singleNodeId="202342f8">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;Inbound&lt;/b&gt;: Write Throughput of the node.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Outbound&lt;/b&gt;: Read Throughput of the node.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Total&lt;/b&gt;: Total Throughput of the node.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;HDD Used&lt;/b&gt;: Used Capacity on HDD.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;HDD Size&lt;/b&gt;: Capacity of the HDD.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;SSD Used&lt;/b&gt;: Used Capacity on SSD.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;SSD Size&lt;/b&gt;: Capacity of the SSD.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Node" sortMode="asc" nodeProperty="name"/>
+          <property xsi:type="ValueNodeColumn" name="Inbound" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Outbound" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Total" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" resultName="Total Throughput" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Uptime" formatter="Duration&lt;format=DHms&gt; Status" filterExpression="name=='Uptime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToString&lt;rounding=0;key_0.0=Down;key_100.0=Healthy;key_50.0=Attention&gt; Status" filterExpression="name=='Availability' &amp; parttype=='Node'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+            <threshold severity="CRITICAL" value="0.0"/>
+            <threshold severity="MAJOR" value="49.0"/>
+            <threshold severity="OK" value="99.0"/>
+          </property>
+          <property xsi:type="ValueNodeColumn" name="CPU Utilization" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="CPUUtilVar" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Disk %Busy" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="AvgClusterDiskBusy" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Disk IO Queue" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="AvgClusterIOsched" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+          <formula formulaId="math.spatial.Average">
+            <setting name="Filter NaN Values" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="CPUUtilVar"/>
+            <result name="AvgCPUUtil" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="AvgClusterDiskBusy"/>
+            <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="AvgClusterIOsched"/>
+            <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+            <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="AvgClusterDiskBusy" default="false" graphable="false"/>
+            <result name="AvgClusterIOsched" default="false" graphable="false"/>
+            <result name="Third Result" default="false" graphable="false"/>
+            <result name="Fourth Result" default="false" graphable="false"/>
+          </formula>
+          <node name="node" singleNodeId="d34c41db">
+            <property xsi:type="NodeExpansion" expandOn="node"/>
+            <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="devdesc"/>
+            <property xsi:type="PropertyNodeColumn" name="Address" property="ip"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IPs"/>
+              <result name="IPs" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="1"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="SumInOctets"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="IPs"/>
+              <result name="SumInOctets" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="1"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="SumOutOctets"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="IPs"/>
+              <result name="SumOutOctets" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="1"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="SumTotalOctets"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="IPs"/>
+              <result name="SumTotalOctets" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="InterfaceCount"/>
+              <result name="interfaceIPs" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Addition">
+              <parameter name="metric1" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+              <parameter name="metric2" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+              <result name="Total Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop4">
+              <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="parttype=='Node' &amp; name=='CurrentUtilization'"/>
+              <parameter name="Second Value" xsi:type="EmptyFormulaParameterDefinition"/>
+              <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+              <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+              <result name="CPUUtilVar" default="false" graphable="false"/>
+              <result name="Second Result" default="false" graphable="false"/>
+              <result name="Third Result" default="false" graphable="false"/>
+              <result name="Fourth Result" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Average">
+              <setting name="Filter NaN Values" value="false"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgDiskBusy"/>
+              <result name="AvgClusterDiskBusy" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Average">
+              <setting name="Filter NaN Values" value="false"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvgIOsched"/>
+              <result name="AvgClusterIOsched" default="false" graphable="false"/>
+            </formula>
+            <report-layout hspan=".-271503ea=1,.-2d0d5938=2" order=".-39594f3=5,.-dadaaa2b=3,.-2a924df=1,.-271503ea=4,.-10e42195=2,.-2d0d5938=6"/>
+            <node name="Node Throughput" order="0" singleNodeId="271503ea">
+              <property xsi:type="NodeFilter" filterExpression="(name=='ReadThroughput' | name=='WriteThroughput') &amp; parttype=='Node'"/>
+              <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" graphInfoDisplayMode="boxed"/>
+              <customization color="#555a61" filter="@node=='Inbound'"/>
+              <customization color="#1447e0" filter="@node=='Outbound'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+              <node name="Inbound" singleNodeId="aa8b8ec3">
+                <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+                <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+              </node>
+              <node name="Outbound" singleNodeId="3f58e80f">
+                <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+                <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+              </node>
+            </node>
+            <node name="Node CPU Usage (%)" order="1" singleNodeId="10e42195">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Node' &amp; (name=='User' | name=='System')"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" maxValue="109.0" graphInfoDisplayMode="boxed"/>
+              <threshold name="major" color="#ff8000" value="60.0"/>
+              <threshold name="critical" color="#ff0000" value="80.0"/>
+              <customization color="#9e999e" filter="@result=='User'"/>
+              <customization color="#0f7dd1" filter="@result=='System'"/>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+            </node>
+            <node name="Disk Busy %" order="1" singleNodeId="dadaaa2b">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="BasicFormatter" filterExpression="name=='RawCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToStringFormatter&lt;key_0=Down;key_50=Attention;key_100=Healthy;key_-1=N/A&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" resultName="DiskBusyVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" resultName="IOschedVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0" mode="absolute"/>
+              <threshold name="major" color="#ff8000" value="8.0E8" mode="absolute"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9" mode="absolute"/>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskBusyVar"/>
+                <result name="AvgDiskBusy" default="false" graphable="true"/>
+              </formula>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="mix"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Busy"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="IOschedQueue"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="DiskBusyVar" default="false" graphable="false"/>
+                  <result name="IOschedVar" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="Busy" singleNodeId="399929aa">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Busy'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Busy'"/>
+                    <result name="Busy" default="false" graphable="true"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+            <node name="Bays" order="2" singleNodeId="2d0d5938">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="Number&lt;rounding=2&gt; Status" filterExpression="name=='RawCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToString&lt;rounding=0;key_0.0=Down;key_100.0=Healthy;key_-1.0=N/A;key_50.0=Attention&gt; Status" filterExpression="name=='Availability'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="DiskBusyVar" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" formatter="Number&lt;rounding=1&gt; Status Graph" resultName="IOschedVar" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0" mode="absolute"/>
+              <threshold name="major" color="#ff8000" value="8.0E8" mode="absolute"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9" mode="absolute"/>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskBusyVar"/>
+                <result name="AvgDiskBusy" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOschedVar"/>
+                <result name="AvgIOsched" default="false" graphable="false"/>
+              </formula>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="Busy"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="IOschedQueue"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="DiskBusyVar" default="false" graphable="false"/>
+                  <result name="IOschedVar" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="Bandwidth" order="0" singleNodeId="d625d6df">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput' | name=='WriteThroughput'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+                  <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+                </node>
+                <node name="Availability (%)" order="1" singleNodeId="68ef35db" type="entity">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Availability'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrb" duration="l2w" preferredPeriod="86400" preferredAggregate="last" maxValue="109.0" graphInfoDisplayMode="boxed"/>
+                  <property xsi:type="PropertyNodeColumn" name="Device or part" property="device part"/>
+                  <property xsi:type="PropertyNodeColumn" name="Name" property="name"/>
+                  <property xsi:type="ValueNodeColumn" name="Last value" timeThreshold="1000"/>
+                  <threshold name="critical" color="#ff0000" value="95.0"/>
+                  <threshold name="major" color="#ff8000" value="99.0"/>
+                </node>
+                <node name="Access" singleNodeId="3b54126a">
+                  <property xsi:type="NodeFilter" filterExpression="name=='AccessLatency' | name=='AccessSlow'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop4">
+                    <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='AccessSlow'"/>
+                    <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='AccessLatency'"/>
+                    <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                    <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                    <result name="AccessSlow" default="false" graphable="true"/>
+                    <result name="AccessLatency" default="false" graphable="true"/>
+                    <result name="Third Result" default="false" graphable="false"/>
+                    <result name="Fourth Result" default="false" graphable="false"/>
+                  </formula>
+                  <node name="name" singleNodeId="c03770f4">
+                    <property xsi:type="NodeExpansion" expandOn="name"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                    <formula formulaId="util.Nop4">
+                      <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='AccessSlow'"/>
+                      <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='AccessLatency'"/>
+                      <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                      <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                      <result name="AccessSlow" default="false" graphable="true"/>
+                      <result name="AccessLatency" default="false" graphable="true"/>
+                      <result name="Third Result" default="false" graphable="false"/>
+                      <result name="Fourth Result" default="false" graphable="false"/>
+                    </formula>
+                  </node>
+                </node>
+                <node name="Busy" singleNodeId="399929aa">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Busy'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Busy'"/>
+                    <result name="Busy" default="false" graphable="true"/>
+                  </formula>
+                </node>
+                <node name="IO Scheduler" singleNodeId="9c6b5435">
+                  <property xsi:type="NodeFilter" filterExpression="name=='IOschedQueue' | name=='IOschedLatency'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='IOschedLatency'"/>
+                    <result name="IOschedLatency" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='IOschedQueue'"/>
+                    <result name="IOschedQueue" default="false" graphable="true"/>
+                  </formula>
+                </node>
+                <node name="Transfer" singleNodeId="1d1d3716">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ReadSize' | name=='WriteSize' | name=='ReadRequests' | name=='WriteRequests'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                  <node name="name" singleNodeId="c03770f4">
+                    <property xsi:type="NodeExpansion" expandOn="name"/>
+                    <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node name="IO Queue" order="2" singleNodeId="2a924df">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" graphScaleFactor="Byte::Storage::B::Byte::Storage"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="BasicFormatter" filterExpression="name=='RawCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToStringFormatter&lt;key_0=Down;key_50=Attention;key_100=Healthy;key_-1=N/A&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" resultName="DiskBusyVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" resultName="IOschedVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0" mode="absolute"/>
+              <threshold name="major" color="#ff8000" value="8.0E8" mode="absolute"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9" mode="absolute"/>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="DiskBusyVar"/>
+                <result name="AvgDiskBusy" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOschedVar"/>
+                <result name="AvgIOsched" default="false" graphable="true"/>
+              </formula>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="mix"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="IOschedQueue"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="First Result" default="false" graphable="false"/>
+                  <result name="IOschedVar" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="IO Scheduler" singleNodeId="9c6b5435">
+                  <property xsi:type="NodeFilter" filterExpression="name=='IOschedQueue'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='IOschedQueue'"/>
+                    <result name="IOschedQueue" default="false" graphable="true"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+            <node name="IOPS" order="2" singleNodeId="6c9aa133">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+              <property xsi:type="ReportPreferences" defaultMode="nrx" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Disk Size&lt;/b&gt;: Raw Capacity of the drive.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;" legendDisplayPolicy="visible"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Bay" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+              <property xsi:type="ValueNodeColumn" name="Disk Size" formatter="BasicFormatter" filterExpression="name=='RawCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToStringFormatter&lt;key_0=Down;key_50=Attention;key_100=Healthy;key_-1=N/A&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <property xsi:type="ValueNodeColumn" name="Disk Busy%" resultName="DiskBusyVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Disk IO Queue" resultName="IOschedVar" forcePeriod="never" useTimeRange="true" roundingAccuracy="1" summaryLabel=""/>
+              <threshold name="good" color="#22e33f" value="0.0"/>
+              <threshold name="major" color="#ff8000" value="8.0E8"/>
+              <threshold name="critical" color="#ff0000" value="1.28E9"/>
+              <formula formulaId="math.spatial.Sum">
+                <setting name="aggregation" value="DEFAULT"/>
+                <setting name="partial" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadRequests"/>
+                <result name="Read IOPS" default="false" graphable="true"/>
+              </formula>
+              <formula formulaId="math.spatial.Sum">
+                <setting name="aggregation" value="DEFAULT"/>
+                <setting name="partial" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteRequests"/>
+                <result name="Write IOPS" default="false" graphable="true"/>
+              </formula>
+              <report-rendering>
+                <charts mode="dynamic"/>
+              </report-rendering>
+              <status-report>
+                <value show="true" rounding="1"/>
+                <marker type="circle" size="large"/>
+              </status-report>
+              <node name="part" singleNodeId="cacaacba">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" defaultMode="mix"/>
+                <formula formulaId="util.Nop4">
+                  <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="ReadRequests"/>
+                  <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="WriteRequests"/>
+                  <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+                  <result name="ReadRequests" default="false" graphable="false"/>
+                  <result name="WriteRequests" default="false" graphable="false"/>
+                  <result name="Third Result" default="false" graphable="false"/>
+                  <result name="Fourth Result" default="false" graphable="false"/>
+                </formula>
+                <node name="Transfer" singleNodeId="1d1d3716">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests' | name=='WriteRequests'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+                    <result name="ReadRequests" default="false" graphable="false"/>
+                  </formula>
+                  <formula formulaId="util.Nop">
+                    <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+                    <result name="WriteRequests" default="false" graphable="false"/>
+                  </formula>
+                </node>
+              </node>
+            </node>
+            <node name="Interfaces" order="3" singleNodeId="39594f3">
+              <property xsi:type="NodeFilter" filterExpression="parttype=='Interface'"/>
+              <property xsi:type="ReportPreferences" description="&lt;div&gt; &#10; &lt;b id=&quot;description&quot; style=&quot;cursor:help;&quot;&gt;Click here to display column definitions&lt;/b&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; &lt;b&gt;In&lt;/b&gt;: Write Throughput for the Interface.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Out&lt;/b&gt;: Read Throughput for the Interface.&lt;/li&gt; &#10;  &lt;li&gt; &lt;b&gt;Status&lt;/b&gt;: Indicates the availability status.&lt;/li&gt; &#10; &lt;/ul&gt; &#10; &lt;script type=&quot;text/javascript&quot;&gt;&#10;$('#description').click(function() {&#10;  $( &quot;#hide&quot; ).toggle();&#10;});&#10;&lt;/script&gt; &#10;&lt;/div&gt;"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Name" sortMode="asc" nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="In" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ifInOctets'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::B/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Out" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ifOutOctets'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="ByteRate::Classic::B/s::BitRate::Classic" summaryLabel=""/>
+              <property xsi:type="ValueNodeColumn" name="Status" formatter="ValueToString&lt;key_0=Down;key_50=Attention;key_100=Healthy;rounding=0&gt; Status" filterExpression="name=='Availability'" period="3600" forcePeriod="never" timeThreshold="2" roundingAccuracy="0" summaryLabel="">
+                <threshold severity="CRITICAL" value="0.0"/>
+                <threshold severity="MAJOR" value="49.0"/>
+                <threshold severity="OK" value="99.0"/>
+              </property>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Availability (%)"/>
+                <result name="Availability (%)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Incoming (Mbits/sec)"/>
+                <result name="Incoming (Mbits/sec)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.Nop">
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Outgoing (Mbits/sec)"/>
+                <result name="Outgoing (Mbits/sec)" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.ChildCount">
+                <result name="InterfaceCount" default="false" graphable="false"/>
+              </formula>
+              <node name="part" order="0" singleNodeId="15d83b48">
+                <property xsi:type="NodeExpansion" expandOn="part"/>
+                <property xsi:type="ReportPreferences" displayMode="2" defaultMode="mix"/>
+                <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+                <report-layout hspan=".-c4c085c7=2,.-ab4bff01=3" order=".-f588d36a=4,.-ab4bff01=1"/>
+                <report-rendering>
+                  <charts mode="dynamic"/>
+                </report-rendering>
+                <node name="Bandwidth" order="0" singleNodeId="ab4bff01">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ifInOctets' | name=='ifOutOctets'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::B/s::BitRate::Classic"/>
+                  <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+                </node>
+                <node name="Packets" order="1" singleNodeId="c4c085c7">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ifInPkts' | name=='ifOutPkts'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="PacketRate::Classic::Pkts/s::PacketRate::Classic"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="Name" property="name"/>
+                  <property xsi:type="ValueNodeColumn" name="Last value" timeThreshold="1000"/>
+                </node>
+                <node name="Errors" order="2" singleNodeId="f588d36a">
+                  <property xsi:type="NodeFilter" filterExpression="name=='ifInErrors' | name=='ifOutErrors'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="stk" legendDisplayPolicy="visible" graphScaleFactor="PacketRate::Classic::Pkts/s::PacketRate::Classic"/>
+                  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+                  <property xsi:type="PropertyNodeColumn" name="Name" property="name"/>
+                  <property xsi:type="ValueNodeColumn" name="Last value" timeThreshold="1000"/>
+                  <report-rendering>
+                    <charts mode="dynamic"/>
+                  </report-rendering>
+                </node>
+                <node name="Availability (%)" order="3" singleNodeId="5a893eff" type="entity">
+                  <property xsi:type="NodeFilter" filterExpression="name=='Availability'"/>
+                  <property xsi:type="ReportPreferences" defaultMode="nrb" duration="l1w" preferredPeriod="3600" maxValue="109.0" graphInfoDisplayMode="boxed"/>
+                  <property xsi:type="PropertyNodeColumn" name="Device or part" property="device part"/>
+                  <property xsi:type="PropertyNodeColumn" name="Name" property="name"/>
+                  <property xsi:type="ValueNodeColumn" name="Last value" timeThreshold="1000"/>
+                  <threshold name="critical" color="#ff0000" value="95.0"/>
+                  <threshold name="major" color="#ff8000" value="99.0"/>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node name="Clusters Throughput" order="1" singleNodeId="7d8a14c8">
+    <property xsi:type="NodeFilter" filterExpression="!(node) &amp; !(vstatus=='inactive') &amp; (name=='ReadThroughput' | name=='WriteThroughput')"/>
+    <property xsi:type="ReportPreferences" defaultMode="ncr" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic" graphInfoDisplayMode="boxed"/>
+    <node name="device" singleNodeId="a03c0552">
+      <property xsi:type="NodeExpansion" expandOn="device"/>
+      <property xsi:type="ReportPreferences" defaultMode="stk" legendProperties="unit" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+      <formula formulaId="math.Addition">
+        <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput"/>
+        <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput"/>
+        <result name="Throughput" default="true" graphable="true"/>
+      </formula>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Inbound" singleNodeId="aa8b8ec3">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadThroughput'"/>
+          <result name="ReadThroughput" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Outbound" singleNodeId="c2e1ce50">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" graphScaleFactor="ByteRate::Classic::MB/s::BitRate::Classic"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="false"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteThroughput'"/>
+          <result name="WriteThroughput" default="false" graphable="true"/>
+        </formula>
+      </node>
+    </node>
+  </node>
+</node>

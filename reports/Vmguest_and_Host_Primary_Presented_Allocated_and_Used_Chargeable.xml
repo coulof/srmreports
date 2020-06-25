@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Vmguest and Host Primary Presented Allocated and Used Chargeable" order="13" singleNodeId="a4d7fabf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="(devtype=='VirtualMachine' | devtype=='Host' | devtype=='PassiveHost') &amp; (w4ncert=='1.0' | w4ncert=='S1.0') &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; !(device='%UnideskTemp%') &amp; !(device='%replica%') &amp; !(device='%uth0p025%')"/>
+  <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+  <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty" propagateTimeSelection="true"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Host" nodeProperty="expandedNames[0]"/>
+  <property xsi:type="PropertyNodeColumn" name="Host Type" property="devtype"/>
+  <property xsi:type="PropertyNodeColumn" name="Template" property="template"/>
+  <property xsi:type="PropertyNodeColumn" name="State" sortMode="desc" property="state"/>
+  <property xsi:type="PropertyNodeColumn" name="No. vCPU" property="nbcpu"/>
+  <property xsi:type="ValueNodeColumn" name="RAM (MB)" formatter="Number&lt;rounding=0&gt; Status Graph" filterExpression="name=='TotalMemory'" period="86400" forcePeriod="never" timeThreshold="1" roundingAccuracy="0" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage::MB" summaryLabel=""/>
+  <property xsi:type="PropertyNodeColumn" name="Physical RAM (MB)" property="memory"/>
+  <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable (GB)" description="Sum of primary presented Chargeable Capacity of RDMs and VMDK Files on Datastore. It is deduplicated by shared capacity." formatter="ValueToString&lt;key_=-;rounding=0&gt; Status" filterExpression="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" showSeverityAbove="OK" roundingAccuracy="0" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="">
+    <threshold severity="OK" value="-Infinity"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable (GB)" description="Sum of primary used Chargeable Capacity of RDMs and VMDK Files on Datastore. It is deduplicated by shared capacity." formatter="ValueToString&lt;key_=-;rounding=0&gt; Status" filterExpression="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" showSeverityAbove="OK" roundingAccuracy="0" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="">
+    <threshold severity="OK" value="-Infinity"/>
+  </property>
+  <property xsi:type="PropertyNodeColumn" name="ESX Cluster Host" property="hypervsr"/>
+  <property xsi:type="PropertyNodeColumn" name="Operating System" filterExpression="!(devdesc=='Host')" property="devdesc"/>
+  <property xsi:type="PropertyNodeColumn" name="Datastore Name" property="linkedto"/>
+  <node name="&lt;hosts&gt;" singleNodeId="6b472432" uid="CHARGEBACK2.0_HOST_HYPER_PRI_PRES">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='Host' | devtype=='Hypervisor' | devtype=='PassiveHost' &amp; !(actdisc=='1')"/>
+    <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+    <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Disks" description="WWN or name of the Disk." nodeProperty="name"/>
+    <property xsi:type="PropertyNodeColumn" name="Array Name" description="Name of the Array. It is set to N/A when the array is not discovered." filterExpression="name=='PresentedChargeableCapacity'" property="array"/>
+    <property xsi:type="PropertyNodeColumn" name="LUN ID" description="Identifier for each LUN. It is set to N/A when the array is not discovered." filterExpression="name=='PresentedChargeableCapacity'" property="lun"/>
+    <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+    <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="Presented capacity for the primary LUN or Virtual Volume allocated to the host. If the array or virtual storage is not discovered, it is the host disk used capacity." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Connected Hosts" description="List of all hosts connected to that LUN." filterExpression="name=='PresentedChargeableCapacity'" property="hosts"/>
+    <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Primary presented Chargeable Capacity for the host deduplicated by shared capacity. It is Primary presented capacity split equally between all the hosts sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+      <threshold severity="CRITICAL" value="-Infinity"/>
+      <threshold severity="MAJOR" value="-1.0"/>
+      <threshold severity="OK" value="0.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+      <threshold severity="CRITICAL" value="-Infinity"/>
+      <threshold severity="MAJOR" value="-1.0"/>
+      <threshold severity="OK" value="0.0"/>
+    </property>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Platinum'"/>
+      <result name="PlatinumCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Gold'"/>
+      <result name="GoldCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Silver'"/>
+      <result name="SilverCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Bronze'"/>
+      <result name="BronzeCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='FAST VP'"/>
+      <result name="FastVPCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='VirtualStorage'"/>
+      <result name="VirtualStorageCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Other'"/>
+      <result name="OtherCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedNonChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalChargeable" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedNonChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalNonChargeableCost" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalChargeableCost" default="false" graphable="false"/>
+    </formula>
+    <node name="Disks" singleNodeId="dad7208c">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Disk' &amp; ((devtype=='Host' | devtype=='Hypervisor') &amp; isremote=='true' | devtype=='PassiveHost' &amp; !(actdisc=='1'))"/>
+      <property xsi:type="NodeExpansion" expandOn="partsn" filterMode="both"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+        <result name="isbemon" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+        <result name="isvbemon" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+      <link singleNodeId="36c244ed" linkID="*:#W4N-WWN-LINKER" order="0"/>
+      <link singleNodeId="df61a719" linkID=":#W4N-WWN-HOST-LINKER" order="1"/>
+      <link singleNodeId="a858f178" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+      <link singleNodeId="1ed25799" linkID="*:#W4N-VPLEX-WWN-LINKER" order="3"/>
+    </node>
+  </node>
+  <node name="&lt;vms&gt;" singleNodeId="51a4d095" uid="CHARGEBACK2.0_VM_PRI_PRES">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='VirtualMachine'"/>
+    <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+    <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;"/>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Platinum'"/>
+      <result name="PlatinumCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Gold'"/>
+      <result name="GoldCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Silver'"/>
+      <result name="SilverCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Bronze'"/>
+      <result name="BronzeCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='FAST VP'"/>
+      <result name="FastVPCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='VirtualStorage'"/>
+      <result name="VirtualStorageCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; svclevel=='Other'"/>
+      <result name="OtherCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedNonChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalChargeable" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedNonChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalNonChargeableCost" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCost' &amp; !(part) &amp; !(svclevel)"/>
+      <result name="TotalChargeableCost" default="false" graphable="false"/>
+    </formula>
+    <node name="Physical LUN/Disks (RDM)" order="0" singleNodeId="d7225021">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Virtual Disk' &amp; partsn &amp; rdmname"/>
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Disk" description="Name of the Disk." nodeProperty="name"/>
+      <property xsi:type="PropertyNodeColumn" name="WWN" description="The world wide number of the LUN." property="partsn"/>
+      <property xsi:type="PropertyNodeColumn" name="Array Name" description="Name of the Array. Its set to N/A when the array is not discovered." property="array"/>
+      <property xsi:type="PropertyNodeColumn" name="LUN ID" description="Identifier for each LUN. Its set to N/A when the array is not discovered." property="lun"/>
+      <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+      <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="Presented Capacity of the primary LUN or the virtual volume allocated to the VM. If the array or virtual storage is not discovered, it is equal to the RDM used capacity." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Connected VMs" description="List of all Virtual machines connected to that LUN or virtual volume." property="hosts"/>
+      <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Primary Presented Capacity of the disk deduplicated by shared capacity. It is Primary Presented capacity split equally between all the Virtual machines sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="-1.0"/>
+        <threshold severity="OK" value="0.0"/>
+      </property>
+      <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="-1.0"/>
+        <threshold severity="OK" value="0.0"/>
+      </property>
+      <node name="Physical LUN/Disks" singleNodeId="a7e4e5c4">
+        <property xsi:type="NodeExpansion" expandOn="part" filterMode="both"/>
+        <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+          <result name="isbemon" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+          <result name="isvbemon" default="false" graphable="false"/>
+        </formula>
+        <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+        <link singleNodeId="63b114b6" linkID="*:#W4N-WWN-LINKER" order="0"/>
+        <link singleNodeId="dc41ab47" linkID=":#VM-LINKER-FOR-CHARGEBACK2.0" order="1"/>
+        <link singleNodeId="efc97ff6" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+        <link singleNodeId="fe74519f" linkID="*:#W4N-VPLEX-WWN-LINKER" order="3"/>
+      </node>
+    </node>
+    <node name="Files on Datastore" order="1" singleNodeId="6364407d">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='File'"/>
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="File Name" description="Name of the vmdk file." nodeProperty="name"/>
+      <property xsi:type="PropertyNodeColumn" name="Datastore" description="Name of the datastore." property="linkedto"/>
+      <property xsi:type="PropertyNodeColumn" name="VDisk Name" description="Name of the virtual disk." property="rdmname"/>
+      <property xsi:type="ValueNodeColumn" name="Is RDM Definition?" description="Is raw device mapping enabled; values are Yes or No." formatter="ValueToStringFormatter&lt;key_1.0=Yes;key_0.0=No&gt;" resultName="HasRDMName" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+      <property xsi:type="ValueNodeColumn" name="Primary Presented" display="no" description="It is the capacity of the VMDK file." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Connected VMs" description="List of all virtual machines connected to that LUN." property="hosts"/>
+      <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable" description="The Chargeable Capacity for the VMDK file deduplicated by shared capacity. It is Primary presented capacity split equally between all the virtual machines sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="-1.0"/>
+        <threshold severity="OK" value="0.0"/>
+      </property>
+      <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="BlankFormatter" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="-1.0"/>
+        <threshold severity="OK" value="0.0"/>
+      </property>
+      <link singleNodeId="894e6f8e" linkID=":#W4N-VMDK-LINKER2.0"/>
+    </node>
+  </node>
+</node>

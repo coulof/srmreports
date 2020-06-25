@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Isilon Capacity Summary" order="0" singleNodeId="6ecc6c1" type="Performance" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="source=='Isilon-Collector' &amp; (name=='HDDUsedCapacity' | name=='HDDCapacity' | name=='SSDCapacity' | name=='SSDUsedCapacity') &amp; !(node)"/>
+  <property xsi:type="ReportPreferences" defaultMode="imx" description="&lt;div&gt; &#10; &lt;b&gt;Tables and graphs showing usage by Isilon cluster and by pool &lt;/b&gt; &#10;&lt;/div&gt;"/>
+  <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+  <property xsi:type="PropertyNodeColumn" name="Cluster" property="device"/>
+  <property xsi:type="ValueNodeColumn" name="HDD Size" filterExpression="!(parttype) &amp; name=='HDDCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="Total" summaryAggregate="6"/>
+  <property xsi:type="ValueNodeColumn" name="HDD Used" filterExpression="!(parttype) &amp; name=='HDDUsedCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+  <property xsi:type="ValueNodeColumn" name="SSD Size" filterExpression="!(parttype) &amp; name=='SSDCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="Total" summaryAggregate="6"/>
+  <property xsi:type="ValueNodeColumn" name="SSD Used" filterExpression="!(parttype) &amp; name=='SSDUsedCapacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+  <property xsi:type="ValueNodeColumn" name="HDD Used (%)" resultName="HDD Used (%)" period="3600" forcePeriod="never" timeThreshold="1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="MAJOR" value="50.0"/>
+    <threshold severity="CRITICAL" value="80.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="SSD Used (%)" resultName="SSD Used (%)" period="3600" forcePeriod="never" timeThreshold="1" summaryLabel="">
+    <threshold severity="OK" value="0.0"/>
+    <threshold severity="MAJOR" value="50.0"/>
+    <threshold severity="CRITICAL" value="80.0"/>
+  </property>
+  <property xsi:type="ValueNodeColumn" name="Pool's Over 80% Used" formatter="Number&lt;rounding=0&gt; CellBackground" resultName="PoolsInAlarm" forcePeriod="never" timeThreshold="1200" replaceNullWithZero="true" summaryLabel="">
+    <threshold severity="OK" value="-Infinity"/>
+    <threshold severity="MAJOR" value="1.0"/>
+    <threshold severity="CRITICAL" value="2.0"/>
+  </property>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="device(cluster)" singleNodeId="3a2f655d">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l3M" preferredPeriod="86400"/>
+    <formula formulaId="util.Nop4">
+      <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="HDD Used (%)"/>
+      <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="SSD Used (%)"/>
+      <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="PoolsInAlarm"/>
+      <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+      <result name="HDD Used (%)" default="false" graphable="false"/>
+      <result name="SSD Used (%)" default="false" graphable="false"/>
+      <result name="PoolsInAlarm" default="false" graphable="false"/>
+      <result name="Fourth Result" default="false" graphable="false"/>
+    </formula>
+    <node name="HDD and SSD % Used" order="0" singleNodeId="16bff5aa">
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" legendDisplayPolicy="visible" maxValue="100.0"/>
+      <threshold severity="CRITICAL" value="80.0"/>
+      <threshold severity="MAJOR" value="90.0"/>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="HDDUsedCapacityMetric" from="node"/>
+        <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="HDDCapacityMetric" from="node"/>
+        <result name="HDD Used (%)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="SSDUsedCapacityMetric" from="node"/>
+        <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="SSDCapacityMetric" from="node"/>
+        <result name="SSD Used (%)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop4">
+        <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='HDDCapacity'"/>
+        <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='HDDUsedCapacity'"/>
+        <parameter name="Third Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='SSDCapacity'"/>
+        <parameter name="Fourth Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='SSDUsedCapacity'"/>
+        <result name="HDDCapacityMetric" default="false" graphable="false"/>
+        <result name="HDDUsedCapacityMetric" default="false" graphable="false"/>
+        <result name="SSDCapacityMetric" default="false" graphable="false"/>
+        <result name="SSDUsedCapacityMetric" default="false" graphable="false"/>
+      </formula>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+    </node>
+    <node name="Pool Capacity" order="1" singleNodeId="9ca584fc">
+      <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; (name=='Capacity' | name=='UsedCapacity') &amp; (parttype=='Disk Pool' &amp; devdesc='%v7.0.%' | parttype=='Storage Pool') &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;properties=device;level-up=9999&gt;" filterMode="select"/>
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l3M" preferredPeriod="86400"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk Pool" property="part"/>
+      <property xsi:type="ValueNodeColumn" name="Configured Usable Capacity" resultName="Configured Usable Capacity" period="3600" forcePeriod="never" timeThreshold="1" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="Total" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Used Capacity" resultName="Used Capacity" period="3600" forcePeriod="never" timeThreshold="1" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+      <property xsi:type="ValueNodeColumn" name="Used (%)" resultName="UsedPercent" period="3600" forcePeriod="never" timeThreshold="1" summaryLabel="">
+        <threshold severity="OK" value="0.0"/>
+        <threshold severity="MAJOR" value="50.0"/>
+        <threshold severity="CRITICAL" value="80.0"/>
+      </property>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="PoolsInAlarm"/>
+        <result name="PoolsInAlarm" default="false" graphable="false"/>
+      </formula>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="part" singleNodeId="4aa40378">
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l3M" preferredPeriod="86400"/>
+        <formula formulaId="math.Division">
+          <setting name="scale" value="100"/>
+          <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used Capacity"/>
+          <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Configured Usable Capacity"/>
+          <result name="UsedPercent" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.ConditionalTimeValueCount">
+          <setting name="Comparison Type" value="'&gt;'"/>
+          <setting name="Base Value" value="80"/>
+          <setting name="Scale Factor" value="1"/>
+          <parameter name="Input Metric" xsi:type="ResultFormulaParameterDefinition" result="UsedPercent" from="node"/>
+          <result name="PoolsInAlarm" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Configured Usable Capacity"/>
+          <result name="Configured Usable Capacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Used Capacity"/>
+          <result name="Used Capacity" default="false" graphable="false"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Pool Capacity" singleNodeId="2bc5566a">
+          <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" legendDisplayPolicy="visible" graphScaleFactor="Byte::Storage::GB::Byte::Storage::TB"/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+            <parameter name="Second Value" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+            <parameter name="Third Value" xsi:type="EmptyFormulaParameterDefinition"/>
+            <parameter name="Fourth Value" xsi:type="EmptyFormulaParameterDefinition"/>
+            <result name="Configured Usable Capacity" default="false" graphable="true"/>
+            <result name="Used Capacity" default="false" graphable="true"/>
+            <result name="Third Result" default="false" graphable="false"/>
+            <result name="Fourth Result" default="false" graphable="false"/>
+          </formula>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

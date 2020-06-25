@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Device Discovery Date" singleNodeId="6a2e7582" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="!(parttype) &amp; name=='Availability'"/>
+  <property xsi:type="ReportPreferences" defaultMode="mix" duration="l5y" preferredPeriod="604800" preferredAggregate="max" description="Discovered and Last Seen dates will be to the nearest week, day or hour depending on the aggregation level selected.&#10;&#10;The default report selects weekly aggregation over the last 5 years."/>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="Devtype Discovery Date" singleNodeId="90821551">
+    <property xsi:type="NodeExpansion" expandOn="devtype"/>
+    <property xsi:type="ReportPreferences" duration="l5y" preferredPeriod="604800" preferredAggregate="max"/>
+    <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Device" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Discoverd" formatter="DateTime&lt;format=1-&gt; Graph" resultName="FirstDiscovered" period="inherit" forcePeriod="never" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1"/>
+    <property xsi:type="ValueNodeColumn" name="Last Seen" formatter="DateTime&lt;format=1-&gt; Graph" resultName="LastSeen" period="inherit" forcePeriod="never" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="Device" singleNodeId="4073bde6">
+      <property xsi:type="NodeFilter" filterExpression="name=='Availability'"/>
+      <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l5y" preferredPeriod="604800" preferredAggregate="max"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <formula formulaId="util.FindMinMaxTimestamp">
+        <setting name="StartFrom" value="start"/>
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Availability'"/>
+        <result name="FirstMinVal" default="false" graphable="false"/>
+        <result name="FirstMinTime" default="false" graphable="false"/>
+        <result name="FirstMaxVal" default="false" graphable="false"/>
+        <result name="FirstMaxTime" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Min">
+        <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+          <parameter xsi:type="ResultFormulaParameterDefinition" result="FirstMaxTime" from="node"/>
+          <parameter xsi:type="ResultFormulaParameterDefinition" result="FirstMinTime" from="node"/>
+        </parameter>
+        <result name="FirstDiscovered" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.FindMinMaxTimestamp">
+        <setting name="StartFrom" value="end"/>
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Availability'"/>
+        <result name="LastMinVal" default="false" graphable="false"/>
+        <result name="LastMinTime" default="false" graphable="false"/>
+        <result name="LastMaxVal" default="false" graphable="false"/>
+        <result name="LastMaxTime" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Max">
+        <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+          <parameter xsi:type="ResultFormulaParameterDefinition" result="LastMaxTime" from="node"/>
+          <parameter xsi:type="ResultFormulaParameterDefinition" result="LastMinTime" from="node"/>
+        </parameter>
+        <result name="LastSeen" default="false" graphable="false"/>
+      </formula>
+    </node>
+  </node>
+</node>

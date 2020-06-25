@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Host to LUN" singleNodeId="e28d4ea3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive')"/>
+  <property xsi:type="ReportPreferences" defaultMode="lst"/>
+  <node name="Disk to LUN" singleNodeId="ba396ca0">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='Host' &amp; parttype=='Disk' &amp; isremote=='true'"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Server" nodeProperty="expandedNames[0]"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Disk" nodeProperty="expandedNames[1]"/>
+    <property xsi:type="PropertyNodeColumn" name="Is Used ?" property="isused"/>
+    <property xsi:type="PropertyNodeColumn" name="World Wide Name/LunID" property="partsn"/>
+    <property xsi:type="PropertyNodeColumn" name="Connected Array" resultName="Capacity" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="LUN" resultName="Capacity" property="part"/>
+    <property xsi:type="PropertyNodeColumn" name="VPLEX" resultName="VVolCapacity" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="VVol" resultName="VVolCapacity" property="part"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" sortMode="desc" formatter="Number&lt;rounding=2;color&gt; PerformanceChart Status" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <node name="device,part" singleNodeId="76434287">
+      <property xsi:type="NodeExpansion" expandOn="device,part"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+        <result name="VVolCapacity" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-fcbdf73a=2"/>
+      <node name="Capacity" order="0" singleNodeId="efcfee4">
+        <property xsi:type="NodeFilter" filterExpression="name=='Capacity'"/>
+        <property xsi:type="ReportPreferences" defaultMode="hsb" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" maxValue="109.0"/>
+        <threshold name="major" color="#ff8000" value="80.0"/>
+        <threshold name="critical" color="#ff0000" value="90.0"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Utilization (%)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Connected LUNs" order="2" singleNodeId="fcbdf73a">
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt;&#10;  This table shows 30 connected LUNs maximum. &#10;&lt;/div&gt;"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <property xsi:type="PropertyNodeColumn" name="Connected Array" resultName="Capacity" property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="LUN" resultName="Capacity" property="part"/>
+        <property xsi:type="PropertyNodeColumn" name="Service Level" resultName="Capacity" property="svclevel"/>
+        <property xsi:type="NodePropertyNodeColumn" name="WWN" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+          <result name="Capacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+          <result name="VVolCapacity" default="false" graphable="false"/>
+        </formula>
+        <link singleNodeId="f6571ae7" linkID="*:#W4N-VPLEX-WWN-LINKER"/>
+        <link singleNodeId="c4e59cc" linkID="*:#W4N-WWN-LINKER"/>
+      </node>
+    </node>
+  </node>
+  <node name="Filesystem to LUN" singleNodeId="6dbc26e8">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='Host' &amp; parttype=='FileSystem'"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Server" nodeProperty="expandedNames[0]"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Filesystem" nodeProperty="expandedNames[1]"/>
+    <property xsi:type="PropertyNodeColumn" name="Block Device" property="bldevice"/>
+    <property xsi:type="PropertyNodeColumn" name="FileSystem Type" property="partdesc"/>
+    <property xsi:type="PropertyNodeColumn" name="WWN" property="partsn"/>
+    <property xsi:type="PropertyNodeColumn" name="Volume Group" property="volgroup"/>
+    <property xsi:type="PropertyNodeColumn" name="Array" resultName="Capacity" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="LUN" resultName="Capacity" property="part"/>
+    <property xsi:type="PropertyNodeColumn" name="VPLEX" resultName="VVolCapacity" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="VVol" resultName="VVolCapacity" property="part"/>
+    <property xsi:type="ValueNodeColumn" name="Used Capacity" display="no" filterExpression="name=='UsedCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Free Capacity" display="no" filterExpression="name=='FreeCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" display="no" formatter="Number&lt;rounding=2;color&gt; PerformanceChart Status" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Utilization" display="no" formatter="Number&lt;rounding=1;color&gt; SparkLine Status" filterExpression="name=='CurrentUtilization'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="85.0"/>
+      <threshold severity="CRITICAL" value="95.0"/>
+    </property>
+    <node name="device,part" singleNodeId="b80b4238">
+      <property xsi:type="NodeExpansion" expandOn="device,part"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+        <result name="VVolCapacity" default="false" graphable="false"/>
+      </formula>
+      <report-layout hspan=".-fcbdf73a=2"/>
+      <node name="CurrentUtilization (%)" order="0" singleNodeId="efcfee4">
+        <property xsi:type="NodeFilter" filterExpression="name=='CurrentUtilization'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible" maxValue="109.0"/>
+        <threshold name="major" color="#ff8000" value="80.0"/>
+        <threshold name="critical" color="#ff0000" value="90.0"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Utilization (%)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="FileSystem usage history" order="1" singleNodeId="5a93eff3">
+        <property xsi:type="NodeFilter" filterExpression="name=='Capacity' | name=='UsedCapacity'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l3M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+          <result name="Capacity (GB)" default="false" graphable="true"/>
+        </formula>
+        <formula formulaId="util.MakeRange">
+          <setting name="Fill Before" value="false"/>
+          <setting name="Fill After" value="true"/>
+          <setting name="Fill Between" value="true"/>
+          <setting name="Interpolated Points" value="true"/>
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity'"/>
+          <result name="Used Capacity (GB)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Connected LUNs" order="2" singleNodeId="fcbdf73a">
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt;&#10;  This table shows 30 connected LUNs maximum. &#10;&lt;/div&gt;"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <property xsi:type="PropertyNodeColumn" name="Connected Array" resultName="Capacity" property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="LUN" resultName="Capacity" property="part"/>
+        <property xsi:type="PropertyNodeColumn" name="Service Level" resultName="Capacity" property="svclevel"/>
+        <property xsi:type="NodePropertyNodeColumn" name="WWN" nodeProperty="name"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+          <result name="Capacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+          <result name="VVolCapacity" default="false" graphable="false"/>
+        </formula>
+        <link singleNodeId="f6571ae7" linkID="*:#W4N-VPLEX-WWN-LINKER"/>
+        <link singleNodeId="c4e59cc" linkID="*:#W4N-WWN-LINKER"/>
+      </node>
+    </node>
+  </node>
+</node>

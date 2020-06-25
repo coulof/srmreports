@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Cisco Port Overview and  Line Card Report" singleNodeId="d457f2f0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="mix"/>
+  <node name="DB Enviroment Cisco" singleNodeId="5ef96c61">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='FabricSwitch'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix"/>
+    <node name="Summary" order="0" singleNodeId="c2fb64b3">
+      <property xsi:type="NodeFilter" filterExpression="devtype=='FabricSwitch' &amp; devdesc='%Cisco%' &amp; !(vstatus=='inactive') &amp; devtype=='FabricSwitch' &amp; devdesc='%Cisco%' &amp; !(vstatus=='inactive')"/>
+      <property xsi:type="ReportPreferences" defaultMode="mix"/>
+      <node name="Switches" order="0" singleNodeId="adb08cbc">
+        <property xsi:type="NodeFilter" filterExpression="devtype=='FabricSwitch' &amp; devdesc='%Cisco%' &amp; !(vstatus=='inactive')"/>
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Device" sortMode="asc#1" description="Physical switch name" formatter="String Style&lt;type=link&gt;" nodeProperty="name"/>
+        <property xsi:type="PropertyNodeColumn" name="Model" description="Model of the Cisco MDS/Nexus switch" property="model"/>
+        <property xsi:type="PropertyNodeColumn" name="IP/hostname" description="IP Address or host name of the switch" property="ip"/>
+        <property xsi:type="ValueNodeColumn" name="# FC Ports" description="The total number of physical FC Ports including Port Channels on the switch. On a FCoE enabled switch, the count includes physical FC Ports and virtual FC Ports created on the switch" formatter="Number&lt;rounding=0&gt; Status Style&lt;type=Default Style&gt;" resultName="FCPorts Count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="# Online Ports" description="The number of online FC ports on the switch" formatter="Number&lt;rounding=0&gt; Status Style&lt;type=Default Style&gt;" resultName="OnlineFCPortCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="# Free FC Ports" formatter="Number Status Style&lt;type=Default Style&gt; Graph" resultName="FreeFCPortCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="Free FC Ports in %" sortMode="desc" formatter="Number&lt;rounding=0&gt; Status Style&lt;type=Default Style&gt; Graph" resultName="Free FC Port(%)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <wiring behaviors="!entityDrilldown">
+          <jump-to-report>
+            <src-filter xsi:type="EntityClickFilter"/>
+            <report-path path="{W4N-EXPLORE-STORAGE-CONNECTIVITY-SWITCHES}/(device)"/>
+          </jump-to-report>
+        </wiring>
+        <node name="device" order="0" singleNodeId="84f8bcf7">
+          <property xsi:type="NodeExpansion" expandOn="device"/>
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <formula formulaId="util.Nop4">
+            <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="FCPorts Count"/>
+            <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="Free FC Port(%)"/>
+            <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="FreeFCPortCount"/>
+            <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="OnlineFCPortCount"/>
+            <result name="FCPorts Count" default="false" graphable="false"/>
+            <result name="Free FC Port(%)" default="false" graphable="false"/>
+            <result name="FreeFCPortCount" default="false" graphable="false"/>
+            <result name="OnlineFCPortCount" default="false" graphable="false"/>
+          </formula>
+          <node name="FC Ports" order="2" singleNodeId="7cd06110" uid="CISCO-MDS_INV_FC-PORTS">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='Port' &amp; iftype=='fibreChannel'"/>
+            <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;p&gt;Fibre Channel ports including Port Channels&lt;/p&gt; &#10;&lt;/div&gt;"/>
+            <formula formulaId="util.DistinctValueCountFormula">
+              <setting name="Filter" value="parttype=='Port' &amp; !iftype=='portChannel' &amp; !((iftype=='fibreChannel' | parttype=='NameServer') &amp; part='port-channel%') &amp; (!(part='sup-fc%' | part='mgmt%' | part='vfc%' | part='fcip%' | part='port%'))"/>
+              <setting name="ExpandOn" value="device,part"/>
+              <setting name="Level-Up" value="0"/>
+              <result name="FCPorts Count" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.DistinctValueCountFormula">
+              <setting name="Filter" value="parttype='Port'&amp;(partstat='online'|partstat='Online'|partstat='up')"/>
+              <setting name="ExpandOn" value="device,part"/>
+              <setting name="Level-Up" value="0"/>
+              <result name="OnlineFCPortCount" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Subtraction">
+              <parameter name="base metric" xsi:type="ResultFormulaParameterDefinition" result="FCPorts Count" from="node"/>
+              <parameter name="subtract metric" xsi:type="ResultFormulaParameterDefinition" result="OnlineFCPortCount" from="node"/>
+              <result name="FreeFCPortCount" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Division">
+              <setting name="scale" value="100"/>
+              <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="FreeFCPortCount" from="node"/>
+              <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="FCPorts Count" from="node"/>
+              <result name="Free FC Port(%)" default="false" graphable="false"/>
+            </formula>
+            <node name="Physical FC Ports" order="0" singleNodeId="f80da1f4">
+              <property xsi:type="NodeFilter" filterExpression="iftype=='fibreChannel' &amp; !(part='sup-fc%' | part='mgmt%' | part='vfc%' | part='fcip%') &amp; !(iftype=='portChannel' | (iftype=='fibreChannel' | parttype=='NameServer') &amp; part='port-channel%')"/>
+              <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Port" sortMode="asc" nodeProperty="expandedNames[1]"/>
+              <formula formulaId="util.ChildCount">
+                <result name="PhyFCPorts Count" default="false" graphable="false"/>
+              </formula>
+              <node name="device,part" singleNodeId="3117b7f4" uid="CISCO-MDS_INV_FC-PORTS_DEVICE-PART">
+                <property xsi:type="NodeExpansion" expandOn="device,part"/>
+                <property xsi:type="ReportPreferences" displayMode="3" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+                <report-rendering>
+                  <charts mode="dynamic"/>
+                </report-rendering>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="MDS 9513 Line Cards" order="1" singleNodeId="2c1a9566">
+      <property xsi:type="NodeFilter" filterExpression="linemode=='DS-X9224-96K9' | linemode=='DS-X9232-256K9' | linemode=='DS-X9248-256K9' | linemode=='DS-X9248-96K9' | linemode=='DS-X9112' | linemode=='DS-X9124' | linemode=='DS-X9148' | linemode=='DS-X9530-SF2-K9' | linemode=='DS-X9530-SF2AK9' | part=='Supervisor/Fabric-2' | part=='Supervisor/Fabric-2a' | part=='DS-13SLT-FAB2' | part=='DS-13SLT-FAB3' | part=='1/2/4/8 Gbps FC Module' | part=='1/2/4/8/10 Gbps Advanced FC Module'"/>
+      <property xsi:type="PropertyNodeColumn" name="Device" sortMode="asc" formatter="String Style&lt;bold;type=Default Style&gt;" property="device"/>
+      <property xsi:type="PropertyNodeColumn" name="Serial Number" formatter="String Style&lt;type=Default Style&gt;" property="devicesn"/>
+      <property xsi:type="PropertyNodeColumn" name="Model" formatter="String Style&lt;type=Default Style&gt;" property="model"/>
+      <property xsi:type="PropertyNodeColumn" name="IP" formatter="String Style&lt;type=Default Style&gt;" property="ip"/>
+      <property xsi:type="PropertyNodeColumn" name="Module Type" formatter="String Style&lt;type=Default Style&gt;" property="part"/>
+      <property xsi:type="PropertyNodeColumn" name="Line Card Model" formatter="String Style&lt;type=Default Style&gt;" property="linemode"/>
+      <property xsi:type="PropertyNodeColumn" name="Location" formatter="String Style&lt;type=Default Style&gt;" property="location"/>
+    </node>
+  </node>
+</node>

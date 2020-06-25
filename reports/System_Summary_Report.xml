@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Storage Summary Report - (SRM 4)" singleNodeId="9909a4f0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+  <node name="EMC Data Domain" singleNodeId="14a2e672">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; devdesc='Data Domain OS%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="f32e003c" linkID="tbf7358a1fc2d885:b067543e"/>
+  </node>
+  <node name="EMC ECS" singleNodeId="55ed7910">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; source=='ECS'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="ed4d8927" linkID="t9d601654cb91b28:393d40fe"/>
+  </node>
+  <node name="EMC Isilon" singleNodeId="d452be8a">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; source=='Isilon-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="135db5d7" linkID="tc8e20a2231aedd46:2be2936d"/>
+  </node>
+  <node name="EMC ScaleIO" singleNodeId="f7b07468">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; source=='ScaleIO-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="8c74a094" linkID="t63d51eceffaa0b6d:c1060503"/>
+  </node>
+  <node name="EMC VMAX" singleNodeId="b39e943">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='VMAX-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="57dfc1eb" linkID="te78602b5a6bd99:ed9df070"/>
+  </node>
+  <node name="EMC VNX" singleNodeId="dd3942ed">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector')"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="50297bf4" linkID="t3a7d227d433f92f3:ad96e7fc"/>
+  </node>
+  <node name="EMC XtremIO" singleNodeId="3a060135">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; !(parttype) &amp; source='XtremIO-Collector%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="a6f6505d" linkID="t3420f4f592562a34:f401a933"/>
+  </node>
+  <node name="HDS" singleNodeId="f8a83e78">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; source=='HDS-Collector' &amp; devtype=='Array' &amp; !(vstatus=='inactive')"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="4e830a69" linkID="tbcd3b5c2a35ad85d:89d9f0bb"/>
+  </node>
+  <node name="HP 3PAR" singleNodeId="4076182">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='HP-3PAR-Collector' | source=='HP-3PAR-Performance')"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="b04b8a7" linkID="t39d21d6e9c3f8180:c3f856c0"/>
+  </node>
+  <node name="HP StorageWorks P9000" singleNodeId="b93f0606">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; source=='P9000-Collector' &amp; devtype=='Array' &amp; !(vstatus=='inactive')"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="d1f8518d" linkID="tecf331a5d3a7b0:95500840"/>
+  </node>
+  <node name="IBM DS" singleNodeId="f7a9a513">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='IBMDS-Collector' &amp; datagrp='IBMTSDS_%' | (eventSource=='IBMDS-Collector-GenericEvent' | eventSource='IBMDS8k%') &amp; active=='1' &amp; #EVENTS-GENERIC:ALL | #APG:ALL &amp; source=='IBMDS-Collector' &amp; datagrp='LSISSI_%' | (eventSource='IBMDS5k%' | source=='IBMDS5k-Collector') &amp; active=='1' &amp; #EVENTS-GENERIC:ALL"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="60c9e60f" linkID="t7f2e76e67929ea6e:987e200"/>
+    <link singleNodeId="6f8a9576" linkID="tb5abac48ba700df:bf3e0557"/>
+  </node>
+  <node name="IBM SVC" singleNodeId="ca22ed19">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='SVC-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="85887d51" linkID="t9ff91c3e9a26ee57:974b914e"/>
+  </node>
+  <node name="IBM XIV" singleNodeId="84bd9366">
+    <property xsi:type="NodeFilter" filterExpression="!(vstatus=='inactive') &amp; source=='XIV-Collector'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="acc63e82" linkID="ta9d0a0db8676657e:c60502ca"/>
+  </node>
+  <node name="NetApp" singleNodeId="e675a6f0">
+    <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source='Netapp%'"/>
+    <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <link singleNodeId="4ce27544" linkID="ta53f39035fccbb9a:dd96ffa5"/>
+  </node>
+</node>

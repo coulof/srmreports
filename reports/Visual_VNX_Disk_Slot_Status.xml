@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Extra - VNX Array - disk empty slots" order="3" singleNodeId="f1b272ae" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="devtype=='Array' &amp; parttype=='Disk' &amp; model='VNX%' &amp; name=='Availability'"/>
+  <property xsi:type="ReportPreferences" defaultMode="lst" description="&lt;div&gt; &#10; &lt;h3&gt;This is a beta report&lt;/h3&gt; Disk's Availability only states the disk availability, no longer tell its status. Partstat property reports on disk/slot status... which is converted back into a value for TreeMap consumption. The report is built to be compatible with 4 disk/slot status: Enabled, HotSpareReady, Unbound, and Empty. Everything else is considered Unknown.&#10; &lt;br /&gt; This report is providing a visual overview of disk slot status in VNX arrays, while being a good application of TreeMap example. &#10; &lt;br /&gt;The construction is based on an application of complex expansion of the 'part' property of parttype='Disk'. 'part' property is formatted as 'Bus X Enclosure Y Disk Z' where complex expansion, using regex, recovers the elements, 1 for each level of expansion. The child report under the final report node (Disk) does some formula computing: 1) it counts number of Availability metric (1 per disk) and their status based on partstat property. Only 1 report node should report a status, which is multiplied by a constant value to represent the status. At Disk level, the child values are aggregated, only 1 should &quot;win&quot;, and tells about the status. At the top of the report structure, on the Array expansion level, defines the TreeMap report. Size makes use of the constant value (so all cells are of same size) and Color makes use of the output of Conditional Formula while the threshold definition select between green and red. &#10; &lt;br /&gt;TBV: When data cannot be recovered (Availability metric), the cell is gray (not checked). &#10;&lt;/div&gt;"/>
+  <node name="Per Array" singleNodeId="7dc4b3">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" defaultMode="tm" preferredPeriod="3600" displayedProperties="model" legendProperties=""/>
+    <property xsi:type="ValueNodeColumn" name="Constant" resultName="CellSize" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600"/>
+    <property xsi:type="ValueNodeColumn" name="Empty Slot?" resultName="Status" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600">
+      <threshold name="Enabled" color="#2ecc71" value="1.0"/>
+      <threshold name="Hot Spare Ready" color="#e0a21d" value="2.0"/>
+      <threshold name="Unbound" color="#e74d3c" value="3.0"/>
+      <threshold name="Empty" color="#0553fa" value="4.0"/>
+      <threshold name="Unknown" color="#000000" value="5.0"/>
+    </property>
+    <property xsi:type="PropertyNodeColumn" name="Disk Manufacturer" property="partdesc"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk Size" property="disksize"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk RPM" property="diskrpm"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk model" property="partmdl"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk Serial Number" property="partsn"/>
+    <property xsi:type="PropertyNodeColumn" name="Disk slot status" property="partstat"/>
+    <treemap-report depth="3" size="Constant" color="Empty Slot?"/>
+    <node name="Per Bus" singleNodeId="ff5de770">
+      <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=^\s*Bus\s*(.+)\s*Enclosure\s*(.+)\s*Disk\s*(.+);value-replace=Bus $1&gt;"/>
+      <property xsi:type="ReportPreferences" defaultMode="tm" preferredPeriod="3600" legendProperties=""/>
+      <property xsi:type="ValueNodeColumn" name="Size" resultName="CellSize" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600"/>
+      <property xsi:type="ValueNodeColumn" name="Color" resultName="Status" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600">
+        <threshold name="Enabled" color="#2ecc71" value="1.0"/>
+        <threshold name="Hot Spare Ready" color="#e0a21d" value="2.0"/>
+        <threshold name="Unbound" color="#e74c3c" value="3.0"/>
+        <threshold name="Empty" color="#0653fa" value="4.0"/>
+        <threshold name="Unknown" color="#000000" value="5.0"/>
+      </property>
+      <property xsi:type="PropertyNodeColumn" name="Disk Manufacturer" property="diskmake"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk Size" property="disksize"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk RPM" property="diskrpm"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk model" property="dskmodel"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk Serial Number" property="dskslnum"/>
+      <property xsi:type="PropertyNodeColumn" name="Disk slot status" property="partstat"/>
+      <treemap-report/>
+      <node name="Per Enclosure" singleNodeId="d6d9fe01">
+        <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=^\s*Bus\s*(.+)\s*Enclosure\s*(.+)\s*Disk\s*(.+);value-replace=Enclosure $2&gt;"/>
+        <property xsi:type="ReportPreferences" defaultMode="tm" preferredPeriod="3600" legendProperties=""/>
+        <property xsi:type="ValueNodeColumn" name="Size" resultName="CellSize" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600"/>
+        <property xsi:type="ValueNodeColumn" name="Color" resultName="Status" period="inherit" forcePeriod="never" aggregationFunc="inherit" timeThreshold="3600">
+          <threshold name="Enabled" color="#2ecc71" value="1.0"/>
+          <threshold name="Hot Spare ready" color="#e0a21d" value="2.0"/>
+          <threshold name="Unbound" color="#e74c3c" value="3.0"/>
+          <threshold name="Empty" color="#0653fa" value="4.0"/>
+          <threshold name="Unknown" color="#000000" value="5.0"/>
+        </property>
+        <property xsi:type="PropertyNodeColumn" name="Disk Manufacturer" property="diskmake"/>
+        <property xsi:type="PropertyNodeColumn" name="DiskSize" property="disksize"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk RPM" property="diskrpm"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk type" property="disktype"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk model" property="dskmodel"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk Serial number" property="dskslnum"/>
+        <property xsi:type="PropertyNodeColumn" name="Disk slot status" property="partstat"/>
+        <treemap-report depth="1"/>
+        <node name="Per Disk" singleNodeId="d8823a7f">
+          <property xsi:type="NodeExpansion" expandOn="part&lt;type=regex;value-match=^\s*Bus\s*(.+)\s*Enclosure\s*(.+)\s*Disk\s*(.+);value-replace=$3&gt;" filterMode="select"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx" preferredPeriod="3600"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+            <result name="CellSize" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Aggregation">
+            <setting name="temporal-aggregation" value="AVG"/>
+            <setting name="spatial-aggregation" value="AVG"/>
+            <setting name="parameter-aggregation" value="SUM"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Status"/>
+            <result name="Status" default="false" graphable="false"/>
+          </formula>
+          <node name="Empty" singleNodeId="f053b93">
+            <property xsi:type="ReportPreferences" defaultMode="lst" preferredPeriod="3600"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.MetricCount">
+              <setting name="Filter" value="#APG:ALL&amp;name=='Availability'&amp;partstat=='Empty'"/>
+              <result name="Enabled" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Scale">
+              <setting name="scale factor" value="4"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Enabled" from="node"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+          </node>
+          <node name="Enabled" singleNodeId="2c694314">
+            <property xsi:type="ReportPreferences" defaultMode="lst" preferredPeriod="3600"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.MetricCount">
+              <setting name="Filter" value="#APG:ALL&amp;name=='Availability'&amp;partstat=='Enabled'"/>
+              <result name="Enabled" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Scale">
+              <setting name="scale factor" value="1"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Enabled" from="node"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+          </node>
+          <node name="HotSpareReady" singleNodeId="652d13a1">
+            <property xsi:type="ReportPreferences" defaultMode="lst" preferredPeriod="3600"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.MetricCount">
+              <setting name="Filter" value="#APG:ALL&amp;name=='Availability'&amp;partstat=='Hot Spare Ready'"/>
+              <result name="Enabled" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Scale">
+              <setting name="scale factor" value="2"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Enabled" from="node"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+          </node>
+          <node name="Other" singleNodeId="21aff0e7">
+            <property xsi:type="ReportPreferences" defaultMode="lst" preferredPeriod="3600"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.MetricCount">
+              <setting name="Filter" value="#APG:ALL &amp; name=='Availability' &amp; (!partstat=='Enabled' &amp; !partstat=='Empty' &amp; !partstat=='Unbound' &amp; !partstat=='Hot Spare Ready')"/>
+              <result name="Enabled" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Scale">
+              <setting name="scale factor" value="5"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Enabled" from="node"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+          </node>
+          <node name="Unbound" singleNodeId="c462f6be">
+            <property xsi:type="ReportPreferences" defaultMode="lst" preferredPeriod="3600"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideInTreeAndReport"/>
+            <formula formulaId="util.MetricCount">
+              <setting name="Filter" value="#APG:ALL&amp;name=='Availability'&amp;partstat=='Unbound'"/>
+              <result name="Enabled" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.Scale">
+              <setting name="scale factor" value="3"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Enabled" from="node"/>
+              <result name="Status" default="false" graphable="false"/>
+            </formula>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

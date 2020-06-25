@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="CTG - VPLEX SV Timeframe Report v2 - (SRM 4)" order="7" singleNodeId="6bfa7872" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; source=='VPLEX-Collector'"/>
+  <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+  <property xsi:type="PropertyNodeColumn" name="Serial Number" sortMode="asc#2" description="Vendor-Specified Serial Number." formatter="Text&lt;type=Default Style&gt;" property="serialnb"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Storage View" sortMode="asc#1" description="Storage View that contains virtual volumes." nodeProperty="expandedNames[0]"/>
+  <property xsi:type="PropertyNodeColumn" name="Backend Array" description="Backend array associated with the storage view." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(array=='N/A')" property="array"/>
+  <property xsi:type="ValueNodeColumn" name="# Virtual Volumes" description="Number of virtual volumes for the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Virtual Volumes Count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="# Initiators" description="Registered initiators that are added to the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Initiators count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="# Ports" description="Front-end ports through which a virtual volume is exposed to a host." formatter="Number&lt;rounding=0&gt; Status" resultName="Port count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="Capacity" description="Total Capacity of the virtual volume for the storage view." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="VVolCapacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage"/>
+  <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" sortMode="desc" description="Total number of I/O operations for the front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Throughput (IOPS)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" description="Sum of total number of reads and writes on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Bandwidth (KB/s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" description="Average Latency to perform a read request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Read Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" description="Average Latency to perform a write request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Write Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+  <node name="&lt;&lt; Source &gt;&gt;" order="1" singleNodeId="255a6784">
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hide:always" propagateTimeSelection="true"/>
+    <node name="Storage View - Total Graphs" order="0" singleNodeId="1c1d2278">
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt;&#10;  Note: when the value of the column &quot;Array&quot; is either &quot;N/A&quot; or empty, the underlying storage volume or array has been removed from the VPLEX or the virtual volume is a remote virtual volume. &#10;&lt;/div&gt;" paging="5"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf" propagateTimeSelection="true"/>
+      <property xsi:type="PropertyNodeColumn" name="Serial Number" description="Vendor-Specified Serial Number." formatter="Text&lt;type=link&gt;" property="serialnb"/>
+      <property xsi:type="PropertyNodeColumn" name="Storage View Name" property="view"/>
+      <property xsi:type="PropertyNodeColumn" name="Backend Array" description="Backend array associated with the storage view." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(array=='N/A')" property="array"/>
+      <property xsi:type="ValueNodeColumn" name="# Virtual Volumes" description="Number of virtual volumes for the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Virtual Volumes Count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="# Initiators" description="Registered initiators that are added to the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Initiators count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="# Ports" description="Front-end ports through which a virtual volume is exposed to a host." formatter="Number&lt;rounding=0&gt; Status" resultName="Port count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Capacity" description="Total Capacity of the virtual volume for the storage view." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="VVolCapacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage"/>
+      <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" sortMode="desc" description="Total number of I/O operations for the front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Throughput (IOPS)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" description="Sum of total number of reads and writes on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Bandwidth (KB/s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" description="Average Latency to perform a read request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Read Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" description="Average Latency to perform a write request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Write Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+        <result name="Virtual Volumes Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+        <result name="Initiators count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+        <result name="Port count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+        <result name="VVolCapacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+        <result name="Throughput (IOPS)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+        <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+        <result name="Read Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+        <result name="Write Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <node name="Graphs" order="0" singleNodeId="4b7a1f9e">
+        <property xsi:type="ReportPreferences" defaultMode="mix" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf"/>
+        <property xsi:type="PropertyNodeColumn" name="Serial Number" sortMode="asc" description="Vendor-Specified Serial Number." formatter="Text&lt;type=link&gt;" property="serialnb"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Storage View" description="Storage View that contains virtual volumes." nodeProperty="expandedNames[0]"/>
+        <property xsi:type="PropertyNodeColumn" name="Backend Array" description="Backend array associated with the storage view." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(array=='N/A')" property="array"/>
+        <property xsi:type="ValueNodeColumn" name="# Virtual Volumes" description="Number of virtual volumes for the storage view." formatter="Number&lt;rounding=0&gt; Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="# Initiators" description="Registered initiators that are added to the storage view." formatter="Number&lt;rounding=0&gt; Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="# Ports" description="Front-end ports through which a virtual volume is exposed to a host." formatter="Number&lt;rounding=0&gt; Status" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="Capacity" description="Total Capacity of the virtual volume for the storage view." period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage"/>
+        <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" sortMode="desc#1" description="Total number of I/O operations for the front-end volume." resultName="Second Result" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true"/>
+        <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" description="Sum of total number of reads and writes on front-end volume." resultName="First Result" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true"/>
+        <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" description="Average Latency to perform a read request on front-end volume." resultName="Third Result" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true"/>
+        <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" description="Average Latency to perform a write request on front-end volume." resultName="Fourth Result" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true"/>
+        <property xsi:type="ValueNodeColumn" name="State" description="The operational state of the storage view." formatter="ValueToString&lt;key_99.0=Starting;key_33.0=Stressed;key_66.0=Unknown;key_35.0=Stopped;rounding=0;key_100.0=OK;key_0.0=Error;key_60.0=Degraded;key_30.0=Isolated&gt; Status" filterExpression="name=='Availability'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+        <property xsi:type="ValueNodeColumn" name="Availability (%)" description="Indicates the availability of the storage view." formatter="Number&lt;rounding=2;color&gt; StatusChart Status Style&lt;type=Default Style&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="true" aggregationFunc="last" useTimeRange="true" valuesAggregationFunc="last" durationOverride="d:l1d" replaceNullWithZero="true">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="99.0"/>
+          <threshold severity="OK" value="99.9"/>
+        </property>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+          <result name="Initiators count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+          <result name="Port count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+          <result name="VVolCapacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+          <result name="Throughput (IOPS)" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+          <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+          <result name="Read Latency (N<s)" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+          <result name="Write Latency (N<s)" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+          <result name="Virtual Volumes Count" default="false" graphable="false"/>
+        </formula>
+        <wiring>
+          <jump-to-report>
+            <src-filter xsi:type="CellClickFilter" columnName="Serial Number"/>
+            <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+          </jump-to-report>
+        </wiring>
+        <node name="Throughput" order="0" singleNodeId="7f77c25f">
+          <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" displayUnselectedVariables="false" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+            <result name="Initiators count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+            <result name="Port count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+            <result name="VVolCapacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+            <result name="Throughput (IOPS)" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+            <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+            <result name="Read Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+            <result name="Write Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <customization filter="@result=='Throughput (IOPS)'"/>
+          <link singleNodeId="99192f74" linkID=".-..-..-..-..-8f03b1fb"/>
+        </node>
+        <node name="Bandwidth" order="1" singleNodeId="b8a3a517">
+          <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+            <result name="Initiators count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+            <result name="Port count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+            <result name="VVolCapacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+            <result name="Throughput (IOPS)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+            <result name="Bandwidth (KB/s)" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+            <result name="Read Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+            <result name="Write Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <customization filter="@result=='Bandwidth (KB/s)'"/>
+          <link singleNodeId="72664d0b" linkID=".-..-..-..-..-8f03b1fb"/>
+        </node>
+        <node name="Read Latency" order="2" singleNodeId="8601a5b7">
+          <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+            <result name="Initiators count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+            <result name="Port count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+            <result name="VVolCapacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+            <result name="Throughput (IOPS)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+            <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+            <result name="Read Latency (N<s)" default="false" graphable="true"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+            <result name="Write Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <customization filter="@result=='Write Latency (N<s)'"/>
+          <customization filter="@result=='Write Latency (N<s)'"/>
+          <link singleNodeId="e531b67" linkID=".-..-..-..-..-8f03b1fb"/>
+        </node>
+        <node name="Write Latency" order="3" singleNodeId="4bdc1fbc">
+          <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible" graphInfoDisplayMode="pinpoint boxed"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+            <result name="Initiators count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+            <result name="Port count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+            <result name="VVolCapacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+            <result name="Throughput (IOPS)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+            <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+            <result name="Read Latency (N<s)" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+            <result name="Write Latency (N<s)" default="false" graphable="true"/>
+          </formula>
+          <customization filter="@result=='Write Latency (N<s)'"/>
+          <customization filter="@result=='Write Latency (N<s)'"/>
+          <link singleNodeId="ce4e1a14" linkID=".-..-..-..-..-8f03b1fb"/>
+        </node>
+      </node>
+    </node>
+    <node name="Storage View Details" order="1" singleNodeId="8f03b1fb">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='StorageView' &amp; !(vstatus=='inactive') &amp; source=='VPLEX-Collector'"/>
+      <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt;&#10;  Note: when the value of the column &quot;Array&quot; is either &quot;N/A&quot; or empty, the underlying storage volume or array has been removed from the VPLEX or the virtual volume is a remote virtual volume. &#10;&lt;/div&gt;" paging="5"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hide:empty,leaf" propagateTimeSelection="true"/>
+      <property xsi:type="PropertyNodeColumn" name="Serial Number" sortMode="asc" description="Vendor-Specified Serial Number." formatter="Text&lt;type=link&gt;" property="serialnb"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Storage View" description="Storage View that contains virtual volumes." nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Backend Array" description="Backend array associated with the storage view." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(array=='N/A')" property="array"/>
+      <property xsi:type="ValueNodeColumn" name="# Virtual Volumes" description="Number of virtual volumes for the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Virtual Volumes Count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="# Initiators" description="Registered initiators that are added to the storage view." formatter="Number&lt;rounding=0&gt; Status" resultName="Initiators count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="# Ports" description="Front-end ports through which a virtual volume is exposed to a host." formatter="Number&lt;rounding=0&gt; Status" resultName="Port count" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Capacity" description="Total Capacity of the virtual volume for the storage view." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="VVolCapacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage"/>
+      <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" sortMode="desc#1" description="Total number of I/O operations for the front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Throughput" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" description="Sum of total number of reads and writes on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Bandwidth" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" description="Average Latency to perform a read request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="ReadLatency" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" description="Average Latency to perform a write request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="WriteLatency" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="State" description="The operational state of the storage view." formatter="ValueToString&lt;key_99.0=Starting;key_33.0=Stressed;key_66.0=Unknown;key_35.0=Stopped;rounding=0;key_100.0=OK;key_0.0=Error;key_60.0=Degraded;key_30.0=Isolated&gt; Status" filterExpression="name=='Availability'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+      <property xsi:type="ValueNodeColumn" name="Availability (%)" description="Indicates the availability of the storage view." formatter="Number&lt;rounding=2;color&gt; StatusChart Status Style&lt;type=Default Style&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="true" aggregationFunc="last" useTimeRange="true" valuesAggregationFunc="last" durationOverride="d:l1d">
+        <threshold severity="CRITICAL" value="-Infinity"/>
+        <threshold severity="MAJOR" value="99.0"/>
+        <threshold severity="OK" value="99.9"/>
+      </property>
+      <formula formulaId="util.ChildCount">
+        <result name="StorageViewsCount" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+        <result name="Virtual Volumes Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+        <result name="Initiators count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+        <result name="Port count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+        <result name="VVolCapacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput"/>
+        <result name="Throughput (IOPS)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth"/>
+        <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadLatency"/>
+        <result name="Read Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteLatency"/>
+        <result name="Write Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <wiring>
+        <jump-to-report>
+          <src-filter xsi:type="CellClickFilter" columnName="Serial Number"/>
+          <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)"/>
+        </jump-to-report>
+      </wiring>
+      <node name="part" singleNodeId="7e52b7f">
+        <property xsi:type="NodeExpansion" expandOn="view,serialnb"/>
+        <property xsi:type="ReportPreferences" displayMode="2" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+          <result name="Virtual Volumes Count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+          <result name="Initiators count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+          <result name="Port count" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+          <result name="VVolCapacity" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput"/>
+          <result name="Throughput" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth"/>
+          <result name="Bandwidth" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadLatency"/>
+          <result name="ReadLatency" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteLatency"/>
+          <result name="WriteLatency" default="false" graphable="false"/>
+        </formula>
+        <report-layout hspan=".-50be21a5=2,.=2"/>
+        <node name="Virtual Volumes" order="0" singleNodeId="50be21a5">
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="100"/>
+          <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Virtual Volume" description="Volume presented to host through a storage view." formatter="Text&lt;type=link&gt;" nodeProperty="name"/>
+          <property xsi:type="PropertyNodeColumn" name="WWN" description="World Wide Name, a unique identifier of the virtual volume." property="partsn"/>
+          <property xsi:type="ValueNodeColumn" name="Capacity" description="Total Capacity of the virtual volumes in the storage view." formatter="Number&lt;rounding=2&gt; Status Graph" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" sortMode="desc" description="Total number of I/O operations for the front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Throughput" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" sortMode="desc" description="Sum of total number of reads and writes on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Bandwidth" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" sortMode="desc" description="Average Latency to perform a read request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="ReadLatency" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+          <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" sortMode="desc#1" description="Average Latency to perform a write request on front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="WriteLatency" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+          <property xsi:type="ValueNodeColumn" name="State" description="The operational state of the virtual volume." formatter="ValueToString&lt;key_99.0=Starting;key_33.0=Stressed;key_66.0=Unknown;rounding=0;key_100.0=OK;key_0.0=Error;key_60.0=Degraded;key_30.0=Isolated&gt; Status" filterExpression="name=='Availability'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+          <property xsi:type="ValueNodeColumn" name="Availability (%)" description="Indicates the availability of the device." formatter="Number&lt;rounding=2;color&gt; StatusChart Status Style&lt;type=Default Style&gt;" filterExpression="name=='Availability'" period="3600" forcePeriod="true" aggregationFunc="last" useTimeRange="true" valuesAggregationFunc="last" durationOverride="d:l1d">
+            <threshold severity="CRITICAL" value="-Infinity"/>
+            <threshold severity="MAJOR" value="99.0"/>
+            <threshold severity="OK" value="99.9"/>
+          </property>
+          <formula formulaId="util.ChildCount">
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+            <result name="VVolCapacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.ChildCount">
+            <result name="Virtual Volumes Count" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput"/>
+            <result name="Throughput" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth"/>
+            <result name="Bandwidth" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Average">
+            <setting name="Filter NaN Values" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadLatency"/>
+            <result name="ReadLatency" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Average">
+            <setting name="Filter NaN Values" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteLatency"/>
+            <result name="WriteLatency" default="false" graphable="false"/>
+          </formula>
+          <wiring>
+            <jump-to-report>
+              <src-filter xsi:type="CellClickFilter" columnName="Virtual Volume"/>
+              <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/(serialnb)/Device Summary/(serialnb)/Components/(device)/Virtual Volumes/(vvol, serialnb)"/>
+            </jump-to-report>
+          </wiring>
+          <node name="Join VVols" order="0" singleNodeId="507a6c4d">
+            <property xsi:type="NodeFilter" filterExpression="parttype=='VirtualVolume' &amp; !(vstatus=='inactive')"/>
+            <property xsi:type="NodeExpansion" expandOn="vvol&lt;type=split;properties=vvol;level-up=9999&gt;,serialnb&lt;type=hide&gt;" filterMode="select"/>
+            <property xsi:type="ReportPreferences" defaultMode="tab" paging="10"/>
+            <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+            <formula formulaId="util.ChildCount">
+              <result name="Virtual Volumes Count" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput"/>
+              <result name="Throughput" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Director Count"/>
+              <result name="Director Count" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth"/>
+              <result name="Bandwidth" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadLatency"/>
+              <result name="ReadLatency" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteLatency"/>
+              <result name="WriteLatency" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+              <result name="VVolCapacity" default="false" graphable="false"/>
+            </formula>
+            <node name="Performance" singleNodeId="c774013a">
+              <property xsi:type="NodeFilter" filterExpression="director &amp; parttype=='VirtualVolume' &amp; !(vstatus=='inactive')"/>
+              <property xsi:type="NodeExpansion" expandOn="vvol&lt;type=split;properties=vvol;level-up=4;name-override=Performance&gt;,serialnb&lt;type=hide&gt;" filterMode="select"/>
+              <property xsi:type="ReportPreferences" defaultMode="imx"/>
+              <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+              <property xsi:type="NodePropertyNodeColumn" name="Director" description="Director through which IO is happening." nodeProperty="name"/>
+              <property xsi:type="ValueNodeColumn" name="Throughput (IOPS)" description="Total number of I/O operations for the front-end volume." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Throughput (IOPS)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Bandwidth (KB/s)" description="sum of reads and writes per second over time." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Bandwidth (KB/s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryAggregate="6"/>
+              <property xsi:type="ValueNodeColumn" name="Read Latency (N<s)" description="Average Latency that reflects the quality of service to perform a read request." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Read Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+              <property xsi:type="ValueNodeColumn" name="Write Latency (N<s)" description="Average Latency that reflects the quality of service to perform a write request." formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Write Latency (N<s)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit"/>
+              <formula formulaId="math.spatial.Sum">
+                <setting name="aggregation" value="DEFAULT"/>
+                <setting name="partial" value="true"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+                <result name="Throughput" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="util.ChildCount">
+                <result name="Director Count" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.spatial.Sum">
+                <setting name="aggregation" value="DEFAULT"/>
+                <setting name="partial" value="true"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+                <result name="Bandwidth" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+                <result name="ReadLatency" default="false" graphable="false"/>
+              </formula>
+              <formula formulaId="math.spatial.Average">
+                <setting name="Filter NaN Values" value="false"/>
+                <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+                <result name="WriteLatency" default="false" graphable="false"/>
+              </formula>
+              <node name="director" singleNodeId="fc8eb8f">
+                <property xsi:type="NodeExpansion" expandOn="director" filterMode="both"/>
+                <property xsi:type="ReportPreferences" defaultMode="nrx" legendDisplayPolicy="visible"/>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FeRequests'"/>
+                  <result name="Throughput (IOPS)" default="false" graphable="true"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FeReads'"/>
+                  <result name="FeReads" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FeWrites'"/>
+                  <result name="FeWrites" default="false" graphable="false"/>
+                </formula>
+                <formula formulaId="math.Addition">
+                  <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="FeReads" from="node"/>
+                  <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="FeWrites" from="node"/>
+                  <result name="Bandwidth (KB/s)" default="false" graphable="true"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FeReadLat'"/>
+                  <result name="Read Latency (N<s)" default="false" graphable="true"/>
+                </formula>
+                <formula formulaId="util.MakeRange">
+                  <setting name="Fill Before" value="false"/>
+                  <setting name="Fill After" value="false"/>
+                  <setting name="Fill Between" value="true"/>
+                  <setting name="Interpolated Points" value="true"/>
+                  <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FeWriteLat'"/>
+                  <result name="Write Latency (N<s)" default="false" graphable="true"/>
+                </formula>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node name="Ports" order="1" singleNodeId="b70243b9">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Port" description="Front-end ports through which a virtual volume is exposed to a host." nodeProperty="name"/>
+          <formula formulaId="util.ChildCount">
+            <result name="Port count" default="false" graphable="false"/>
+          </formula>
+          <node name="ports" singleNodeId="51a90408">
+            <property xsi:type="NodeExpansion" expandOn="ports&lt;type=split;value-separator=|;properties=ports;level-up=0&gt;"/>
+            <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hide:tree"/>
+          </node>
+        </node>
+        <node name="Initiators" order="2" singleNodeId="966e3bfa">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+          <property xsi:type="NodePropertyNodeColumn" name="Initiator" description="Registered initiators that are added to the storage view." nodeProperty="name"/>
+          <formula formulaId="util.ChildCount">
+            <result name="Initiators count" default="false" graphable="false"/>
+          </formula>
+          <node name="initiators" singleNodeId="51a90408">
+            <property xsi:type="NodeExpansion" expandOn="inits&lt;type=split;value-separator=|;properties=inits;level-up=0&gt;"/>
+            <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hide:tree"/>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node name="Expansion" singleNodeId="f57090ab">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='StorageView'"/>
+    <property xsi:type="NodeExpansion" expandOn="view,serialnb"/>
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+      <result name="Virtual Volumes Count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+      <result name="Initiators count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+      <result name="Port count" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+      <result name="VVolCapacity" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+      <result name="Throughput (IOPS)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+      <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+      <result name="Read Latency (N<s)" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+      <result name="Write Latency (N<s)" default="false" graphable="false"/>
+    </formula>
+    <node name="Default - 2W:L1D" order="0" singleNodeId="7a67e22f">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Virtual Volumes Count"/>
+        <result name="Virtual Volumes Count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Initiators count"/>
+        <result name="Initiators count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Port count"/>
+        <result name="Port count" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="VVolCapacity"/>
+        <result name="VVolCapacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Throughput (IOPS)"/>
+        <result name="Throughput (IOPS)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Bandwidth (KB/s)"/>
+        <result name="Bandwidth (KB/s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Read Latency (N<s)"/>
+        <result name="Read Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Write Latency (N<s)"/>
+        <result name="Write Latency (N<s)" default="false" graphable="false"/>
+      </formula>
+      <link singleNodeId="48811cdb" linkID=".-..-..-..-255a6784-1c1d2278"/>
+      <link singleNodeId="e0695d19" linkID=".-..-..-..-255a6784-8f03b1fb"/>
+    </node>
+    <node name="Last 1 Day" order="1" singleNodeId="fa22cefa">
+      <property xsi:type="ReportPreferences" defaultMode="tab"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <link singleNodeId="48811cdb" linkID=".-..-..-..-255a6784-1c1d2278"/>
+      <link singleNodeId="e0695d19" linkID=".-..-..-..-255a6784-8f03b1fb"/>
+    </node>
+    <node name="Last 1 Week" order="2" singleNodeId="d810ae09">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l1w"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <link singleNodeId="48811cdb" linkID=".-..-..-..-255a6784-1c1d2278"/>
+      <link singleNodeId="e0695d19" linkID=".-..-..-..-255a6784-8f03b1fb"/>
+    </node>
+    <node name="Last 1 Month" order="3" singleNodeId="a41662b8">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l1M" preferredPeriod="3600"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <link singleNodeId="48811cdb" linkID=".-..-..-..-255a6784-1c1d2278"/>
+      <link singleNodeId="e0695d19" linkID=".-..-..-..-255a6784-8f03b1fb"/>
+    </node>
+    <node name="Last 6 Months" order="4" singleNodeId="b10130bf">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l6M" preferredPeriod="86400"/>
+      <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+      <link singleNodeId="48811cdb" linkID=".-..-..-..-255a6784-1c1d2278"/>
+      <link singleNodeId="e0695d19" linkID=".-..-..-..-255a6784-8f03b1fb"/>
+    </node>
+  </node>
+</node>

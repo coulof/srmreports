@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Cluster Throughput (IOPS)" order="1" singleNodeId="62834655" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="vstatus=='active' &amp; source=='Isilon-Collector'"/>
+  <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="device unit" legendDisplayPolicy="visible"/>
+  <formula formulaId="util.Nop">
+    <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOPS"/>
+    <result name="Throughput (IOPS)" default="false" graphable="true"/>
+  </formula>
+  <node name="device" singleNodeId="413119fe">
+    <property xsi:type="NodeExpansion" expandOn="device" filterMode="select"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" legendProperties="unit" legendDisplayPolicy="visible"/>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="false"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SumReadIOPS"/>
+      <result name="Read IOPS" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="false"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SumWriteIOPS"/>
+      <result name="Write IOPS" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="math.Addition">
+      <parameter name="metric1" xsi:type="ResultFormulaParameterDefinition" result="Read IOPS" from="node"/>
+      <parameter name="metric2" xsi:type="ResultFormulaParameterDefinition" result="Write IOPS" from="node"/>
+      <result name="IOPS" default="true" graphable="true"/>
+    </formula>
+    <customization color="#6c6efa" filter="@result=='Write IOPS'"/>
+    <customization color="#f7ce03" filter="@result=='Read IOPS'"/>
+    <customization color="#6b686b" filter="@result=='IOPS'"/>
+    <node name="node" singleNodeId="df2c723e">
+      <property xsi:type="NodeExpansion" expandOn="node"/>
+      <property xsi:type="ReportPreferences" defaultMode="mix" legendProperties="unit" legendDisplayPolicy="visible"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadIOPS"/>
+        <result name="ReadIOPS" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteIOPS"/>
+        <result name="WriteIOPS" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="SUM"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadIOPS"/>
+        <result name="SumReadIOPS" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="SUM"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteIOPS"/>
+        <result name="SumWriteIOPS" default="false" graphable="false"/>
+      </formula>
+      <node name="disk" singleNodeId="352797c2">
+        <property xsi:type="NodeFilter" filterExpression="parttype=='Disk'"/>
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" defaultMode="ncr" legendProperties="unit" legendDisplayPolicy="visible"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadIOPS"/>
+          <result name="ReadIOPS" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteIOPS"/>
+          <result name="WriteIOPS" default="false" graphable="false"/>
+        </formula>
+        <node name="Reads" singleNodeId="c2e1ce50">
+          <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+            <result name="ReadIOPS" default="false" graphable="false"/>
+          </formula>
+        </node>
+        <node name="Writes" singleNodeId="aa8b8ec3">
+          <property xsi:type="NodeFilter" filterExpression="name=='WriteRequests'"/>
+          <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+            <result name="WriteIOPS" default="false" graphable="false"/>
+          </formula>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

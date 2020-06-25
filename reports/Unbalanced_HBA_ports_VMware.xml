@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Unbalanced HBA ports VMware" singleNodeId="23c2432e" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; devtype=='Hypervisor' &amp; source=='VMWareCollector' &amp; !(vstatus=='inactive')"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Device" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Worst distribution (%)" sortMode="desc" formatter="Number&lt;rounding=2&gt; Status Graph" resultName="Worst distribution (%)" period="inherit" forcePeriod="never" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" roundingAccuracy="-1">
+    <threshold severity="OK" value="100.0"/>
+    <threshold severity="MINOR" value="125.0"/>
+    <threshold severity="MAJOR" value="150.0"/>
+    <threshold severity="CRITICAL" value="200.0"/>
+  </property>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="device" singleNodeId="489c2617">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix"/>
+    <topn-report/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Worst distribution (%)"/>
+      <result name="Worst distribution (%)" default="false" graphable="false"/>
+    </formula>
+    <node name="FC Ports" order="0" singleNodeId="653c4c17">
+      <property xsi:type="NodeFilter" filterExpression="parttype=='Port' &amp; partstat=='online' &amp; adaptype=='FibreChannelHBA'"/>
+      <property xsi:type="ReportPreferences" defaultMode="hb"/>
+      <topn-report valueDisplay="absolute"/>
+      <formula formulaId="math.spatial.Max">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Relative IOPS (%)"/>
+        <result name="Worst distribution (%)" default="false" graphable="false"/>
+      </formula>
+      <node name="Part" singleNodeId="f568832d">
+        <property xsi:type="NodeExpansion" expandOn="part"/>
+        <property xsi:type="ReportPreferences" defaultMode="hb"/>
+        <formula formulaId="math.Division">
+          <setting name="scale" value="100"/>
+          <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Card IOPS"/>
+          <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="Average IOPS"/>
+          <result name="Relative IOPS (%)" default="true" graphable="false"/>
+        </formula>
+        <node name="All cards Total Throughput" singleNodeId="6cffa9b3">
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOPS"/>
+            <result name="Average IOPS" default="true" graphable="true"/>
+          </formula>
+          <node name="device" singleNodeId="93f9e728">
+            <property xsi:type="NodeExpansion" expandOn="device&lt;type=split;level-up=2;properties=device&gt;"/>
+            <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Card IOPS"/>
+              <result name="IOPS" default="false" graphable="false"/>
+            </formula>
+            <link singleNodeId="483768ff" linkID=".-..-..-..-61393d72"/>
+          </node>
+        </node>
+        <node name="Card Total Throughput" singleNodeId="61393d72">
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="hb"/>
+          <topn-report/>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="false"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOPS"/>
+            <result name="Card IOPS" default="true" graphable="false"/>
+          </formula>
+          <node name="IOPS Metrics" singleNodeId="d48f5afd">
+            <property xsi:type="NodeFilter" filterExpression="name=='IORead' | name=='IOWrite'"/>
+            <property xsi:type="NodeExpansion" expandOn="name"/>
+            <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+            <formula formulaId="math.Aggregation">
+              <setting name="temporal-aggregation" value="SUM"/>
+              <setting name="spatial-aggregation" value="AVG"/>
+              <setting name="parameter-aggregation" value="DEFAULT"/>
+              <setting name="partial" value="false"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+              <result name="IOPS over time" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.FullPeriodAggregation">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IOPS over time" from="node"/>
+              <result name="IOPS" default="true" graphable="false"/>
+            </formula>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

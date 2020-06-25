@@ -1,0 +1,826 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Vmware Guest Performance and Storage" singleNodeId="327a575d" type="Explore" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l1M"/>
+  <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+  <property xsi:type="NodePropertyNodeColumn" name="Explorer Views" nodeProperty="name"/>
+  <property xsi:type="ValueNodeColumn" name="Devices/Applications count" resultName="DeviceCount" forcePeriod="never" timeThreshold="600" formatter="PerformanceSparkLineFormatter" roundingAccuracy="-1" displayWhen="$v &gt; 0.00 || $v &lt; 0.00 || empty($v)"/>
+  <node name="Commfdups2 Virtual Disks" order="0" singleNodeId="282f1146">
+    <property xsi:type="NodeFilter" filterExpression="((source=='VMWareCollector' | source=='RSC-ESXPowerPathPerformance') &amp; #APG:ALL | source='VSPHERE-EVENTS%' | source='VSPHERE-TASKS%') &amp; devtype=='VirtualMachine' &amp; !(vstatus=='inactive') &amp; parttype=='Virtual Disk' &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" preferredPeriod="3600" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Latency (ms)" filterExpression="name=='ReadLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Write Latency (ms)" filterExpression="name=='WriteLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth (/s)" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth (/s)" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Datastore Name" filterExpression="name=='Capacity'" property="linkedto"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput" from="node"/>
+      <result name="ReadIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput" from="node"/>
+      <result name="WriteIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="ReadIOPs" from="node"/>
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="WriteIOPs" from="node"/>
+      </parameter>
+      <result name="IOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+      <result name="ReadThroughput" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+      <result name="WriteThroughput" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="984133fc">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadLatency'"/>
+        <result name="Read Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteLatency'"/>
+        <result name="Write Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+      </node>
+    </node>
+  </node>
+  <node name="Commfdups2 Virtual Disks Performance" order="1" singleNodeId="5e196ba0">
+    <property xsi:type="NodeFilter" filterExpression="((source=='VMWareCollector' | source=='RSC-ESXPowerPathPerformance') &amp; #APG:ALL | source='VSPHERE-EVENTS%' | source='VSPHERE-TASKS%') &amp; devtype=='VirtualMachine' &amp; !(vstatus=='inactive') &amp; parttype=='Virtual Disk' &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix" duration="l1w" preferredPeriod="3600" preferredAggregate="last"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Latency (ms)" filterExpression="name=='ReadLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Write Latency (ms)" filterExpression="name=='WriteLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth (/s)" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth (/s)" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Datastore Name" filterExpression="name=='Capacity'" property="linkedto"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput" from="node"/>
+      <result name="ReadIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput" from="node"/>
+      <result name="WriteIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="ReadIOPs" from="node"/>
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="WriteIOPs" from="node"/>
+      </parameter>
+      <result name="IOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+      <result name="ReadThroughput" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+      <result name="WriteThroughput" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="984133fc">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadLatency'"/>
+        <result name="Read Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteLatency'"/>
+        <result name="Write Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+      </node>
+    </node>
+  </node>
+  <node name="Commfdups2 File Systems" order="2" singleNodeId="890f62d4">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='FileSystem' &amp; !(part='System%') &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" preferredPeriod="3600"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="FileSystem" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Storage Size" filterExpression="name=='Capacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Free Space" filterExpression="name=='FreeCapacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used Space" resultName="Used (GB)" forcePeriod="true" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used (%)" sortMode="asc" resultName="Used (%)" forcePeriod="true" useTimeRange="true" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="80.0"/>
+      <threshold severity="CRITICAL" value="90.0"/>
+    </property>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="FileSystems" singleNodeId="d2d88263">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" maxValue="109.0"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <threshold name="Free (%) critical" color="#ff0000" value="5.0"/>
+      <threshold name="Free (%) major" color="#ff8000" value="10.0"/>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Free (%)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="StorageSize" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="AvailableSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedSpace" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Used (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="StorageSize" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Total Size (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Subtraction">
+        <parameter name="base metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <parameter name="subtract metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="UsedSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Used (%)" default="false" graphable="true"/>
+      </formula>
+      <axis scaleFactor="1.0" filterExpression="@result=='Used (GB)' | @result=='Total Size (GB)'"/>
+      <customization filter="@result=='Free (%)'"/>
+      <customization filter="@result=='Used (GB)'"/>
+      <customization color="#f71332" width="2.5" filter="@result=='Total Size (GB)'"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+    </node>
+  </node>
+  <node name="Commfdups2 File Systems" order="3" singleNodeId="2f04b354">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='FileSystem' &amp; !(part='System%') &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix" duration="l1w" preferredPeriod="3600"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="FileSystem" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Storage Size" filterExpression="name=='Capacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Free Space" filterExpression="name=='FreeCapacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used Space" resultName="Used (GB)" forcePeriod="true" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used (%)" sortMode="asc" resultName="Used (%)" forcePeriod="true" useTimeRange="true" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="80.0"/>
+      <threshold severity="CRITICAL" value="90.0"/>
+    </property>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="FileSystems" singleNodeId="d2d88263">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" legendDisplayPolicy="visible"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Free (%)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="File System Total (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="AvailableSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedSpace" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="File System Used (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="StorageSize" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Total Size (GB)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Subtraction">
+        <parameter name="base metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <parameter name="subtract metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="UsedSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Used (%)" default="false" graphable="false"/>
+      </formula>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+    </node>
+  </node>
+  <node name="Commfdups2 Storage Allocation" order="4" singleNodeId="2b1db414">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='Virtual Disk' &amp; part='HARD%' &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" defaultMode="ncr" duration="l1w" preferredPeriod="3600" legendDisplayPolicy="visible"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="287fd0d3">
+      <property xsi:type="NodeFilter" filterExpression="name=='Capacity'"/>
+      <property xsi:type="NodeExpansion" expandOn="part" filterMode="select"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="86400" legendDisplayPolicy="visible"/>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+      </node>
+    </node>
+  </node>
+  <node name="Commfdups2 Processor Usage" order="5" singleNodeId="bcbcae6c">
+    <property xsi:type="NodeFilter" filterExpression="part=='System' &amp; parttype=='Processor' &amp; (name=='CurrentUtilization' | name=='Ready' | name=='UsageMHz') &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1w" preferredPeriod="3600" description="A short spike in CPU usage indicates that you are making the best use of the host resources.&#10;However, if thevalue is constantly high, the host is probably overcommitted. Generally, if the CPU usage value for a virtual machine is above 90%, performance is impacted." legendProperties="name" legendDisplayPolicy="visible" maxValue="109.0"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <threshold name="% Major" color="#ff8000" value="70.0"/>
+    <threshold name="% Critical" color="#ff0000" value="90.0"/>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="part=='System' &amp; parttype=='Processor' &amp; name=='CurrentUtilization'"/>
+      <result name="%" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="part=='System' &amp; parttype=='Processor' &amp; name=='UsageMHz'"/>
+      <result name="MHz" default="false" graphable="true"/>
+    </formula>
+    <axis minValue="0.0" scaleFactor="1.0" filterExpression="@result=='MHz'"/>
+    <customization color="#ff0000" filter="@result=='%'"/>
+    <customization color="#e0e0e0" width="1.0" filter="@result=='MHz'"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="calc" singleNodeId="f3adb5e2">
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="ready" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="300.0"/>
+        <result name="result" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MakeRange">
+        <setting name="Fill Before" value="false"/>
+        <setting name="Fill After" value="false"/>
+        <setting name="Fill Between" value="true"/>
+        <setting name="Interpolated Points" value="true"/>
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ready'"/>
+        <result name="ready" default="false" graphable="false"/>
+      </formula>
+    </node>
+  </node>
+  <node name="Commfdups2 Memory (%)" order="6" singleNodeId="e157a579">
+    <property xsi:type="NodeFilter" filterExpression="part=='System' &amp; parttype=='Memory' &amp; name=='CurrentUtilization' &amp; device=='Commfdups2'"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1w" preferredPeriod="3600" description="Percentage of RAM used by the virtual machine." maxValue="109.0"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <threshold name="major" color="#ff8000" value="60.0"/>
+    <threshold name="critical" color="#ff0000" value="80.0"/>
+    <customization color="#b013b0" filter="name=='CurrentUtilization'"/>
+  </node>
+  <node name="mhmbd124 Virtual Disks" order="7" singleNodeId="9b26499e">
+    <property xsi:type="NodeFilter" filterExpression="((source=='VMWareCollector' | source=='RSC-ESXPowerPathPerformance') &amp; #APG:ALL | source='VSPHERE-EVENTS%' | source='VSPHERE-TASKS%') &amp; devtype=='VirtualMachine' &amp; !(vstatus=='inactive') &amp; parttype=='Virtual Disk' &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" preferredPeriod="3600" preferredAggregate="last"/>
+    <property xsi:type="DisplayPreferences" propagateTimeSelection="true"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Latency (ms)" filterExpression="name=='ReadLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Write Latency (ms)" filterExpression="name=='WriteLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth (/s)" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth (/s)" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Datastore Name" filterExpression="name=='Capacity'" property="linkedto"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput" from="node"/>
+      <result name="ReadIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput" from="node"/>
+      <result name="WriteIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="ReadIOPs" from="node"/>
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="WriteIOPs" from="node"/>
+      </parameter>
+      <result name="IOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+      <result name="ReadThroughput" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+      <result name="WriteThroughput" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="984133fc">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadLatency'"/>
+        <result name="Read Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteLatency'"/>
+        <result name="Write Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+      </node>
+    </node>
+  </node>
+  <node name="mhmbd124 Virtual Disks Performance" order="8" singleNodeId="d16a2e74">
+    <property xsi:type="NodeFilter" filterExpression="((source=='VMWareCollector' | source=='RSC-ESXPowerPathPerformance') &amp; #APG:ALL | source='VSPHERE-EVENTS%' | source='VSPHERE-TASKS%') &amp; devtype=='VirtualMachine' &amp; !(vstatus=='inactive') &amp; parttype=='Virtual Disk' &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" defaultMode="mix" duration="l1w" preferredPeriod="3600" preferredAggregate="last"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Latency (ms)" filterExpression="name=='ReadLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Write Latency (ms)" filterExpression="name=='WriteLatency'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="BarChartSparkLineFormatter&lt;spacing=1;barwidth=1&gt;" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="25.0"/>
+      <threshold severity="CRITICAL" value="50.0"/>
+    </property>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth (/s)" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth (/s)" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" formatter="SparkLineFormatter" scaleOperation="unit" scaleFactor="Byte::Storage::MB::Byte::Storage" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Datastore Name" filterExpression="name=='Capacity'" property="linkedto"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Decimal::GB::Byte::Decimal" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ReadThroughput" from="node"/>
+      <result name="ReadIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="WriteThroughput" from="node"/>
+      <result name="WriteIOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="CombinedFormulaParameterDefinition">
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="ReadIOPs" from="node"/>
+        <parameter xsi:type="ResultFormulaParameterDefinition" result="WriteIOPs" from="node"/>
+      </parameter>
+      <result name="IOPs" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadRequests'"/>
+      <result name="ReadThroughput" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteRequests'"/>
+      <result name="WriteThroughput" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="984133fc">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" preferredAggregate="last"/>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+        <result name="Capacity" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ReadLatency'"/>
+        <result name="Read Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='WriteLatency'"/>
+        <result name="Write Latency (ms)" default="false" graphable="true"/>
+      </formula>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+      </node>
+    </node>
+  </node>
+  <node name="mhmbd124 File Systems" order="9" singleNodeId="af34deaa">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='FileSystem' &amp; !(part='System%') &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" preferredPeriod="3600"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="FileSystem" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Storage Size" filterExpression="name=='Capacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Free Space" filterExpression="name=='FreeCapacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used Space" resultName="Used (GB)" forcePeriod="true" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used (%)" sortMode="asc" resultName="Used (%)" forcePeriod="true" useTimeRange="true" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="80.0"/>
+      <threshold severity="CRITICAL" value="90.0"/>
+    </property>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="FileSystems" singleNodeId="d2d88263">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" maxValue="109.0"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <threshold name="Free (%) critical" color="#ff0000" value="5.0"/>
+      <threshold name="Free (%) major" color="#ff8000" value="10.0"/>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Free (%)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="StorageSize" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="AvailableSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedSpace" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Used (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="StorageSize" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Total Size (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Subtraction">
+        <parameter name="base metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <parameter name="subtract metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="UsedSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Used (%)" default="false" graphable="true"/>
+      </formula>
+      <axis scaleFactor="1.0" filterExpression="@result=='Used (GB)' | @result=='Total Size (GB)'"/>
+      <customization filter="@result=='Free (%)'"/>
+      <customization filter="@result=='Used (GB)'"/>
+      <customization color="#f71332" width="2.5" filter="@result=='Total Size (GB)'"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+    </node>
+  </node>
+  <node name="mhmbd124 File Systems" order="10" singleNodeId="66907c62">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='FileSystem' &amp; !(part='System%') &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" displayMode="1" defaultMode="mix" duration="l1w" preferredPeriod="3600"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="FileSystem" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Storage Size" filterExpression="name=='Capacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Free Space" filterExpression="name=='FreeCapacity'" forcePeriod="never" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used Space" resultName="Used (GB)" forcePeriod="true" useTimeRange="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="Used (%)" sortMode="asc" resultName="Used (%)" forcePeriod="true" useTimeRange="true" roundingAccuracy="0" summaryLabel="">
+      <threshold severity="OK" value="-Infinity"/>
+      <threshold severity="MAJOR" value="80.0"/>
+      <threshold severity="CRITICAL" value="90.0"/>
+    </property>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="FileSystems" singleNodeId="d2d88263">
+      <property xsi:type="NodeExpansion" expandOn="part"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1M" preferredPeriod="3600" legendDisplayPolicy="visible"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Free (%)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="File System Total (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="util.Nop">
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="AvailableSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="UsedSpace" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="File System Used (GB)" default="false" graphable="true"/>
+      </formula>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="StorageSize" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="1.0"/>
+        <result name="Total Size (GB)" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Subtraction">
+        <parameter name="base metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <parameter name="subtract metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='FreeCapacity'"/>
+        <result name="UsedSpace" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.Percentage">
+        <setting name="threshold" value="100"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="Used (GB)" from="node"/>
+        <parameter name="denominator" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+        <result name="Used (%)" default="false" graphable="false"/>
+      </formula>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+    </node>
+  </node>
+  <node name="mhmbd124 Storage Allocation" order="11" singleNodeId="7477a678">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='Virtual Disk' &amp; part='HARD%' &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" defaultMode="ncr" duration="l1w" preferredPeriod="3600" legendDisplayPolicy="visible"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty" propagateTimeSelection="true"/>
+    <property xsi:type="PropertyNodeColumn" name="Host Name" property="hostname"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Virtual Disk" nodeProperty="name"/>
+    <property xsi:type="ValueNodeColumn" name="Capacity" filterExpression="name=='Capacity'" period="3600" forcePeriod="never" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DiskCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="StorageSize"/>
+      <result name="ProvisionedSize" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="AvailableSpace"/>
+      <result name="AvailableSpace" default="false" graphable="false"/>
+    </formula>
+    <node name="Virtual Disk" singleNodeId="984133fc">
+      <property xsi:type="NodeFilter" filterExpression="name=='Capacity'"/>
+      <property xsi:type="NodeExpansion" expandOn="part" filterMode="select"/>
+      <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1y" preferredPeriod="86400" legendDisplayPolicy="visible"/>
+      <node name="Details" singleNodeId="ed02e62c">
+        <property xsi:type="NodeExpansion" expandOn="unit"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+      </node>
+    </node>
+  </node>
+  <node name="mhmbd124 Processor Usage" order="12" singleNodeId="d31b9d61">
+    <property xsi:type="NodeFilter" filterExpression="part=='System' &amp; parttype=='Processor' &amp; (name=='CurrentUtilization' | name=='Ready' | name=='UsageMHz') &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1w" preferredPeriod="3600" description="A short spike in CPU usage indicates that you are making the best use of the host resources.&#10;However, if thevalue is constantly high, the host is probably overcommitted. Generally, if the CPU usage value for a virtual machine is above 90%, performance is impacted." legendProperties="name" legendDisplayPolicy="visible" maxValue="109.0"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <threshold name="% Major" color="#ff8000" value="70.0"/>
+    <threshold name="% Critical" color="#ff0000" value="90.0"/>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="part=='System' &amp; parttype=='Processor' &amp; name=='CurrentUtilization'"/>
+      <result name="%" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="util.MakeRange">
+      <setting name="Fill Before" value="false"/>
+      <setting name="Fill After" value="false"/>
+      <setting name="Fill Between" value="true"/>
+      <setting name="Interpolated Points" value="true"/>
+      <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="part=='System' &amp; parttype=='Processor' &amp; name=='UsageMHz'"/>
+      <result name="MHz" default="false" graphable="true"/>
+    </formula>
+    <axis minValue="0.0" scaleFactor="1.0" filterExpression="@result=='MHz'"/>
+    <customization color="#ff0000" filter="@result=='%'"/>
+    <customization color="#e0e0e0" width="1.0" filter="@result=='MHz'"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="calc" singleNodeId="f3adb5e2">
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfBrowsing"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <formula formulaId="math.Division">
+        <setting name="scale" value="1"/>
+        <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="ready" from="node"/>
+        <parameter name="denominator" xsi:type="ConstantFormulaParameterDefinition" value="300.0"/>
+        <result name="result" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.MakeRange">
+        <setting name="Fill Before" value="false"/>
+        <setting name="Fill After" value="false"/>
+        <setting name="Fill Between" value="true"/>
+        <setting name="Interpolated Points" value="true"/>
+        <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='ready'"/>
+        <result name="ready" default="false" graphable="false"/>
+      </formula>
+    </node>
+  </node>
+  <node name="mhmbd124 Memory (%)" order="13" singleNodeId="124ce6e3">
+    <property xsi:type="NodeFilter" filterExpression="part=='System' &amp; parttype=='Memory' &amp; name=='CurrentUtilization' &amp; device=='mhmbd124 - vCenter Sandbox'"/>
+    <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l1w" preferredPeriod="3600" description="Percentage of RAM used by the virtual machine." maxValue="109.0"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+    <threshold name="major" color="#ff8000" value="60.0"/>
+    <threshold name="critical" color="#ff0000" value="80.0"/>
+    <customization color="#b013b0" filter="name=='CurrentUtilization'"/>
+  </node>
+</node>

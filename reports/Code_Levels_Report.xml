@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Code Levels" order="13" singleNodeId="e0e92b6f" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="mix"/>
+  <node name="Storage Systems" order="0" singleNodeId="7382a769">
+    <property xsi:type="NodeFilter" filterExpression="(datatype=='Block' | datatype=='File' | datatype=='Virtual' &amp; !(device=='null') | datatype=='Object' | devtype=='FabricSwitch' &amp; !(parttype=='Fabric' | parttype='Zone%') &amp; !(serialnb)) &amp; vstatus=='active'"/>
+    <property xsi:type="ReportPreferences" duration="l1w" preferredPeriod="3600" paging="100"/>
+    <property xsi:type="PropertyNodeColumn" name="Storage System Type" sortMode="asc" property="sstype"/>
+    <property xsi:type="PropertyNodeColumn" name="Device Type" property="devtype"/>
+    <property xsi:type="PropertyNodeColumn" name="Array Type" sortMode="asc#1" property="arraytyp"/>
+    <property xsi:type="PropertyNodeColumn" name="Model" property="model"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Serial Number" nodeProperty="name"/>
+    <property xsi:type="PropertyNodeColumn" name="Storage System Alias" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="Vendor" property="vendor"/>
+    <property xsi:type="PropertyNodeColumn" name="Firmware" property="devdesc"/>
+    <property xsi:type="ValueNodeColumn" name="Total Raw (TB)" columnFilterCondition="\b\B" filterExpression="name=='RawCapacity' &amp; !(parttype) &amp; !(devtype=='VirtualStorage')" period="3600" forcePeriod="true" timeThreshold="2" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::TB" summaryLabel="" summaryAggregate="6"/>
+    <node name="serialnb" singleNodeId="483bce83">
+      <property xsi:type="NodeExpansion" expandOn="serialnb"/>
+      <property xsi:type="ReportPreferences" displayMode="3" defaultMode="mix" duration="l1w" preferredPeriod="3600"/>
+      <report-layout vspan="*:#W4N-TEMPLATE-OBJECT-SUMMARY=1,*:#W4N-OBJECT-USABLE-CAP-BY-SL=1,*:#W4N-TEMPLATE-ENTERPRISE-SUMMARY=1,*:#W4N-OBJECT-USED-BY-POOL=1,.-e1d0b12e=1,*:#W4N-TEMPLATE-UNIFIED-SUMMARY=1,*:#W4N-TEMPLATE-VPLEX-SUMMARY=1,*:#W4N-DEVICE-SUMMARY-FABRICSWITCH=1,*:#W4N-DASHBOARD-USABLECAPBYSL=1" hspan="*:#W4N-EMC-VMAX-STORAGEGROUP-SUMMARY=2,*:#W4N-EMC-VNX-STORAGEPROCESSOR=2,*:#W4N-VPLEX-DIRECTORS=3,*:#W4N-VIRTUAL-VDISK-DETAILS=3,*:#W4N-ENTERPRISE-USED-BY-TYPE=1,*:#W4N-VIRTUAL-TOPOLOGY=3,*:#W4N-DASHBOARD-USED-BY-POOL=3,*:#W4N-EMC-VMAX-DEVICE-PERFORMANCE=3,*:#W4N-BLOCK-STORAGE-CONNECTIVITY=3,*:{W4N-TEMPLATE-OBJECT-SUMMARY}-80e60ed7=3,*:{W4N-TEMPLATE-ENTERPRISE-SUMMARY}-80e60ed7=3,*:{W4N-TEMPLATE-UNIFIED-SUMMARY}-80e60ed7=3,*:#W4N-VIRTUAL-VVOL-DETAILS=3,*:#W4N-BLOCK-PATH-DETAILS=3,*:#W4N-FILE-STORAGE-CONNECTIVITY=2,.-e1d0b12e=2,*:#W4N-ENTERPRISE-RAW-CAP=1,*:#W4N-OBJECT-USABLE-CAP-BY-SL=2,*:#W4N-EMC-VMAX-FRONTEND-DIRECTOR-SUMMARY=2,*:#W4N-VPLEX-CLUSTERS=3,*:#W4N-OBJECT-USED-BY-POOL=3,*:#W4N-TEMPLATE-UNIFIED-SUMMARY=1,*:#W4N-DASHBOARD-USABLECAPBYSL=3,*:{W4N-TEMPLATE-ENTERPRISE-SUMMARY}-5f4ce54c-cf236b0a=3,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-b6b721eb-8d1d9fc4=3,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-40b96e3f=3,*:{W4N-TEMPLATE-VPLEX-SUMMARY}-573648b4=3,*:#W4N-VPLEX-PORT-INVENTORY=3,*:#W4N-EMC-VNXFILE-FILESYSTEMS=3,*:#W4N-DASHBOARD-USED-BY-VIRTUALPOOL=3" order="*:#W4N-OBJECT-USED-CAP=5,*:#W4N-TEMPLATE-OBJECT-SUMMARY=2,*:#W4N-OBJECT-OBJECTCOUNTREND=6,*:#W4N-OBJECT-USABLE-CAP-BY-SL=7,*:#W4N-OBJECT-USABLE-CAP=3,*:#W4N-OBJECT-USABLETREND=4,*:#W4N-OBJECT-USED-BY-POOL=8,.-e1d0b12e=1"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Topology Map" order="0" singleNodeId="e1d0b12e" type="network">
+        <property xsi:type="ReportPreferences" displayMode="3" defaultMode="tda"/>
+        <wiring behaviors="!passThrough,!entityDrilldown,!titleDrilldown,!markerPopup">
+          <trigger desc="Passthrough">
+            <src-filter xsi:type="JsonQueryFilter" query=":eq({name}, com.emc.watch4net.triggers.report.entity.click)"/>
+            <action xsi:type="PassthroughAction"/>
+          </trigger>
+          <trigger desc="Remove default">
+            <src-filter xsi:type="JsonQueryFilter" query=":and({:eq({name}, com.emc.watch4net.triggers.report.entity.click)}, {:eq({context.topoElement.type}, node)}, {:not({context.topoElement.data.properties.part})}, {:not({context.topoElement.data.properties.noselect})}, {context.topoElement.data.name})"/>
+            <action xsi:type="CustomAction">
+              <transformation xsi:type="AddTransformation" context="." key="name">
+                <value xsi:type="StaticValueSelector" value="com.emc.watch4net.actions.report.global.remove"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="oldid">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:getParentReport()},-37918cb)"/>
+              </transformation>
+            </action>
+          </trigger>
+          <trigger desc="Replace imix">
+            <src-filter xsi:type="JsonQueryFilter" query=":and({:eq({name}, com.emc.watch4net.triggers.report.entity.click)}, {:eq({context.topoElement.type}, node)}, {:not({context.topoElement.data.properties.part})}, {:not({context.topoElement.data.properties.noselect})}, {context.topoElement.data.name})"/>
+            <action xsi:type="CustomAction">
+              <transformation xsi:type="AddTransformation" context="." key="name">
+                <value xsi:type="StaticValueSelector" value="com.emc.watch4net.actions.report.global.replace"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="oldid">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:resolveNodeId(..-..-..-..)}, -171b1315)"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="id">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:resolveNodeId(..-..-..-..)}, -171b1315-,{context.topoElement.data.name:computeHash(7984f977)})"/>
+              </transformation>
+            </action>
+          </trigger>
+        </wiring>
+        <topology-report topology="Default" algo="hierarchical" mode="t" xmlFile="topology/report/map?vendor=${vendor}&amp;device=${device}&amp;devtype=${devtype}&amp;serialnb=${serialnb}&amp;model=${model}&amp;arraytyp=${arraytyp}">
+          <topo-template name="Storage Topology.xml"/>
+        </topology-report>
+      </node>
+    </node>
+  </node>
+  <node name="Switches" order="1" singleNodeId="210485c">
+    <property xsi:type="NodeFilter" filterExpression="devtype=='FabricSwitch' &amp; !(parttype=='Fabric' | parttype='Zone%') &amp; vstatus=='active'"/>
+    <property xsi:type="ReportPreferences" duration="l1w" preferredPeriod="3600" paging="50"/>
+    <property xsi:type="PropertyNodeColumn" name="Switch" sortMode="asc" property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="IP" property="ip"/>
+    <property xsi:type="PropertyNodeColumn" name="Vendor" property="vendor"/>
+    <property xsi:type="PropertyNodeColumn" name="Model" property="model"/>
+    <property xsi:type="PropertyNodeColumn" name="Firmware" property="firmware"/>
+    <property xsi:type="PropertyNodeColumn" name="Description" property="devdesc"/>
+    <property xsi:type="ValueNodeColumn" name="Total FC Ports" formatter="Number&lt;rounding=0&gt; Status" resultName="PortCount" forcePeriod="never" useTimeRange="true" summaryLabel="" summaryAggregate="6"/>
+    <property xsi:type="ValueNodeColumn" name="# Used Ports" formatter="Number&lt;rounding=0&gt; Status" resultName="OnlinePortCount" forcePeriod="never" useTimeRange="true" summaryLabel="" summaryAggregate="6"/>
+    <formula formulaId="util.ChildCount">
+      <result name="ConnDeviceCount" default="false" graphable="false"/>
+    </formula>
+    <formula formulaId="util.Nop">
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="ConnDeviceCount" from="node"/>
+      <result name="SwitchCount" default="false" graphable="false"/>
+    </formula>
+    <node name="Devices" singleNodeId="69161620" type="application">
+      <property xsi:type="NodeExpansion" expandOn="device"/>
+      <property xsi:type="ReportPreferences" displayMode="3" defaultMode="mix" duration="l1w" preferredPeriod="3600" displayedProperties="device ip devdesc domainid[Fibre channel domain ID] model vendor[Device vendor] firmware[Firmware]"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Name" nodeProperty="name"/>
+      <formula formulaId="util.DistinctValueCountFormula">
+        <setting name="Filter" value="parttype=='Port' &amp; !(part='mgmt%' | part='sup-fc%')&amp;!(iftype=='Ethernet')&amp; partstat"/>
+        <setting name="ExpandOn" value="part"/>
+        <setting name="Level-Up" value="0"/>
+        <result name="PortCount" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="util.DistinctValueCountFormula">
+        <setting name="Filter" value="parttype='Port'&amp;(partstat='online'|partstat='up'|partstat='Enabled'|partstat='Online')&amp;!(iftype=='Ethernet')"/>
+        <setting name="ExpandOn" value="part"/>
+        <setting name="Level-Up" value="0"/>
+        <result name="OnlinePortCount" default="false" graphable="false"/>
+      </formula>
+      <report-layout vspan="*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-b6b721eb-8d1d9fc4=1,*:#W4N-DEVICE-SUMMARY-FABRICSWITCH=1" hspan=".-65588478=2,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-b6b721eb-8d1d9fc4=3,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-9361b663-54a7027d=2,*:#W4N-DEVICE-SUMMARY-FABRICSWITCH=1,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-40b96e3f=3,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-9361b663-9f7b02aa=1,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-b6b721eb=2" order=".-65588478=1,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-9361b663-54a7027d=3,*:#W4N-DEVICE-SUMMARY-FABRICSWITCH=2,*:{W4N-DEVICE-SUMMARY-FABRICSWITCH}-9361b663-9f7b02aa=4"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Topology Map" order="0" singleNodeId="65588478" type="network">
+        <property xsi:type="ReportPreferences" displayMode="3" defaultMode="tda"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+        <wiring behaviors="!passThrough,!entityDrilldown,!titleDrilldown,!markerPopup">
+          <trigger desc="Passthrough">
+            <src-filter xsi:type="JsonQueryFilter" query=":eq({name}, com.emc.watch4net.triggers.report.entity.click)"/>
+            <action xsi:type="PassthroughAction"/>
+          </trigger>
+          <trigger desc="Remove default">
+            <src-filter xsi:type="JsonQueryFilter" query=":and({:eq({name}, com.emc.watch4net.triggers.report.entity.click)}, {:eq({context.topoElement.type}, node)}, {:not({context.topoElement.data.properties.part})}, {:not({context.topoElement.data.properties.noselect})}, {context.topoElement.data.name})"/>
+            <action xsi:type="CustomAction">
+              <transformation xsi:type="AddTransformation" context="." key="name">
+                <value xsi:type="StaticValueSelector" value="com.emc.watch4net.actions.report.global.remove"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="oldid">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:getParentReport()},-57fa153f)"/>
+              </transformation>
+            </action>
+          </trigger>
+          <trigger desc="Replace imix">
+            <src-filter xsi:type="JsonQueryFilter" query=":and({:eq({name}, com.emc.watch4net.triggers.report.entity.click)}, {:eq({context.topoElement.type}, node)}, {:not({context.topoElement.data.properties.part})}, {:not({context.topoElement.data.properties.noselect})}, {context.topoElement.data.name})"/>
+            <action xsi:type="CustomAction">
+              <transformation xsi:type="AddTransformation" context="." key="name">
+                <value xsi:type="StaticValueSelector" value="com.emc.watch4net.actions.report.global.replace"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="oldid">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:resolveNodeId(..-..-..-..)}, -171b1315)"/>
+              </transformation>
+              <transformation xsi:type="AddTransformation" context="context" key="id">
+                <value xsi:type="JsonQueryValueSelector" query=":concat({adapterContext.id:resolveNodeId(..-..-..-..)}, -171b1315-,{context.topoElement.data.name:computeHash(7984f977)})"/>
+              </transformation>
+            </action>
+          </trigger>
+        </wiring>
+        <topology-report topology="Default" algo="hierarchical" mode="t" xmlFile="topology/report/map?device=${device}&amp;devtype=${devtype}">
+          <topo-template name="Storage Topology.xml"/>
+        </topology-report>
+      </node>
+    </node>
+  </node>
+</node>

@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="CTG - VNX SG Capacity Trending (SRM 4.x)" singleNodeId="74f7785b" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+  <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="Array SG Trending - Use Cases" order="0" singleNodeId="fe3768de">
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="SGs per Array" order="0" singleNodeId="bcb4a672">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Device" order="0" singleNodeId="e68b9a23">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Presented Capacity" order="0" singleNodeId="f8817df3">
+          <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Used Capacity" order="1" singleNodeId="719b4b66">
+          <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Both (Presented &amp; Used)" order="2" singleNodeId="93290920">
+          <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+          <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc#1" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+        </node>
+      </node>
+    </node>
+    <node name="All Array SGs" order="1" singleNodeId="c1686e6e">
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="Presented Capacity" order="0" singleNodeId="f8817df3">
+        <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+        <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+        <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <formula formulaId="util.ChildCount">
+          <result name="Storage Group Count" default="false" graphable="false"/>
+        </formula>
+        <link singleNodeId="74424767" linkID=".-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+      </node>
+      <node name="Used Capacity" order="1" singleNodeId="719b4b66">
+        <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+        <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+        <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <formula formulaId="util.ChildCount">
+          <result name="Storage Group Count" default="false" graphable="false"/>
+        </formula>
+        <link singleNodeId="74424767" linkID=".-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+      </node>
+      <node name="Both (Presented &amp; Used)" order="2" singleNodeId="93290920">
+        <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+        <property xsi:type="ReportPreferences" defaultMode="imx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+        <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+        <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc#1" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <formula formulaId="util.ChildCount">
+          <result name="Storage Group Count" default="false" graphable="false"/>
+        </formula>
+        <link singleNodeId="74424767" linkID=".-..-..-..-..-b5762c9b-3ba550e9-d8eaeb77"/>
+      </node>
+    </node>
+  </node>
+  <node name="Top 10 Dashboards" order="1" singleNodeId="d318c536">
+    <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="SGs per Array" order="0" singleNodeId="d50910fc">
+      <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab"/>
+      <node name="Device" order="0" singleNodeId="cc96117d">
+        <property xsi:type="NodeExpansion" expandOn="device"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <link singleNodeId="1dbf7a21" linkID=".-..-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="0"/>
+        <link singleNodeId="5739b420" linkID=".-..-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="1"/>
+      </node>
+    </node>
+    <node name="All Array SGs" order="1" singleNodeId="139ad4dc">
+      <property xsi:type="NodeFilter" filterExpression="#APG:ALL &amp; !(vstatus=='inactive') &amp; (source=='VNXBlock-Collector' | source=='VNXFile-Collector' | source=='VNXUnity-Collector') &amp; parttype=='LUN' &amp; sgname &amp; !(sgname=='N/A')"/>
+      <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <link singleNodeId="1dbf7a21" linkID=".-..-..-..-b5762c9b-24aa1e07-3c966a3f" order="0"/>
+      <link singleNodeId="5739b420" linkID=".-..-..-..-b5762c9b-24aa1e07-8c3d5eb9" order="1"/>
+    </node>
+  </node>
+  <node name="&lt;&lt;SOURCE&gt;&gt;" order="2" singleNodeId="b5762c9b">
+    <property xsi:type="ReportPreferences" defaultMode="lst"/>
+    <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+    <node name="&lt;&lt;ReportSource&gt;&gt;" order="0" singleNodeId="3ba550e9">
+      <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+      <node name="serialnb,sgname" singleNodeId="d8eaeb77">
+        <property xsi:type="NodeExpansion" expandOn="serialnb&lt;type=hide&gt;,sgname&lt;type=split;value-separator=|;properties=sgname;level-up=1&gt;" filterMode="both"/>
+        <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <formula formulaId="util.Nop4">
+          <parameter name="First Value" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity"/>
+          <parameter name="Second Value" xsi:type="ResultFormulaParameterDefinition" result="SG Used (%)"/>
+          <parameter name="Third Value" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity"/>
+          <parameter name="Fourth Value" xsi:type="ResultFormulaParameterDefinition" result="LunCount"/>
+          <result name="SG Capacity" default="false" graphable="false"/>
+          <result name="SG Used (%)" default="false" graphable="false"/>
+          <result name="SG Used Capacity" default="false" graphable="false"/>
+          <result name="LunCount" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity" from="node"/>
+          <result name="Used-Delta-30" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="90"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity" from="node"/>
+          <result name="Used-Delta-90" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="180"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity" from="node"/>
+          <result name="Used-Delta-180" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="30"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity" from="node"/>
+          <result name="Presented-Delta-30" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="90"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity" from="node"/>
+          <result name="Presented-Delta-90" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.Delta">
+          <setting name="nb periods" value="180"/>
+          <parameter name="Metric" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity" from="node"/>
+          <result name="Presented-Delta-180" default="false" graphable="false"/>
+        </formula>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Capacity Trend Graphs" order="0" singleNodeId="42ee66a4">
+          <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <report-rendering>
+            <charts mode="dynamic"/>
+          </report-rendering>
+          <node name="Last 6 Months (Presented &amp; Used)" order="0" singleNodeId="5bf90781">
+            <property xsi:type="ReportPreferences" defaultMode="nrx" duration="l6M" preferredPeriod="86400" preferredAggregate="last" legendDisplayPolicy="visible"/>
+            <property xsi:type="DisplayPreferences" displayPolicy="hideIfEmpty"/>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity"/>
+              <result name="SG - Presented Capacity" default="false" graphable="true"/>
+            </formula>
+            <formula formulaId="util.Nop">
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity"/>
+              <result name="SG - Used Capacity" default="false" graphable="true"/>
+            </formula>
+            <customization color="#bf00ff" marker="diamond" filter="@result=='SG - Presented Capacity'"/>
+            <customization color="#050400" filter="@result=='SG - Used Capacity'"/>
+            <report-rendering>
+              <charts mode="dynamic"/>
+            </report-rendering>
+            <link singleNodeId="e1f092b7" linkID=".-..-..-..-ebaca2d"/>
+          </node>
+        </node>
+        <node name="Associated Devices" order="1" singleNodeId="ebaca2d">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="200"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group" description="Storage Group name." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="PropertyNodeColumn" name="LUN Name" description="LUN name." formatter="Text&lt;type=Default Style&gt;" property="partdesc"/>
+          <property xsi:type="PropertyNodeColumn" name="LUN ID" description="LUN identifier." formatter="Text&lt;type=Default Style&gt;" property="partid"/>
+          <property xsi:type="PropertyNodeColumn" name="RAID Level" description="RAID type." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(dgraid='%,%')" property="dgraid"/>
+          <property xsi:type="PropertyNodeColumn" name="Disk Technology" description="Indicates the disk technology used." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(name=='TierCapacity')" property="disktype"/>
+          <property xsi:type="PropertyNodeColumn" name="Purpose" description="The purpose of the LUN.The LUN is used as Local Replica or Pool contributor etc." formatter="Text&lt;type=Default Style&gt;" property="purpose"/>
+          <property xsi:type="PropertyNodeColumn" name="Thin / Thick" description="Type of Storage Provisioning i.e. (Thin/Thick)." formatter="Text&lt;type=Default Style&gt;" property="dgstype"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Pool / RAID Group" description="Storage Pool / RAID Group name." formatter="Text&lt;type=Default Style&gt;" filterExpression="!(dgname='%,%')" property="dgname"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Pool /  RAID Group Type" description="Storage Pool /  RAID Group type." formatter="Text&lt;type=Default Style&gt;" property="dgtype"/>
+          <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level name." property="svclevel"/>
+          <property xsi:type="ValueNodeColumn" name="Capacity (GB)" description="The total capacity of the LUN." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='Capacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity (GB)" description="The consumed capacity of the LUN." formatter="Number&lt;rounding=2&gt; Status Style&lt;type=Default Style&gt; Graph" filterExpression="name=='UsedCapacity' | name=='PoolUsedCapacity' &amp; ismetah=='0'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel="" summaryAggregate="6"/>
+          <formula formulaId="util.ChildCount">
+            <result name="LunCount" default="true" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUN Capacity"/>
+            <result name="SG Capacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="true"/>
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUN Used Capacity"/>
+            <result name="SG Used Capacity" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.Division">
+            <setting name="scale" value="100"/>
+            <parameter name="numerator" xsi:type="ResultFormulaParameterDefinition" result="SG Used Capacity" from="node"/>
+            <parameter name="denominator" xsi:type="ResultFormulaParameterDefinition" result="SG Capacity" from="node"/>
+            <result name="SG Used (%)" default="false" graphable="false"/>
+          </formula>
+          <wiring behaviors="!entityDrilldown"/>
+          <node name="serialnb,part" order="0" singleNodeId="ccd9661f">
+            <property xsi:type="NodeExpansion" expandOn="serialnb,part"/>
+            <property xsi:type="ReportPreferences" displayMode="3" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" displayedProperties="part[Name] dgraid[RAID level] dgstype[LUN Type] csupoltp[Consuming from Storage Pool / RAID Group] csupolnm[Consuming from Storage Pool #/ RAID Group #]"/>
+            <formula formulaId="util.DistinctValueCountFormula">
+              <setting name="Filter" value="dgstype=='Thin'"/>
+              <setting name="ExpandOn" value="part"/>
+              <setting name="Level-Up" value="0"/>
+              <result name="IsThin" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="math.spatial.Sum">
+              <setting name="aggregation" value="DEFAULT"/>
+              <setting name="partial" value="true"/>
+              <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="IsThin"/>
+              <result name="NbThin" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='Capacity'"/>
+              <result name="LUN Capacity" default="false" graphable="false"/>
+            </formula>
+            <formula formulaId="util.MakeRange">
+              <setting name="Fill Before" value="false"/>
+              <setting name="Fill After" value="true"/>
+              <setting name="Fill Between" value="true"/>
+              <setting name="Interpolated Points" value="true"/>
+              <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedCapacity' | name=='PoolUsedCapacity' &amp; ismetah=='0'"/>
+              <result name="LUN Used Capacity" default="false" graphable="false"/>
+            </formula>
+            <report-layout hspan="*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-DISKS=3,*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-RAID-GROUPS=3,*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-STORAGE-POOLS=3,*:#W4N-EMC-VNX-LIST-OF-LUNS-CHILD=3" order="*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-DISKS=14,*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-RAID-GROUPS=13,*:#VNX_TEMP_BLOCK-TEMP_LUN_ASSOCIATED-STORAGE-POOLS=14"/>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node name="&lt;&lt;DashboardReportSource&gt;&gt;" order="1" singleNodeId="24aa1e07">
+      <property xsi:type="ReportPreferences" defaultMode="lst" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="alwaysHide"/>
+      <node name="Presented Capacity Growth" order="0" singleNodeId="3c966a3f">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="5"/>
+        <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Host" description="Name of the Host." formatter="Text&lt;type=link&gt;" nodeProperty="expandedNames[0]"/>
+        <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" formatter="Text&lt;type=Default Style&gt;" property="devtype"/>
+        <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." formatter="Text&lt;type=Default Style&gt;" property="ip"/>
+        <property xsi:type="ValueNodeColumn" name="Presented - Current" description="Current sum of Primary Presented Chargeable Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='PresentedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Current sum of Primary Presented Used Capacity of all the host disks. It is deduplicated by shared capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" filterExpression="name=='UsedChargeableCapacity' &amp; !(part) &amp; !(svclevel)" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous 30 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" description="Delta between previous 90 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" description="Delta between previous 180 day sum of Primary Presented Chargeable Capacity and the current sum of Primary Presented Chargeable Capacity." formatter="ValueToString&lt;default= ;key_=-;rounding=2&gt; Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Last Timestamp" description="The most recent date/time that this key performance indicator has been collected." formatter="DateTime&lt;format=1-&gt;" filterExpression="name=='UsedChargeableCost' &amp; !(part) &amp; !(svclevel)" period="604800" forcePeriod="true" aggregationFunc="lasttimestamp" timeThreshold="2" summaryLabel=""/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <wiring>
+          <jump-to-report>
+            <src-filter xsi:type="CellClickFilter" columnName="Host"/>
+            <report-path path="{EXPLORE-BRANCH-HOSTS}/(device)"/>
+          </jump-to-report>
+        </wiring>
+        <node name="Presented Capacity (30 Days)" order="0" singleNodeId="70ce0d2d">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Presented Capacity (90 Days)" order="1" singleNodeId="6931ec77">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 90 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Presented Capacity (180 Days)" order="2" singleNodeId="d92ea039">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Delta - Last 180 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Presented-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+      </node>
+      <node name="Used Capacity Growth" singleNodeId="8c3d5eb9">
+        <property xsi:type="ReportPreferences" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+        <node name="Used Capacity (30 Days)" order="0" singleNodeId="7ac25aea">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 30 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-30" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Used Capacity (90 Days)" order="1" singleNodeId="eedb9102">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 90 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-90" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+        <node name="Used Capacity (180 Days)" order="2" singleNodeId="f572906f">
+          <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" paging="10"/>
+          <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the Storage Array." formatter="Text&lt;type=Default Style&gt;" property="device"/>
+          <property xsi:type="PropertyNodeColumn" name="Storage Group Name" description="Name of the Storage Group." formatter="Text&lt;type=Default Style&gt;" property="sgname"/>
+          <property xsi:type="ValueNodeColumn" name="# Devices" description="Number of Devices in the Storage Group." formatter="Number&lt;rounding=0&gt; Style&lt;type=Default Style&gt;" resultName="LunCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Presented Capacity - Current" columnFilterCondition="\b\B" display="no" description="Total Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Capacity - Current" description="Total Used Capacity of the Storage Group." formatter="Number&lt;rounding=2&gt; Style&lt;type=Default Style&gt;" resultName="SG Used Capacity" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <property xsi:type="ValueNodeColumn" name="Used Delta - Last 180 Days" sortMode="desc" description="Delta between previous (x) day metric (Last 1 day metric of the last day on the month/quarter/6 months) and the current Presented/Used metric." formatter="Number&lt;rounding=2&gt; Status" resultName="Used-Delta-180" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage" summaryLabel=""/>
+          <formula formulaId="util.ChildCount">
+            <result name="Storage Group Count" default="false" graphable="false"/>
+          </formula>
+          <link singleNodeId="74424767" linkID=".-..-..-..-..-3ba550e9-d8eaeb77"/>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

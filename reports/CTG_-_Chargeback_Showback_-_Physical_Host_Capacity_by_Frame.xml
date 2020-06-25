@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="Physical Host Capacity (By Frame)" order="1" singleNodeId="44cdf7ce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="array &amp; !(vstatus=='inactive')"/>
+  <property xsi:type="ReportPreferences" defaultMode="tab" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;ul id=&quot;hide&quot; class=&quot;hidden&quot;&gt; &#10;  &lt;li&gt; Report created or modified by *SS*.&lt;/li&gt; &#10; &lt;/ul&gt; &#10;&lt;/div&gt;"/>
+  <node name="Storage Array" singleNodeId="ef708510">
+    <property xsi:type="NodeFilter" filterExpression="source=='Chargeback-block-processor' &amp; w4ncert=='1.0' &amp; !(vstatus=='inactive') &amp; #APG:ALL &amp; (devtype=='Host' | devtype=='Hypervisor' | devtype=='PassiveHost' &amp; !(actdisc=='1'))"/>
+    <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+    <property xsi:type="NodePropertyNodeColumn" name="Array Name" sortMode="asc" nodeProperty="name"/>
+    <property xsi:type="PropertyNodeColumn" name="Service Levels" sortMode="asc#1" filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+    <property xsi:type="ValueNodeColumn" name="# SRM Discovered Hosts w/ Storage" description="This column will show actively/passively discovered hosts that have storage mapped/masked that appear in chargeback reports." formatter="Number&lt;rounding=0&gt; Status Graph" resultName="HostCount" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <node name="Host Capacity - Array" order="0" singleNodeId="bd1d56f6">
+      <property xsi:type="NodeFilter" filterExpression="name='Presented%' | name='Used%'"/>
+      <property xsi:type="NodeExpansion" expandOn="array"/>
+      <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+      <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Host" sortMode="asc" description="Name of the Host." nodeProperty="expandedNames[0]"/>
+      <property xsi:type="PropertyNodeColumn" name="Host Type" description="Type of host; values can be - Host, Hypervisor, PassiveHost" property="devtype"/>
+      <property xsi:type="PropertyNodeColumn" name="Resolved IP" display="no" description="The IP address of the host." property="ip"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Total LUN Count" nodeProperty="childCount"/>
+      <property xsi:type="ValueNodeColumn" name="Total Presented LUN Size -  (Not Cluster Aware) (GB)" formatter="ValueToString&lt;key_=-;rounding=2&gt; Status" resultName="LUN Size Total" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable (PPC) (GB)" formatter="ValueToString&lt;key_=-;rounding=2&gt; Status" resultName="PPC" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+      <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable (PUC) (GB)" formatter="ValueToString&lt;key_=-;rounding=2&gt; Status" resultName="PUC" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+      <property xsi:type="PropertyNodeColumn" name="Array Name(s)" description="Name of the Array. It is set to N/A when the array is not discovered." filterExpression="name=='PresentedChargeableCapacity'" property="array"/>
+      <property xsi:type="PropertyNodeColumn" name="Shares LUNs with" display="no" description="List of all hosts connected to that LUN." filterExpression="name=='PresentedChargeableCapacity'" property="hosts"/>
+      <property xsi:type="PropertyNodeColumn" name="Service Levels" filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+      <formula formulaId="util.ChildCount">
+        <result name="HostCount" default="false" graphable="false"/>
+      </formula>
+      <formula formulaId="math.spatial.Sum">
+        <setting name="aggregation" value="DEFAULT"/>
+        <setting name="partial" value="false"/>
+        <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUNCount"/>
+        <result name="LUNCount" default="false" graphable="false"/>
+      </formula>
+      <node name="&lt;hosts&gt;" singleNodeId="bf4eb8de">
+        <property xsi:type="NodeFilter" filterExpression="devtype=='Host' | devtype=='Hypervisor' | devtype=='PassiveHost' &amp; !(actdisc=='1')"/>
+        <property xsi:type="NodeExpansion" expandOn="device" filterMode="both"/>
+        <property xsi:type="ReportPreferences" duration="l2w" preferredPeriod="86400" preferredAggregate="last" description="&lt;div&gt; &#10; &lt;b&gt;For the capacity to be assigned to a service-level, the LUN providing the storage must be monitored (in the last 24h)&lt;/b&gt; &#10;&lt;/div&gt;" paging="100"/>
+        <property xsi:type="NodePropertyNodeColumn" name="Host Device" description="WWN or name of the Disk." nodeProperty="name"/>
+        <property xsi:type="PropertyNodeColumn" name="Array Name" description="Name of the Array. It is set to N/A when the array is not discovered." formatter="Text&lt;type=link&gt;" filterExpression="name=='PresentedChargeableCapacity'" property="array"/>
+        <property xsi:type="PropertyNodeColumn" name="LUN ID" description="Identifier for each LUN. It is set to N/A when the array is not discovered." filterExpression="name=='PresentedChargeableCapacity'" property="lun"/>
+        <property xsi:type="ValueNodeColumn" name="LUN Size (GB)" resultName="LUN Size" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+        <property xsi:type="PropertyNodeColumn" name="Service Level" description="Service level that the LUN is tagged with. When array is not discovered, SL is set to &quot;Other&quot;. The service level is set to &quot;VirtualStorage&quot; when the Virtual storage array is discovered but backend array is not discovered and when the LUNs backing the virtual volume are tagged with different service levels." filterExpression="name=='PresentedChargeableCapacity'" property="svclevel"/>
+        <property xsi:type="PropertyNodeColumn" name="Connected Hosts" description="List of all hosts connected to that LUN." filterExpression="name=='PresentedChargeableCapacity'" property="hosts"/>
+        <property xsi:type="ValueNodeColumn" name="Primary Presented (GB)" columnFilterCondition="\b\B" display="no" description="Presented capacity for the primary LUN or Virtual Volume allocated to the host. If the array or virtual storage is not discovered, it is the host disk used capacity." filterExpression="name=='PresentedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Primary Used (GB)" columnFilterCondition="\b\B" display="no" description="Used Capacity of the primary LUN. If the array is not discovered, its the host disk used capacity." filterExpression="name=='UsedNonChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel=""/>
+        <property xsi:type="ValueNodeColumn" name="Primary Presented Chargeable (GB)" description="The Primary presented Chargeable Capacity for the host deduplicated by shared capacity. It is Primary presented capacity split equally between all the hosts sharing the LUN." filterExpression="name=='PresentedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+        <property xsi:type="ValueNodeColumn" name="Primary Used Chargeable (GB)" description="The Chargeable Capacity for the disk deduplicated by shared capacity. It is is Primary used capacity split equally between all the hosts sharing the LUN." filterExpression="name=='UsedChargeableCapacity'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="Byte::Storage::GB::Byte::Storage::GB" summaryLabel="" summaryAggregate="6"/>
+        <property xsi:type="ValueNodeColumn" name="LUN Monitored" description="Indicates when the LUN allocated to the given disk has/has not been discovered." formatter="Status" resultName="isbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="-1.0"/>
+          <threshold severity="OK" value="0.0"/>
+        </property>
+        <property xsi:type="ValueNodeColumn" name="Virtual Storage Monitored" description="Indicates when the VPLEX/SVC Virtual Volume allocated to the given disk has/has not been discovered." formatter="Status" resultName="isvbemon" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" replaceNullWithZero="true" summaryLabel="">
+          <threshold severity="CRITICAL" value="-Infinity"/>
+          <threshold severity="MAJOR" value="-1.0"/>
+          <threshold severity="OK" value="0.0"/>
+        </property>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="PPC"/>
+          <result name="PPC" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="PUC"/>
+          <result name="PUC" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="math.spatial.Sum">
+          <setting name="aggregation" value="DEFAULT"/>
+          <setting name="partial" value="false"/>
+          <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="LUN Size"/>
+          <result name="LUN Size Total" default="false" graphable="false"/>
+        </formula>
+        <formula formulaId="util.ChildCount">
+          <result name="LUNCount" default="false" graphable="false"/>
+        </formula>
+        <wiring>
+          <jump-to-report>
+            <src-filter xsi:type="CellClickFilter" columnName="Array Name"/>
+            <report-path path="{EXPLORE-BRANCH-STORAGE-SYSTEMS}/{}"/>
+          </jump-to-report>
+        </wiring>
+        <node name="Disks" singleNodeId="dad7208c">
+          <property xsi:type="NodeFilter" filterExpression="parttype=='Disk' &amp; ((devtype=='Host' | devtype=='Hypervisor') &amp; isremote=='true' | devtype=='PassiveHost' &amp; !(actdisc=='1'))"/>
+          <property xsi:type="NodeExpansion" expandOn="partsn" filterMode="both"/>
+          <property xsi:type="ReportPreferences" displayMode="1" defaultMode="dmx" duration="l2w" preferredPeriod="86400" preferredAggregate="last"/>
+          <property xsi:type="DisplayPreferences" displayPolicy="hideIfLeafOrEmpty"/>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isbemon"/>
+            <result name="isbemon" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="PropertyFormulaParameterDefinition" property="isvbemon"/>
+            <result name="isvbemon" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="util.Nop">
+            <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+            <result name="LUN Size" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="trus"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='PresentedChargeableCapacity'"/>
+            <result name="PPC" default="false" graphable="false"/>
+          </formula>
+          <formula formulaId="math.spatial.Sum">
+            <setting name="aggregation" value="DEFAULT"/>
+            <setting name="partial" value="trus"/>
+            <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter="name=='UsedChargeableCapacity'"/>
+            <result name="PUC" default="false" graphable="false"/>
+          </formula>
+          <report-layout hspan="*:{W4N-SVC-WWN-LINKER}-46104e3c=2,*:{W4N-VPLEX-WWN-LINKER}-25b3c824=2"/>
+          <link singleNodeId="36c244ed" linkID="*:#W4N-WWN-LINKER" order="0"/>
+          <link singleNodeId="df61a719" linkID="*:#W4N-WWN-HOST-LINKER" order="1"/>
+          <link singleNodeId="a858f178" linkID="*:#W4N-SVC-WWN-LINKER" order="2"/>
+          <link singleNodeId="1ed25799" linkID="*:#W4N-VPLEX-WWN-LINKER" order="3"/>
+        </node>
+      </node>
+    </node>
+  </node>
+</node>

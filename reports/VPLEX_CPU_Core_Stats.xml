@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="VPLEX Core Usage" singleNodeId="bf4ee3b7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="NodeFilter" filterExpression="source=='VPLEX-Collector' &amp; parttype=='Processor'"/>
+  <property xsi:type="ReportPreferences" defaultMode="tab"/>
+  <report-rendering>
+    <charts mode="dynamic"/>
+  </report-rendering>
+  <node name="device" singleNodeId="a2a07dd4">
+    <property xsi:type="NodeExpansion" expandOn="device"/>
+    <property xsi:type="ReportPreferences" defaultMode="tab"/>
+    <report-rendering>
+      <charts mode="dynamic"/>
+    </report-rendering>
+    <node name="director" singleNodeId="73a84fe5">
+      <property xsi:type="NodeExpansion" expandOn="director"/>
+      <property xsi:type="ReportPreferences" defaultMode="ncr" legendDisplayPolicy="visible"/>
+      <report-rendering>
+        <charts mode="dynamic"/>
+      </report-rendering>
+      <node name="cpu" singleNodeId="8875d21d">
+        <property xsi:type="NodeExpansion" expandOn="cpu"/>
+        <property xsi:type="ReportPreferences" defaultMode="srg"/>
+        <report-rendering>
+          <charts mode="dynamic"/>
+        </report-rendering>
+      </node>
+    </node>
+  </node>
+</node>

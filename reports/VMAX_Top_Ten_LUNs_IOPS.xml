@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><node xmlns="http://www.watch4net.com/APG/Web/XmlTree1" name="VMAX Top Ten LUNs" order="12" singleNodeId="609d3739" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <property xsi:type="ReportPreferences" defaultMode="dmx"/>
+  <node name="Top Ten Read" order="3" singleNodeId="b6c27dc4" uid="W4N-EMC-VMAX-DEVICE-PERFORMANCE">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='LUN' &amp; !(ispolctr=='1') &amp; source=='VMAX-Collector'"/>
+    <property xsi:type="ReportPreferences" displayMode="1" paging="-10"/>
+    <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the storage Array." property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="Device Name" columnFilterCondition="\b\B" description="The system defined name of the symmetrix device (LUN)." property="part"/>
+    <property xsi:type="PropertyNodeColumn" name="Alias" description="The alias name of the symmetrix device (LUN)." property="alias"/>
+    <property xsi:type="PropertyNodeColumn" name="Storage Group" property="sgname"/>
+    <property xsi:type="PropertyNodeColumn" name="Type" columnFilterCondition="\b\B" description="Device Type (Thick or Thin)." property="dgstype"/>
+    <property xsi:type="PropertyNodeColumn" name="Configuration" columnFilterCondition="\b\B" description="Device (LUN) Configuration." property="config"/>
+    <property xsi:type="PropertyNodeColumn" name="Purpose" columnFilterCondition="\b\B" description="The purpose of the Symmetrix Device (Primary, Local Replica etc...)." property="purpose"/>
+    <property xsi:type="ValueNodeColumn" name="Read Response Time" description="Device read response time" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ReadResponseTime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Response Time" columnFilterCondition="\b\B" description="Device write response time" formatter="SparkLineFormatter" filterExpression="name=='WriteResponseTime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" sortMode="desc" description="The number of device read requests per second" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" columnFilterCondition="\b\B" description="The number of device write requests per second" formatter="SparkLineFormatter" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth" description="Device read throughput (MBs) per second" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth" columnFilterCondition="\b\B" description="Device write throughput (MBs) per second" formatter="SparkLineFormatter" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Disk WWN" property="partsn"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DevicesCount" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+      <result name="Capacity" default="true" graphable="false"/>
+    </formula>
+    <node name="device,part" singleNodeId="aacdccdb">
+      <property xsi:type="NodeExpansion" expandOn="device,part"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" displayedProperties="part[Device name] poolname[Thin pool name] config[Configuration] partsn[WWN (UUID)]"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Indicator" nodeProperty="name"/>
+      <property xsi:type="PropertyNodeColumn" name="Unit" property="unit"/>
+      <node name="ReadResponseTime" order="0" singleNodeId="b62c5513">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadResponseTime'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device read response time"/>
+      </node>
+      <node name="WriteResponseTime" order="1" singleNodeId="757a096d">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteResponseTime'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device write response time"/>
+      </node>
+      <node name="Read Throughput (IOPS)" order="2" singleNodeId="dbd6693">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Combined Random and Sequential Read I/O Operations per Second"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Read Throughput (IOPS)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Write Throughput (IOPS)" order="3" singleNodeId="2daa6646">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteRequests'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Combined Random and Sequential Write I/O Operations per Second"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Write Throughput (IOPS)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Read Bandwidth" order="4" singleNodeId="c4ced376">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device read throughput (MBs) per second" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Read Bandwidth" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Write Bandwidth" order="5" singleNodeId="aac8dead">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device write throughput (MBs) per second" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Write Bandwidth" default="false" graphable="true"/>
+        </formula>
+      </node>
+    </node>
+  </node>
+  <node name="Top Ten Write" order="3" singleNodeId="6717eee5" uid="W4N-EMC-VMAX-DEVICE-PERFORMANCE">
+    <property xsi:type="NodeFilter" filterExpression="parttype=='LUN' &amp; !(ispolctr=='1') &amp; source=='VMAX-Collector'"/>
+    <property xsi:type="ReportPreferences" displayMode="1" paging="-10"/>
+    <property xsi:type="PropertyNodeColumn" name="Array" description="Name of the storage Array." property="device"/>
+    <property xsi:type="PropertyNodeColumn" name="Device Name" columnFilterCondition="\b\B" description="The system defined name of the symmetrix device (LUN)." property="part"/>
+    <property xsi:type="PropertyNodeColumn" name="Alias" description="The alias name of the symmetrix device (LUN)." property="alias"/>
+    <property xsi:type="PropertyNodeColumn" name="Storage Group" property="sgname"/>
+    <property xsi:type="PropertyNodeColumn" name="Type" columnFilterCondition="\b\B" description="Device Type (Thick or Thin)." property="dgstype"/>
+    <property xsi:type="PropertyNodeColumn" name="Configuration" columnFilterCondition="\b\B" description="Device (LUN) Configuration." property="config"/>
+    <property xsi:type="PropertyNodeColumn" name="Purpose" columnFilterCondition="\b\B" description="The purpose of the Symmetrix Device (Primary, Local Replica etc...)." property="purpose"/>
+    <property xsi:type="ValueNodeColumn" name="Read Response Time" columnFilterCondition="\b\B" description="Device read response time" formatter="SparkLineFormatter" filterExpression="name=='ReadResponseTime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Response Time" description="Device write response time" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='WriteResponseTime'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Throughput (IOPS)" columnFilterCondition="\b\B" description="The number of device read requests per second" formatter="SparkLineFormatter" filterExpression="name=='ReadRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Throughput (IOPS)" sortMode="desc" description="The number of device write requests per second" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='WriteRequests'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Read Bandwidth" columnFilterCondition="\b\B" description="Device read throughput (MBs) per second" formatter="SparkLineFormatter" filterExpression="name=='ReadThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic" summaryLabel=""/>
+    <property xsi:type="ValueNodeColumn" name="Write Bandwidth" description="Device write throughput (MBs) per second" formatter="Number&lt;rounding=2;color&gt; SparkLine Status" filterExpression="name=='WriteThroughput'" period="inherit" forcePeriod="true" aggregationFunc="inherit" useTimeRange="true" valuesAggregationFunc="inherit" scaleOperation="unit" scaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic" summaryLabel=""/>
+    <property xsi:type="PropertyNodeColumn" name="Disk WWN" property="partsn"/>
+    <formula formulaId="util.ChildCount">
+      <result name="DevicesCount" default="false" graphable="true"/>
+    </formula>
+    <formula formulaId="math.spatial.Sum">
+      <setting name="aggregation" value="DEFAULT"/>
+      <setting name="partial" value="true"/>
+      <parameter name="metric" xsi:type="ResultFormulaParameterDefinition" result="Capacity"/>
+      <result name="Capacity" default="true" graphable="false"/>
+    </formula>
+    <node name="device,part" singleNodeId="aacdccdb">
+      <property xsi:type="NodeExpansion" expandOn="device,part"/>
+      <property xsi:type="ReportPreferences" displayMode="2" defaultMode="dmx" displayedProperties="part[Device name] poolname[Thin pool name] config[Configuration] partsn[WWN (UUID)]"/>
+      <property xsi:type="NodePropertyNodeColumn" name="Indicator" nodeProperty="name"/>
+      <property xsi:type="PropertyNodeColumn" name="Unit" property="unit"/>
+      <node name="ReadResponseTime" order="0" singleNodeId="b62c5513">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadResponseTime'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device read response time"/>
+      </node>
+      <node name="WriteResponseTime" order="1" singleNodeId="757a096d">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteResponseTime'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device write response time"/>
+      </node>
+      <node name="Read Throughput (IOPS)" order="2" singleNodeId="dbd6693">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadRequests'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Combined Random and Sequential Read I/O Operations per Second"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Read Throughput (IOPS)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Write Throughput (IOPS)" order="3" singleNodeId="2daa6646">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteRequests'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Combined Random and Sequential Write I/O Operations per Second"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Write Throughput (IOPS)" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Read Bandwidth" order="4" singleNodeId="c4ced376">
+        <property xsi:type="NodeFilter" filterExpression="name=='ReadThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device read throughput (MBs) per second" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Read Bandwidth" default="false" graphable="true"/>
+        </formula>
+      </node>
+      <node name="Write Bandwidth" order="5" singleNodeId="aac8dead">
+        <property xsi:type="NodeFilter" filterExpression="name=='WriteThroughput'"/>
+        <property xsi:type="ReportPreferences" defaultMode="nrx" description="Device write throughput (MBs) per second" legendDisplayPolicy="visible" graphScaleFactor="ByteRate::Classic::MB/s::ByteRate::Classic"/>
+        <formula formulaId="util.Nop">
+          <parameter name="metric" xsi:type="FilterFormulaParameterDefinition" filter=""/>
+          <result name="Write Bandwidth" default="false" graphable="true"/>
+        </formula>
+      </node>
+    </node>
+  </node>
+</node>
